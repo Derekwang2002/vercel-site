@@ -1,0 +1,7 @@
+对当前站点做质量自检并输出清单：
+1) 移动端导航与布局
+2) draft/selected 过滤是否一致（blog/tags/rss/sitemap）
+3) SEO meta 是否齐全
+4) 空状态/404 是否合理
+5) 可访问性：语义结构与可聚焦元素
+只修 P0/P1 问题，避免风格大改。修完跑 lint/typecheck/build。
