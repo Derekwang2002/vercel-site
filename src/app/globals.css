@@ -1,0 +1,40 @@
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Georgia", "Times New Roman", serif;
+  line-height: 1.6;
+  color: #111111;
+  background: #ffffff;
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+h1 {
+  font-size: 2rem;
+  line-height: 1.2;
+  margin: 0 0 0.75rem;
+}
+
+p {
+  margin: 0 0 0.75rem;
+}
+
+a {
+  color: inherit;
+}
