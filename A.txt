@@ -1,0 +1,6 @@
+Read PRD.md / ARCHITECTURE.md / TASKS.md.
+Only implement {task ID} in TASKS.md; do not do any extra extensions or refactoring.
+First output an implementation plan: list of files to be modified/added + data flow/routing changes + acceptance-criteria mapping.
+Then apply the changes.
+Finally, you must run: lint, typecheck, build (and any tests related to this task).
+Output: change summary + acceptance-criteria checklist item by item + local verification steps.
