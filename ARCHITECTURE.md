@@ -86,3 +86,15 @@ If tests exist:
 - Every Pull Request must generate a Preview Deployment.
 - No manual server setup; site must remain statically generatable.
 - Custom domain (optional): configure via Vercel dashboard; DNS managed externally if needed.
+
+## 10. Framework (Next.js)
+- Framework: Next.js (App Router).
+- Rendering: Static generation first (SSG) for posts/tags.
+- Content: Markdown files under /content/posts.
+- No server-side database. No auth. No comments in MVP.
+- Deployment: Vercel only.
+
+## 11. Project Conventions
+- TypeScript required.
+- ESLint enabled.
+- Prefer minimal dependencies; new deps require justification + approval.
