@@ -1,0 +1,35 @@
+
+> personal-website@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 1460ms
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 1838ms (598 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /blog 200 in 2060ms
+ GET /blog 200 in 54ms
+ GET /blog 200 in 26ms
+ ✓ Compiled /tags in 178ms (586 modules)
+ GET /tags 200 in 284ms
+ ✓ Compiled / in 124ms (605 modules)
+ GET / 200 in 183ms
+ GET / 200 in 25ms
+ ✓ Compiled in 66ms (225 modules)
+ ⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 1368ms
+[?25h

@@ -1,0 +1,89 @@
+
+> personal-website@0.1.0 dev
+> cmd /c "npx -y node@22 node_modules\next\dist\bin\next dev"
+
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 1466ms
+ ○ Compiling /tags ...
+ ✓ Compiled /tags in 2.5s (586 modules)
+ GET /tags 200 in 2779ms
+ GET /blog 200 in 2813ms
+ ✓ Compiled / in 237ms (605 modules)
+ GET / 200 in 394ms
+ GET / 200 in 23ms
+ GET /blog 200 in 33ms
+ GET /tags 200 in 31ms
+ GET / 200 in 23ms
+ GET /blog 200 in 28ms
+ GET /tags 200 in 36ms
+ GET / 200 in 33ms
+ GET /blog 200 in 25ms
+ GET /tags 200 in 27ms
+ GET / 200 in 25ms
+ GET /tags 200 in 21ms
+ GET /blog 200 in 15ms
+ ✓ Compiled in 22ms
+ ✓ Compiled /blog in 270ms (618 modules)
+ ⨯ Error: Invalid post filename "Blogs.md". Expected format: YYYY-MM-DD-slug.md
+    at readPostFile (lib\posts.ts:143:11)
+    at eval (lib\posts.ts:103:67)
+    at Array.map (<anonymous>)
+    at loadAllPosts (lib\posts.ts:103:49)
+    at async getSelectedPosts (lib\posts.ts:35:17)
+    at async BlogPage (src\app\blog\page.tsx:15:44)
+  141 |   const fileNameMatch = FILE_NAME_PATTERN.exec(fileName);
+  142 |   if (!fileNameMatch) {
+> 143 |     throw new Error(
+      |           ^
+  144 |       `Invalid post filename \"${fileName}\". Expected format: YYYY-MM-DD-slug.md`
+  145 |     );
+  146 |   } {
+  digest: '2009440905'
+}
+ ⨯ Error: Invalid post filename "Blogs.md". Expected format: YYYY-MM-DD-slug.md
+    at readPostFile (lib\posts.ts:143:11)
+    at eval (lib\posts.ts:103:67)
+    at Array.map (<anonymous>)
+    at loadAllPosts (lib\posts.ts:103:49)
+    at async getAllPosts (lib\posts.ts:30:17)
+    at async BlogPage (src\app\blog\page.tsx:15:71)
+  141 |   const fileNameMatch = FILE_NAME_PATTERN.exec(fileName);
+  142 |   if (!fileNameMatch) {
+> 143 |     throw new Error(
+      |           ^
+  144 |       `Invalid post filename \"${fileName}\". Expected format: YYYY-MM-DD-slug.md`
+  145 |     );
+  146 |   } {
+  digest: '3033032669'
+}
+ GET /blog?tab=selected 500 in 388ms
+ GET /blog 500 in 520ms
+ ✓ Compiled in 77ms (369 modules)
+ ⨯ [TypeError: a[d] is not a function] { digest: '3504788417' }
+[TypeError: a[d] is not a function]
+ ⨯ [TypeError: a[d] is not a function]
+ ⨯ [TypeError: a[d] is not a function] { page: '/blog' }
+ ⨯ [TypeError: a[d] is not a function] { digest: '3504788417' }
+[TypeError: a[d] is not a function]
+ ⨯ [TypeError: a[d] is not a function]
+ ⨯ [TypeError: a[d] is not a function] { page: '/blog' }
+ ⨯ [TypeError: a[d] is not a function] { digest: '3504788417' }
+[TypeError: a[d] is not a function]
+ ⨯ [TypeError: a[d] is not a function]
+ ⨯ [TypeError: a[d] is not a function] { page: '/blog' }
+ ⨯ [TypeError: a[d] is not a function] { digest: '3504788417' }
+[TypeError: a[d] is not a function]
+ ⨯ [TypeError: a[d] is not a function]
+ ⨯ [TypeError: a[d] is not a function] { page: '/blog' }
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 2.2s (945 modules)
+ GET /blog 500 in 3480ms
+ GET /blog?tab=selected 500 in 2840ms
+ GET /blog 500 in 2842ms
+ GET /blog?tab=selected 500 in 2846ms
