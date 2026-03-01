@@ -1,0 +1,98 @@
+
+> personal-website@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 1390ms
+ ○ Compiling /tags ...
+ ✓ Compiled /tags in 2s (586 modules)
+ GET /blog 200 in 2287ms
+ GET /tags 200 in 2216ms
+ ✓ Compiled / in 194ms (605 modules)
+ GET / 200 in 308ms
+ GET / 200 in 25ms
+ GET /blog 200 in 24ms
+ GET /tags 200 in 25ms
+ GET / 200 in 21ms
+ GET /blog 200 in 27ms
+ GET /tags 200 in 28ms
+ GET / 200 in 37ms
+ GET / 200 in 15ms
+ GET /blog 200 in 15ms
+ GET /tags 200 in 13ms
+ GET /blog 200 in 14ms
+ GET /tags 200 in 16ms
+ GET /blog 200 in 15ms
+ GET / 200 in 12ms
+ GET / 200 in 11ms
+ GET /blog 200 in 12ms
+ GET /tags 200 in 17ms
+ GET / 200 in 15ms
+ GET /blog 200 in 14ms
+ GET /tags 200 in 13ms
+ GET /blog 200 in 12ms
+ GET / 200 in 14ms
+ GET /blog 200 in 88ms
+ GET /tags 200 in 26ms
+ GET /blog 200 in 14ms
+ GET / 200 in 14ms
+ GET /blog 200 in 24ms
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  digest: '880287304'
+}
+[TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  page: '/'
+}
+ ○ Compiling /_error ...
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled /_error in 1232ms (939 modules)
+ ⨯ Error: Cannot find module './52.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\pages\_document.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:9790)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:9834) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/blog'
+}
+ ⨯ Error: Cannot find module './52.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\pages\_document.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:9790)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:9834) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/blog'
+}
+ GET / 500 in 2326ms
+ GET /blog 500 in 839ms
+ GET /blog 500 in 869ms
+[?25h

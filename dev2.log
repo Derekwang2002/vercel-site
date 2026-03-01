@@ -1,0 +1,179 @@
+
+> personal-website@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+
+ ✓ Starting...
+ ✓ Ready in 1484ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 2.3s (598 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /blog 200 in 2530ms
+ GET /blog 200 in 196ms
+ ✓ Compiled / in 296ms (603 modules)
+ GET / 200 in 461ms
+ GET /blog 200 in 421ms
+ ⨯ Error: Could not find the module "S:\Personal\Blogs\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '3271322628'
+}
+ ⨯ Error: Could not find the module "S:\Personal\Blogs\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '3553811854'
+}
+ ⨯ Error: Could not find the module "S:\Personal\Blogs\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '3553811854'
+}
+ ⨯ Error: Could not find the module "S:\Personal\Blogs\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '3553811854'
+}
+ ⨯ Error: Could not find the module "S:\Personal\Blogs\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '3271322628'
+}
+ ⨯ Error: Could not find the module "S:\Personal\Blogs\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '3271322628'
+}
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  digest: '880287304'
+}
+ ⨯ Error: Could not find the module "S:\Personal\Blogs\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '3271322628'
+}
+[TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  page: '/'
+}
+ ⨯ Error: Could not find the module "S:\Personal\Blogs\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '3271322628'
+}
+ ⨯ Error: Could not find the module "S:\Personal\Blogs\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '3553811854'
+}
+ ⨯ Error: Could not find the module "S:\Personal\Blogs\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '3553811854'
+}
+ ⨯ Error: Could not find the module "S:\Personal\Blogs\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '3553811854'
+}
+ ⨯ Error: Could not find the module "S:\Personal\Blogs\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '3271322628'
+}
+ ⨯ Error: Could not find the module "S:\Personal\Blogs\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '3271322628'
+}
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  digest: '880287304'
+}
+ ⨯ Error: Could not find the module "S:\Personal\Blogs\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '3271322628'
+}
+[TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  page: '/blog'
+}
+ ○ Compiling /tags ...
+ ✓ Compiled /tags in 2.3s (941 modules)
+ ⨯ Error: Cannot find module './52.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\pages\_document.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:9790)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:9834) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/blog'
+}
+ GET /tags 200 in 2561ms
+ GET / 500 in 4130ms
+ GET /blog 500 in 2744ms
+ GET /blog 500 in 940ms
+ ⨯ Error: Cannot find module './52.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\pages\_document.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:9790)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:9834) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/blog'
+}
+ GET /blog 500 in 234ms
+ ⨯ Error: Cannot find module './52.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\pages\_document.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:9790)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:9834) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/blog'
+}
+ GET /blog 500 in 244ms
+ ✓ Compiled in 233ms (838 modules)
+ ⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 1419ms
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 933ms (584 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /blog 200 in 1166ms
+ GET /blog 200 in 33ms
+[?25h

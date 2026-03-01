@@ -1,0 +1,49 @@
+.blogPage {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2.8rem 1rem 3.5rem;
+}
+
+.title {
+  margin: 0 0 1.1rem;
+  font-size: clamp(1.9rem, 6vw, 2.8rem);
+  line-height: 1.1;
+}
+
+.postList {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.95rem;
+}
+
+.postRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+}
+
+.postLink {
+  color: #111111;
+  text-decoration: none;
+  min-width: 0;
+}
+
+.postLink:hover,
+.postLink:focus-visible {
+  text-decoration: underline;
+}
+
+.postDate {
+  color: #666666;
+  font-size: 0.94rem;
+  white-space: nowrap;
+}
+
+.emptyState {
+  margin: 1.2rem 0 0;
+  color: #666666;
+}

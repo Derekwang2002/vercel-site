@@ -1,0 +1,39 @@
+
+> personal-website@0.1.0 dev
+> cmd /c "npx -y node@22 node_modules\next\dist\bin\next dev"
+
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 1474ms
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 2.3s (627 modules)
+ GET /blog?tab=selected 200 in 2624ms
+ GET /blog 200 in 39ms
+ GET /blog 200 in 32ms
+ GET /blog?tab=selected 200 in 33ms
+ ✓ Compiled / in 256ms (603 modules)
+ GET / 200 in 334ms
+ ✓ Compiled /blog in 68ms (374 modules)
+ GET /blog 200 in 109ms
+ GET /blog?tab=selected 200 in 16ms
+ GET /blog?tab=all 200 in 16ms
+ ✓ Compiled /tags in 143ms (608 modules)
+ GET /tags 200 in 180ms
+ GET /blog 200 in 20ms
+ GET /blog?tab=selected 200 in 21ms
+ GET /blog?tab=all 200 in 16ms
+ GET /blog?tab=selected 200 in 19ms
+ GET /blog 200 in 13ms
+ GET /tags 200 in 19ms
+ GET /blog 200 in 15ms
+ GET / 200 in 15ms
+ GET /blog 200 in 63ms
+ GET /tags 200 in 28ms
+ GET /blog 200 in 25ms
+ GET / 200 in 18ms
+^C^C^C

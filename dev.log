@@ -1,0 +1,356 @@
+
+> personal-website@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.1.8
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+
+ ✓ Starting...
+ ✓ Ready in 1307ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1542ms (595 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /_next/static/webpack/9600d50ec0127d37.webpack.hot-update.json 404 in 1685ms
+ ✓ Compiled / in 76ms (583 modules)
+ GET / 200 in 132ms
+ ✓ Compiled /tags in 151ms (587 modules)
+ GET /tags 200 in 170ms
+ GET /blog 200 in 186ms
+ GET / 200 in 14ms
+ GET / 200 in 7ms
+ GET /blog 200 in 9ms
+ GET / 200 in 7ms
+ GET /tags 200 in 6ms
+ GET /blog 200 in 6ms
+ GET / 200 in 6ms
+ GET /blog 200 in 6ms
+ GET /tags 200 in 5ms
+ GET /blog 200 in 6ms
+ GET / 200 in 6ms
+ GET /blog 200 in 5ms
+ GET /tags 200 in 5ms
+ GET /blog 200 in 5ms
+ GET /tags 200 in 6ms
+ GET /blog 200 in 5ms
+ GET / 200 in 6ms
+ ⨯ ./src/app/page.tsx:1:1
+Module not found: Can't resolve './page.module.css'
+> 1 | import styles from "./page.module.css";
+    | ^
+  2 |
+  3 | const SOCIAL_LINKS = [
+  4 |   { label: "GitHub", href: "https://github.com" },
+
+https://nextjs.org/docs/messages/module-not-found
+ ✓ Compiled in 236ms (597 modules)
+ GET / 200 in 36ms
+ ✓ Compiled /_not-found in 35ms (306 modules)
+ ⨯ Error: Cannot find module './581.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\app\_not-found\page.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at __webpack_require__.f.require (S:\Personal\Blogs\.next\server\webpack-runtime.js:198:28)
+    at <unknown> (S:\Personal\Blogs\.next\server\webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (S:\Personal\Blogs\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (S:\Personal\Blogs\.next\server\webpack-runtime.js:162:22)
+    at <unknown> (S:\Personal\Blogs\.next\server\app\_not-found\page.js:1:3827)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\_not-found\page.js:1:3868) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 540ms (832 modules)
+ GET /_next/static/css/app/layout.css?v=1772301969915 500 in 1413ms
+ GET / 200 in 395ms
+ GET / 200 in 6ms
+ ⨯ Error: Cannot find module './581.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\app\page.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at __webpack_require__.f.require (S:\Personal\Blogs\.next\server\webpack-runtime.js:198:28)
+    at <unknown> (S:\Personal\Blogs\.next\server\webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (S:\Personal\Blogs\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (S:\Personal\Blogs\.next\server\webpack-runtime.js:162:22)
+    at <unknown> (S:\Personal\Blogs\.next\server\app\_not-found\page.js:1:3827)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\_not-found\page.js:1:3868) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ GET /_next/static/css/app/layout.css?v=1772301971398 500 in 22ms
+ ✓ Compiled /tags in 122ms (351 modules)
+ GET /tags 200 in 162ms
+Failed to get source map: [Error: Failed to read file contents of S:\Personal\Blogs\.next\static\chunks\webpack.js.] {
+  [cause]: [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\chunks\webpack.js'] {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'S:\\Personal\\Blogs\\.next\\static\\chunks\\webpack.js'
+  }
+}
+Failed to get source map: [Error: Failed to read file contents of S:\Personal\Blogs\.next\static\chunks\webpack.js.] {
+  [cause]: [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\chunks\webpack.js'] {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'S:\\Personal\\Blogs\\.next\\static\\chunks\\webpack.js'
+  }
+}
+Failed to get source map: [Error: Failed to read file contents of S:\Personal\Blogs\.next\static\chunks\webpack.js.] {
+  [cause]: [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\chunks\webpack.js'] {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'S:\\Personal\\Blogs\\.next\\static\\chunks\\webpack.js'
+  }
+}
+ ⨯ Error: Cannot find module './581.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\app\tags\page.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at __webpack_require__.f.require (S:\Personal\Blogs\.next\server\webpack-runtime.js:198:28)
+    at <unknown> (S:\Personal\Blogs\.next\server\webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (S:\Personal\Blogs\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (S:\Personal\Blogs\.next\server\webpack-runtime.js:162:22)
+    at <unknown> (S:\Personal\Blogs\.next\server\app\page.js:1:4664)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\page.js:1:4705) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/'
+}
+ ✓ Compiled /_error in 122ms (833 modules)
+ ⨯ Error: Cannot find module './627.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\pages\_document.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at __webpack_require__.f.require (S:\Personal\Blogs\.next\server\webpack-runtime.js:198:28)
+    at <unknown> (S:\Personal\Blogs\.next\server\webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (S:\Personal\Blogs\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (S:\Personal\Blogs\.next\server\webpack-runtime.js:162:22)
+    at <unknown> (S:\Personal\Blogs\.next\server\pages\_document.js:1:335)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\pages\_document.js:1:376) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ GET / 500 in 170ms
+ ✓ Compiled /_not-found in 55ms (353 modules)
+ ⨯ Error: Cannot find module './581.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\app\_not-found\page.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at __webpack_require__.f.require (S:\Personal\Blogs\.next\server\webpack-runtime.js:198:28)
+    at <unknown> (S:\Personal\Blogs\.next\server\webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (S:\Personal\Blogs\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (S:\Personal\Blogs\.next\server\webpack-runtime.js:162:22)
+    at <unknown> (S:\Personal\Blogs\.next\server\app\_not-found\page.js:1:3827)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\_not-found\page.js:1:3868) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Error: Cannot find module './581.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\app\_not-found\page.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at __webpack_require__.f.require (S:\Personal\Blogs\.next\server\webpack-runtime.js:198:28)
+    at <unknown> (S:\Personal\Blogs\.next\server\webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (S:\Personal\Blogs\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (S:\Personal\Blogs\.next\server\webpack-runtime.js:162:22)
+    at <unknown> (S:\Personal\Blogs\.next\server\app\_not-found\page.js:1:3827)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\_not-found\page.js:1:3868) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Error: Cannot find module './581.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\app\_not-found\page.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at __webpack_require__.f.require (S:\Personal\Blogs\.next\server\webpack-runtime.js:198:28)
+    at <unknown> (S:\Personal\Blogs\.next\server\webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (S:\Personal\Blogs\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (S:\Personal\Blogs\.next\server\webpack-runtime.js:162:22)
+    at <unknown> (S:\Personal\Blogs\.next\server\app\_not-found\page.js:1:3827)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\_not-found\page.js:1:3868) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ GET /_next/static/chunks/fallback/webpack.js 500 in 114ms
+ GET /_next/static/chunks/fallback/main.js 500 in 113ms
+ GET /_next/static/chunks/fallback/react-refresh.js 500 in 113ms
+ ⨯ Error: Cannot find module './581.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\app\_not-found\page.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at __webpack_require__.f.require (S:\Personal\Blogs\.next\server\webpack-runtime.js:198:28)
+    at <unknown> (S:\Personal\Blogs\.next\server\webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (S:\Personal\Blogs\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (S:\Personal\Blogs\.next\server\webpack-runtime.js:162:22)
+    at <unknown> (S:\Personal\Blogs\.next\server\app\_not-found\page.js:1:3827)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\_not-found\page.js:1:3868) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Error: Cannot find module './581.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\app\_not-found\page.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at __webpack_require__.f.require (S:\Personal\Blogs\.next\server\webpack-runtime.js:198:28)
+    at <unknown> (S:\Personal\Blogs\.next\server\webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (S:\Personal\Blogs\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (S:\Personal\Blogs\.next\server\webpack-runtime.js:162:22)
+    at <unknown> (S:\Personal\Blogs\.next\server\app\_not-found\page.js:1:3827)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\_not-found\page.js:1:3868) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ GET /_next/static/chunks/fallback/pages/_app.js 500 in 35ms
+ GET /_next/static/chunks/fallback/pages/_error.js 500 in 35ms
+ ⨯ Error: Cannot find module './581.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\app\_not-found\page.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at __webpack_require__.f.require (S:\Personal\Blogs\.next\server\webpack-runtime.js:198:28)
+    at <unknown> (S:\Personal\Blogs\.next\server\webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (S:\Personal\Blogs\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (S:\Personal\Blogs\.next\server\webpack-runtime.js:162:22)
+    at <unknown> (S:\Personal\Blogs\.next\server\app\page.js:1:4664)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\page.js:1:4705) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/'
+}
+ ⨯ Error: Cannot find module './627.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\app\_not-found\page.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at __webpack_require__.f.require (S:\Personal\Blogs\.next\server\webpack-runtime.js:198:28)
+    at <unknown> (S:\Personal\Blogs\.next\server\webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (S:\Personal\Blogs\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (S:\Personal\Blogs\.next\server\webpack-runtime.js:162:22)
+    at <unknown> (S:\Personal\Blogs\.next\server\pages\_document.js:1:335)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\pages\_document.js:1:376) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ GET / 500 in 29ms
+[?25h
