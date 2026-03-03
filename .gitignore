@@ -1,4 +1,6 @@
 .next/
+.next-dev/
+.next-prod/
 node_modules/
 out/
 dist/
