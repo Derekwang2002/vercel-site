@@ -105,8 +105,28 @@ async function loadAllPosts(): Promise<Post[]> {
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
-  const posts = await loadAllPosts();
-  return posts.find((post) => post.slug === slug) ?? null;
+  const entries = await fs.readdir(POSTS_DIRECTORY, { withFileTypes: true });
+  const markdownFiles = entries
+    .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith(".md"))
+    .map((entry) => entry.name)
+    .sort((a, b) => a.localeCompare(b, "en"));
+
+  for (const fileName of markdownFiles) {
+    const fileNameMatch = FILE_NAME_PATTERN.exec(fileName);
+    if (!fileNameMatch) {
+      continue;
+    }
+
+    const postSlug = fileNameMatch[2].trim();
+    if (postSlug !== slug) {
+      continue;
+    }
+
+    const post = await readPostFile(fileName);
+    return post.draft ? null : post;
+  }
+
+  return null;
 }
 
 function toPublicPosts(posts: Post[]): Post[] {
@@ -123,7 +143,7 @@ function sortPostsByDateDesc(posts: Post[]): Post[] {
   });
 }
 
-function normalizeTagSlug(input: string): string {
+export function normalizeTagSlug(input: string): string {
   return input
     .trim()
     .toLowerCase()

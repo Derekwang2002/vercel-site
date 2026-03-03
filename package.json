@@ -6,10 +6,10 @@
     "node": ">=20 <24"
   },
   "scripts": {
-    "dev": "cmd /c \"npx -y node@22 node_modules\\next\\dist\\bin\\next dev\"",
+    "dev": "set NEXT_DIST_DIR=.next-dev&& cmd /c \"npx -y node@22 node_modules\\next\\dist\\bin\\next dev\"",
     "dev:host": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "set NEXT_DIST_DIR=.next-prod&& next build",
+    "start": "set NEXT_DIST_DIR=.next-prod&& next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
   },

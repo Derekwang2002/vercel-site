@@ -1,0 +1,60 @@
+
+> personal-website@0.1.0 dev
+> set NEXT_DIST_DIR=.next-dev&& cmd /c "npx -y node@22 node_modules\next\dist\bin\next dev"
+
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 1547ms
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 2.7s (627 modules)
+ GET /blog 200 in 3051ms
+ ✓ Compiled in 206ms (595 modules)
+ GET /blog 200 in 173ms
+ GET /blog?tab=selected 200 in 57ms
+ ✓ Compiled / in 292ms (613 modules)
+ GET / 200 in 359ms
+ GET /blog 200 in 24ms
+ ✓ Compiled /tags in 162ms (608 modules)
+ GET /tags 200 in 208ms
+ GET /blog 200 in 17ms
+ GET /blog?tab=selected 200 in 19ms
+ GET /blog?tab=all 200 in 13ms
+ GET /blog?tab=selected 200 in 18ms
+ GET /blog 200 in 20ms
+ GET /tags 200 in 18ms
+ GET /blog 200 in 19ms
+ GET /blog?tab=selected 200 in 14ms
+ GET /blog?tab=all 200 in 15ms
+ GET / 200 in 22ms
+ GET /blog 200 in 18ms
+ GET /tags 200 in 15ms
+ GET /blog 200 in 15ms
+ GET /tags 200 in 12ms
+ GET /blog 200 in 19ms
+ GET /blog?tab=selected 200 in 16ms
+ GET /blog?tab=all 200 in 13ms
+ GET /blog?tab=selected 200 in 13ms
+ GET /blog?tab=all 200 in 20ms
+ GET /blog?tab=selected 200 in 17ms
+ GET / 200 in 14ms
+ GET /blog 200 in 15ms
+ GET /tags 200 in 15ms
+ GET /blog 200 in 16ms
+ GET / 200 in 15ms
+ GET /blog 200 in 14ms
+ GET /blog 200 in 106ms
+ GET /blog?tab=selected 200 in 21ms
+ GET /blog?tab=all 200 in 19ms
+ GET / 200 in 14ms
+ GET /blog 200 in 20ms
+ GET /tags 200 in 14ms
+ GET /blog 200 in 16ms
+ GET /blog?tab=selected 200 in 15ms
+ GET /tags 200 in 12ms
+ GET /blog 200 in 14ms
+^C^C^C
