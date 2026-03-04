@@ -1,7 +1,26 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { BlogTabs, type BlogTab } from "@/components/blog-tabs";
 import { getAllPosts, getSelectedPosts, type Post } from "../../../lib/posts";
 import styles from "./page.module.css";
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description: "Chronological timeline of blog posts with all and selected filters.",
+  openGraph: {
+    title: "Blog | Personal Website",
+    description: "Chronological timeline of blog posts with all and selected filters.",
+    url: "/blog",
+    images: [
+      {
+        url: "/og-default.svg",
+        width: 1200,
+        height: 630,
+        alt: "Blog Open Graph Image"
+      }
+    ]
+  }
+};
 
 type BlogPageProps = {
   searchParams?: Promise<{
