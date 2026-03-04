@@ -1,0 +1,30 @@
+
+> personal-website@0.1.0 dev
+> set WATCHPACK_POLLING=true&& set CHOKIDAR_USEPOLLING=true&& next dev
+
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 1441ms
+ ○ Compiling /tags ...
+ ✓ Compiled /tags in 2.2s (586 modules)
+ GET /blog 200 in 2417ms
+ GET /tags 200 in 2340ms
+ ✓ Compiled / in 189ms (605 modules)
+ GET / 200 in 307ms
+ GET / 200 in 26ms
+ GET /blog 200 in 31ms
+ GET /tags 200 in 33ms
+ GET / 200 in 25ms
+ GET /blog 200 in 31ms
+ GET /tags 200 in 32ms
+ GET / 200 in 23ms
+ GET /blog 200 in 32ms
+ GET /tags 200 in 25ms
+ GET / 200 in 25ms
+ ✓ Compiled in 55ms (225 modules)
+[?25h

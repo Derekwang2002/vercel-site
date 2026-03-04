@@ -1,0 +1,48 @@
+.tagsPage {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2.8rem 1rem 3.5rem;
+}
+
+.title {
+  margin: 0 0 1.1rem;
+  font-size: clamp(1.9rem, 6vw, 2.8rem);
+  line-height: 1.1;
+}
+
+.tagList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 0.7rem;
+}
+
+.tagItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid #d8d8d8;
+  padding: 0.3rem 0.55rem;
+}
+
+.tagLink {
+  color: #111111;
+  text-decoration: none;
+}
+
+.tagLink:hover,
+.tagLink:focus-visible {
+  text-decoration: underline;
+}
+
+.count {
+  color: #666666;
+  font-size: 0.92rem;
+}
+
+.emptyState {
+  margin: 0;
+  color: #666666;
+}

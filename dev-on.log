@@ -1,0 +1,149 @@
+
+> personal-website@0.1.0 dev
+> cmd /c "npx -y node@22 node_modules\next\dist\bin\next dev"
+
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 6.1s
+ ○ Compiling / ...
+ ✓ Compiled / in 564ms (588 modules)
+ GET / 200 in 1036ms
+ GET / 200 in 50ms
+ ✓ Compiled /blog in 214ms (603 modules)
+ GET /blog 200 in 318ms
+ ✓ Compiled /tags in 140ms (608 modules)
+ GET /tags 200 in 206ms
+ GET /blog 200 in 21ms
+ GET /blog?tab=selected 200 in 16ms
+ GET /blog?tab=all 200 in 13ms
+ ✓ Compiled in 227ms (369 modules)
+ GET /blog?tab=all 200 in 71ms
+ GET /blog?tab=all 200 in 91ms
+ ✓ Compiled in 165ms (599 modules)
+ GET /blog?tab=all 200 in 56ms
+ ○ Compiling /blog/[slug] ...
+ ✓ Compiled /blog/[slug] in 6.1s (625 modules)
+ ⨯ [Error: Cannot find module './vendor-chunks/@swc.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\app\blog\[slug]\page.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\server\dev\static-paths-worker.js
+- S:\Personal\Blogs\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/blog/non-existent-post'
+}
+ ⨯ [Error: Cannot find module './vendor-chunks/@swc.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\app\blog\[slug]\page.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\server\dev\static-paths-worker.js
+- S:\Personal\Blogs\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/blog/non-existent-post'
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 1612ms (961 modules)
+ ⨯ Error: Cannot find module './52.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\pages\_document.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:15233)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:15277) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/blog'
+}
+ GET /blog/non-existent-post 500 in 8562ms
+ GET /blog/non-existent-post 500 in 8888ms
+ GET /blog?tab=all 500 in 1245ms
+ ⨯ Error: Cannot find module './52.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\pages\_document.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:15233)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:15277) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/blog'
+}
+ GET /blog?tab=all 500 in 236ms
+ ⨯ Error: Cannot find module './52.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\pages\_document.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:15233)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\blog\page.js:2:15277) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/blog'
+}
+ GET /blog?tab=all 500 in 239ms
+ ⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 1426ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 518ms (595 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /blog?tab=all 200 in 773ms
+ GET /blog?tab=all 200 in 43ms
+ ✓ Compiled in 159ms (226 modules)
+ ✓ Compiled in 177ms (595 modules)
+ ✓ Compiled in 56ms (226 modules)
+ ⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 1533ms

@@ -1,0 +1,89 @@
+
+> personal-website@0.1.0 dev
+> set NEXT_DIST_DIR=.next-dev&& cmd /c "npx -y node@22 node_modules\next\dist\bin\next dev"
+
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 6s
+ ○ Compiling / ...
+ ✓ Compiled / in 556ms (588 modules)
+ GET / 200 in 1034ms
+ GET / 200 in 53ms
+ ✓ Compiled /blog in 198ms (603 modules)
+ GET /blog 200 in 298ms
+ GET /blog?tab=selected 200 in 24ms
+ GET /blog?tab=all 200 in 16ms
+ GET /blog?tab=selected 200 in 16ms
+ ✓ Compiled /tags in 162ms (608 modules)
+ GET /tags 200 in 210ms
+ GET /blog 200 in 25ms
+ ⨯ ./src/app/tags/page.tsx:3:1
+Module not found: Can't resolve './page.module.css'
+  1 | import Link from "next/link";
+  2 | import { getAllTagsWithCounts } from "../../../lib/posts";
+> 3 | import styles from "./page.module.css";
+    | ^
+  4 |
+  5 | export default async function TagsPage() {
+  6 |   const tags = await getAllTagsWithCounts();
+
+https://nextjs.org/docs/messages/module-not-found
+ ✓ Compiled in 61ms (369 modules)
+ ○ Compiling /tags ...
+ ✓ Compiled /tags in 5s (616 modules)
+ GET /tags 200 in 4552ms
+ GET /tags 200 in 4555ms
+ GET /tags 200 in 5198ms
+ GET /blog 200 in 235ms
+ ✓ Compiled / in 107ms (374 modules)
+ GET / 200 in 176ms
+ GET /blog 200 in 25ms
+ GET /blog?tab=selected 200 in 23ms
+ ✓ Compiled /tags in 90ms (379 modules)
+ GET /tags 200 in 139ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 571ms (615 modules)
+ GET /tags/test 404 in 636ms
+ GET /tags/test 404 in 76ms
+ GET / 200 in 43ms
+ GET /tags 200 in 27ms
+ GET /tags/test 404 in 16ms
+ GET /tags/test 404 in 32ms
+ GET / 200 in 18ms
+ GET /tags 200 in 20ms
+ GET /tags/test 404 in 13ms
+ GET /tags/test 404 in 41ms
+ GET /tags 200 in 20ms
+ GET /tags/next-js 404 in 16ms
+ GET /tags/next-js 404 in 29ms
+ GET /blog 200 in 26ms
+ GET /blog?tab=selected 200 in 16ms
+ GET /blog?tab=all 200 in 19ms
+ ○ Compiling /blog/[slug] ...
+ ✓ Compiled /blog/[slug] in 521ms (641 modules)
+ GET /blog/hello-next 200 in 1093ms
+ GET /test-image.png 404 in 99ms
+ GET / 200 in 42ms
+ ✓ Compiled in 237ms (628 modules)
+ GET / 200 in 82ms
+ ✓ Compiled /tags/[tag] in 312ms (646 modules)
+ GET /tags/not-a-real-tag 404 in 832ms
+ GET /tags/test 200 in 995ms
+ GET /tags/test 200 in 676ms
+ GET /blog 200 in 172ms
+ GET /blog?tab=selected 200 in 27ms
+ GET /blog?tab=all 200 in 20ms
+ GET /tags 200 in 81ms
+ GET /tags/test 200 in 541ms
+ GET /blog/hello-next 200 in 86ms
+ ✓ Compiled /_not-found in 189ms (400 modules)
+ GET /test-image.png 404 in 372ms
+ GET /tags/next-js 200 in 45ms
+ GET /blog/hello-next 200 in 36ms
+ GET /test-image.png 404 in 28ms
+ GET / 200 in 58ms

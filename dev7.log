@@ -1,0 +1,96 @@
+
+> personal-website@0.1.0 dev
+> set WATCHPACK_POLLING=true&& set CHOKIDAR_USEPOLLING=true&& next dev
+
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 1357ms
+ ○ Compiling /tags ...
+ ✓ Compiled /tags in 2.1s (586 modules)
+ GET /tags 200 in 2307ms
+ GET /blog 200 in 2386ms
+ ✓ Compiled / in 191ms (605 modules)
+ GET / 200 in 311ms
+ GET / 200 in 24ms
+ GET /blog 200 in 32ms
+ GET /tags 200 in 31ms
+ GET / 200 in 24ms
+ GET /blog 200 in 25ms
+ GET /tags 200 in 24ms
+ GET / 200 in 22ms
+ GET /blog 200 in 26ms
+ GET /tags 200 in 30ms
+ GET / 200 in 32ms
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  digest: '880287304'
+}
+[TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  page: '/'
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 921ms (935 modules)
+ GET / 500 in 1813ms
+ ⨯ Error: Cannot find module './52.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\pages\_document.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (S:\Personal\Blogs\.next\server\app\page.js:2:10451)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\page.js:2:10495) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/'
+}
+ GET / 500 in 260ms
+ ⨯ Error: Cannot find module './52.js'
+Require stack:
+- S:\Personal\Blogs\.next\server\webpack-runtime.js
+- S:\Personal\Blogs\.next\server\pages\_document.js
+- S:\Personal\Blogs\node_modules\next\dist\server\require.js
+- S:\Personal\Blogs\node_modules\next\dist\server\load-components.js
+- S:\Personal\Blogs\node_modules\next\dist\build\utils.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\options.js
+- S:\Personal\Blogs\node_modules\next\dist\build\swc\index.js
+- S:\Personal\Blogs\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\config.js
+- S:\Personal\Blogs\node_modules\next\dist\server\next.js
+- S:\Personal\Blogs\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (S:\Personal\Blogs\.next\server\app\page.js:2:10451)
+    at Object.<anonymous> (S:\Personal\Blogs\.next\server\app\page.js:2:10495) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/'
+}
+ GET / 500 in 250ms
+ ⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 1460ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ○ Compiling / ...
+ ✓ Compiled / in 2s (611 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET / 200 in 2308ms
+ GET / 200 in 43ms
+ ✓ Compiled in 75ms (224 modules)
+[?25h

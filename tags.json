@@ -1,0 +1,1002 @@
+[
+  {
+    "name": "@vercel/devlow-bench@0.3.4",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/@vercel/devlow-bench@0.3.4",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/@vercel/devlow-bench@0.3.4",
+    "commit": {
+      "sha": "8e19bb0e89e8ad3d915be9789e1b753cf715d04f",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/8e19bb0e89e8ad3d915be9789e1b753cf715d04f"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL0B2ZXJjZWwvZGV2bG93LWJlbmNoQDAuMy40"
+  },
+  {
+    "name": "@vercel/devlow-bench@0.3.3",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/@vercel/devlow-bench@0.3.3",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/@vercel/devlow-bench@0.3.3",
+    "commit": {
+      "sha": "1a144a571ea21622ab474ba5de983fd1af392eff",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/1a144a571ea21622ab474ba5de983fd1af392eff"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL0B2ZXJjZWwvZGV2bG93LWJlbmNoQDAuMy4z"
+  },
+  {
+    "name": "v16.2.0-canary.68",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.68",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.68",
+    "commit": {
+      "sha": "2071a816f4040f54c27dc4373671c799ab3fe8d7",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/2071a816f4040f54c27dc4373671c799ab3fe8d7"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjY4"
+  },
+  {
+    "name": "v16.2.0-canary.67",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.67",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.67",
+    "commit": {
+      "sha": "39e8fb2a48d444105b9a8baa93a6e3112fe4fd22",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/39e8fb2a48d444105b9a8baa93a6e3112fe4fd22"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjY3"
+  },
+  {
+    "name": "v16.2.0-canary.66",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.66",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.66",
+    "commit": {
+      "sha": "36cadbf59dfe8dbb9358d11ed58a6aedc3a43920",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/36cadbf59dfe8dbb9358d11ed58a6aedc3a43920"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjY2"
+  },
+  {
+    "name": "v16.2.0-canary.65",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.65",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.65",
+    "commit": {
+      "sha": "350ce78c75a6005b891765d772121a20dced4042",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/350ce78c75a6005b891765d772121a20dced4042"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjY1"
+  },
+  {
+    "name": "v16.2.0-canary.64",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.64",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.64",
+    "commit": {
+      "sha": "8f5afa357d8da657968117d1cf4f6663d8dbff03",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/8f5afa357d8da657968117d1cf4f6663d8dbff03"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjY0"
+  },
+  {
+    "name": "v16.2.0-canary.63",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.63",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.63",
+    "commit": {
+      "sha": "b6d47641d7f0399a687cb927defd827b476d4441",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/b6d47641d7f0399a687cb927defd827b476d4441"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjYz"
+  },
+  {
+    "name": "v16.2.0-canary.62",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.62",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.62",
+    "commit": {
+      "sha": "e046f052e70e4bbfb8ac6b7d767cabb5bea75368",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/e046f052e70e4bbfb8ac6b7d767cabb5bea75368"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjYy"
+  },
+  {
+    "name": "v16.2.0-canary.61",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.61",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.61",
+    "commit": {
+      "sha": "97be0f52e73c14151e985e5af01f87c551402a81",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/97be0f52e73c14151e985e5af01f87c551402a81"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjYx"
+  },
+  {
+    "name": "v16.2.0-canary.60",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.60",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.60",
+    "commit": {
+      "sha": "2298e89230d01847b37bdc65e2feb64ff881ef45",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/2298e89230d01847b37bdc65e2feb64ff881ef45"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjYw"
+  },
+  {
+    "name": "v16.2.0-canary.59",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.59",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.59",
+    "commit": {
+      "sha": "426d0d2e0135853461db4c86ad966ccdfef5bcb5",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/426d0d2e0135853461db4c86ad966ccdfef5bcb5"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjU5"
+  },
+  {
+    "name": "v16.2.0-canary.58",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.58",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.58",
+    "commit": {
+      "sha": "0a07e091e56b82af3bb006d1067da2fc85828090",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/0a07e091e56b82af3bb006d1067da2fc85828090"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjU4"
+  },
+  {
+    "name": "v16.2.0-canary.57",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.57",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.57",
+    "commit": {
+      "sha": "1fedf5b0d348237446505c2950e0b53fd1639ca3",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/1fedf5b0d348237446505c2950e0b53fd1639ca3"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjU3"
+  },
+  {
+    "name": "v16.2.0-canary.56",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.56",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.56",
+    "commit": {
+      "sha": "3b94d8021af89754ee84252786bd9501a047bdf3",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/3b94d8021af89754ee84252786bd9501a047bdf3"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjU2"
+  },
+  {
+    "name": "v16.2.0-canary.55",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.55",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.55",
+    "commit": {
+      "sha": "b6c5adbd400cf10f86ed9ce952ea1bdd25aaaa39",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/b6c5adbd400cf10f86ed9ce952ea1bdd25aaaa39"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjU1"
+  },
+  {
+    "name": "v16.2.0-canary.54",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.54",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.54",
+    "commit": {
+      "sha": "e5d04e9866c3714ee046a2fd4be4e3090c858a10",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/e5d04e9866c3714ee046a2fd4be4e3090c858a10"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjU0"
+  },
+  {
+    "name": "v16.2.0-canary.53",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.53",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.53",
+    "commit": {
+      "sha": "e2e38d47f81422b6202d099aee1d3f8461ac76c1",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/e2e38d47f81422b6202d099aee1d3f8461ac76c1"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjUz"
+  },
+  {
+    "name": "v16.2.0-canary.52",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.52",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.52",
+    "commit": {
+      "sha": "87f609e710650c5b05664ac1da3b2cd35a643d78",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/87f609e710650c5b05664ac1da3b2cd35a643d78"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjUy"
+  },
+  {
+    "name": "v16.2.0-canary.51",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.51",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.51",
+    "commit": {
+      "sha": "17a332089e3379c1cfa9e19cc303843201ab6f0e",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/17a332089e3379c1cfa9e19cc303843201ab6f0e"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjUx"
+  },
+  {
+    "name": "v16.2.0-canary.50",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.50",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.50",
+    "commit": {
+      "sha": "86c3d3ee26980f70294e4cd857db312c01983e4f",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/86c3d3ee26980f70294e4cd857db312c01983e4f"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjUw"
+  },
+  {
+    "name": "v16.2.0-canary.49",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.49",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.49",
+    "commit": {
+      "sha": "4d3b25070277fba906917a90e0953f33a966151a",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/4d3b25070277fba906917a90e0953f33a966151a"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjQ5"
+  },
+  {
+    "name": "v16.2.0-canary.48",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.48",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.48",
+    "commit": {
+      "sha": "537da8bdfa15a88a11ace61860b0f1f9957c583d",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/537da8bdfa15a88a11ace61860b0f1f9957c583d"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjQ4"
+  },
+  {
+    "name": "v16.2.0-canary.47",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.47",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.47",
+    "commit": {
+      "sha": "24e369011827f4dac98b4e82085b8b2e3c2b9d09",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/24e369011827f4dac98b4e82085b8b2e3c2b9d09"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjQ3"
+  },
+  {
+    "name": "v16.2.0-canary.46",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.46",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.46",
+    "commit": {
+      "sha": "779ed0a53c53d2f5e7b8193d4f6a5a2af513bec3",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/779ed0a53c53d2f5e7b8193d4f6a5a2af513bec3"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjQ2"
+  },
+  {
+    "name": "v16.2.0-canary.45",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.45",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.45",
+    "commit": {
+      "sha": "bd473d007b461eab4866e38c66590f79e26c370f",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/bd473d007b461eab4866e38c66590f79e26c370f"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjQ1"
+  },
+  {
+    "name": "v16.2.0-canary.44",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.44",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.44",
+    "commit": {
+      "sha": "1ea3233a3404350f17dd7e1df927a777401f6998",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/1ea3233a3404350f17dd7e1df927a777401f6998"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjQ0"
+  },
+  {
+    "name": "v16.2.0-canary.43",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.43",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.43",
+    "commit": {
+      "sha": "ea3e11bc15bca951b519a2343bc702d76006eb96",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/ea3e11bc15bca951b519a2343bc702d76006eb96"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjQz"
+  },
+  {
+    "name": "v16.2.0-canary.42",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.42",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.42",
+    "commit": {
+      "sha": "9abda03e1a26056d10af457910d788dea61cf691",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/9abda03e1a26056d10af457910d788dea61cf691"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjQy"
+  },
+  {
+    "name": "v16.2.0-canary.41",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.41",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.41",
+    "commit": {
+      "sha": "8b2b0a6fcee802a3576c24e0b6e3b60d41904668",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/8b2b0a6fcee802a3576c24e0b6e3b60d41904668"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjQx"
+  },
+  {
+    "name": "v16.2.0-canary.40",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.40",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.40",
+    "commit": {
+      "sha": "ea8651a7c4f9f5249dc2f8c82b16700f676eae9c",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/ea8651a7c4f9f5249dc2f8c82b16700f676eae9c"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjQw"
+  },
+  {
+    "name": "v16.2.0-canary.39",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.39",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.39",
+    "commit": {
+      "sha": "ceb281e1ad95335a2f03b5b00b413b591bd4c166",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/ceb281e1ad95335a2f03b5b00b413b591bd4c166"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjM5"
+  },
+  {
+    "name": "v16.2.0-canary.38",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.38",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.38",
+    "commit": {
+      "sha": "002f5197c80da62ef0b796ffddb3cb158a18941b",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/002f5197c80da62ef0b796ffddb3cb158a18941b"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjM4"
+  },
+  {
+    "name": "v16.2.0-canary.37",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.37",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.37",
+    "commit": {
+      "sha": "7a014a7f89d0b1d4d4bec5924a10d721fdcd84a7",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/7a014a7f89d0b1d4d4bec5924a10d721fdcd84a7"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjM3"
+  },
+  {
+    "name": "v16.2.0-canary.36",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.36",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.36",
+    "commit": {
+      "sha": "2009c62307cca6d75bd8ae14ac26ef913e966c41",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/2009c62307cca6d75bd8ae14ac26ef913e966c41"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjM2"
+  },
+  {
+    "name": "v16.2.0-canary.35",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.35",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.35",
+    "commit": {
+      "sha": "381aa36ebbb71a1bef050d47164a94e4b7da48c8",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/381aa36ebbb71a1bef050d47164a94e4b7da48c8"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjM1"
+  },
+  {
+    "name": "v16.2.0-canary.34",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.34",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.34",
+    "commit": {
+      "sha": "a9ecc09b6a3633492ba8b1b5b35a5d7dbe574c8d",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/a9ecc09b6a3633492ba8b1b5b35a5d7dbe574c8d"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjM0"
+  },
+  {
+    "name": "v16.2.0-canary.33",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.33",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.33",
+    "commit": {
+      "sha": "6f58bfa6421a03ba39ab7d052462be6ca9647aec",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/6f58bfa6421a03ba39ab7d052462be6ca9647aec"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjMz"
+  },
+  {
+    "name": "v16.2.0-canary.32",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.32",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.32",
+    "commit": {
+      "sha": "d87bcc61ef627884914985638dcc4955009f450a",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/d87bcc61ef627884914985638dcc4955009f450a"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjMy"
+  },
+  {
+    "name": "v16.2.0-canary.31",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.31",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.31",
+    "commit": {
+      "sha": "160765827742f8423edce7c72e48a21012685ae7",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/160765827742f8423edce7c72e48a21012685ae7"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjMx"
+  },
+  {
+    "name": "v16.2.0-canary.30",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.30",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.30",
+    "commit": {
+      "sha": "7cd9c7071ea92d599b7415d0d1c195a17a2407f0",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/7cd9c7071ea92d599b7415d0d1c195a17a2407f0"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjMw"
+  },
+  {
+    "name": "v16.2.0-canary.29",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.29",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.29",
+    "commit": {
+      "sha": "ffd953c4cd8101f7d03205a4a7c85a50330f97d6",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/ffd953c4cd8101f7d03205a4a7c85a50330f97d6"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjI5"
+  },
+  {
+    "name": "v16.2.0-canary.28",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.28",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.28",
+    "commit": {
+      "sha": "ca1e1c7d7b2cf6ac040a4f2bda4b5315ab6b439c",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/ca1e1c7d7b2cf6ac040a4f2bda4b5315ab6b439c"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjI4"
+  },
+  {
+    "name": "v16.2.0-canary.27",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.27",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.27",
+    "commit": {
+      "sha": "ab8e7865b90b5590daddb35ed1990e227d1119b6",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/ab8e7865b90b5590daddb35ed1990e227d1119b6"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjI3"
+  },
+  {
+    "name": "v16.2.0-canary.26",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.26",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.26",
+    "commit": {
+      "sha": "c8ad192a71e22722c50a766080605c47a0f10cfe",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/c8ad192a71e22722c50a766080605c47a0f10cfe"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjI2"
+  },
+  {
+    "name": "v16.2.0-canary.25",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.25",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.25",
+    "commit": {
+      "sha": "2465b50cd47146a1dc3d39c916bd970b5ab8dca6",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/2465b50cd47146a1dc3d39c916bd970b5ab8dca6"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjI1"
+  },
+  {
+    "name": "v16.2.0-canary.24",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.24",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.24",
+    "commit": {
+      "sha": "b91cf900ed2fac0bbaae17d1bbee8d8eb650a2f1",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/b91cf900ed2fac0bbaae17d1bbee8d8eb650a2f1"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjI0"
+  },
+  {
+    "name": "v16.2.0-canary.23",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.23",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.23",
+    "commit": {
+      "sha": "d77e3d4cf3ba60457c5f764c4f73bebcb57c800f",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/d77e3d4cf3ba60457c5f764c4f73bebcb57c800f"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjIz"
+  },
+  {
+    "name": "v16.2.0-canary.22",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.22",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.22",
+    "commit": {
+      "sha": "fc60622f89b34b9a7534c664248ee94f19046135",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/fc60622f89b34b9a7534c664248ee94f19046135"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjIy"
+  },
+  {
+    "name": "v16.2.0-canary.21",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.21",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.21",
+    "commit": {
+      "sha": "cf7cfe27ecbfdec8ae95188bc16685772a2b2945",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/cf7cfe27ecbfdec8ae95188bc16685772a2b2945"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjIx"
+  },
+  {
+    "name": "v16.2.0-canary.20",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.20",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.20",
+    "commit": {
+      "sha": "7e33c44ba900871163286e389e814e12c93cb3c2",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/7e33c44ba900871163286e389e814e12c93cb3c2"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjIw"
+  },
+  {
+    "name": "v16.2.0-canary.19",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.19",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.19",
+    "commit": {
+      "sha": "eb828c684e9aa964b1545f064b17af5ef36079aa",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/eb828c684e9aa964b1545f064b17af5ef36079aa"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjE5"
+  },
+  {
+    "name": "v16.2.0-canary.18",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.18",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.18",
+    "commit": {
+      "sha": "7517e3ec264e26fdc34c39d5669912c8d9a2d6db",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/7517e3ec264e26fdc34c39d5669912c8d9a2d6db"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjE4"
+  },
+  {
+    "name": "v16.2.0-canary.17",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.17",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.17",
+    "commit": {
+      "sha": "2b0edf628e201b56bdeacc62a5fb3d2597132761",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/2b0edf628e201b56bdeacc62a5fb3d2597132761"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjE3"
+  },
+  {
+    "name": "v16.2.0-canary.16",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.16",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.16",
+    "commit": {
+      "sha": "b5c46080448317ad7f3a9390721b5ac84f828ad6",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/b5c46080448317ad7f3a9390721b5ac84f828ad6"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjE2"
+  },
+  {
+    "name": "v16.2.0-canary.15",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.15",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.15",
+    "commit": {
+      "sha": "fcbcb6dc930da5d49b1f4a026fd8d6a1a7fc2e7e",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/fcbcb6dc930da5d49b1f4a026fd8d6a1a7fc2e7e"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjE1"
+  },
+  {
+    "name": "v16.2.0-canary.14",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.14",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.14",
+    "commit": {
+      "sha": "02d8ff2cf3b3cdb0101981321ee7a31730d6a843",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/02d8ff2cf3b3cdb0101981321ee7a31730d6a843"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjE0"
+  },
+  {
+    "name": "v16.2.0-canary.13",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.13",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.13",
+    "commit": {
+      "sha": "bc4ffb5854fb19591035fe2a672ef538b3ab8112",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/bc4ffb5854fb19591035fe2a672ef538b3ab8112"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjEz"
+  },
+  {
+    "name": "v16.2.0-canary.12",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.12",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.12",
+    "commit": {
+      "sha": "4a73f528a48ae0e9a67db48f4b6c6f3af6f0685b",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/4a73f528a48ae0e9a67db48f4b6c6f3af6f0685b"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjEy"
+  },
+  {
+    "name": "v16.2.0-canary.11",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.11",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.11",
+    "commit": {
+      "sha": "59db275d982c054615b7e71988c31ae400967ac6",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/59db275d982c054615b7e71988c31ae400967ac6"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjEx"
+  },
+  {
+    "name": "v16.2.0-canary.10",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.10",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.10",
+    "commit": {
+      "sha": "2ed773fd534d147fa5ec22d13efcb17e2d9b14e1",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/2ed773fd534d147fa5ec22d13efcb17e2d9b14e1"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjEw"
+  },
+  {
+    "name": "v16.2.0-canary.9",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.9",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.9",
+    "commit": {
+      "sha": "c7d45bb50ced6eac84cacf3d81b1616b88e95b8f",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/c7d45bb50ced6eac84cacf3d81b1616b88e95b8f"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5Ljk="
+  },
+  {
+    "name": "v16.2.0-canary.8",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.8",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.8",
+    "commit": {
+      "sha": "f4c2d5461af31f0eef95759533b18b7a8ea005e7",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/f4c2d5461af31f0eef95759533b18b7a8ea005e7"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5Ljg="
+  },
+  {
+    "name": "v16.2.0-canary.7",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.7",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.7",
+    "commit": {
+      "sha": "f51e3acf961c9bbcab68aab6078c9267d230db21",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/f51e3acf961c9bbcab68aab6078c9267d230db21"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5Ljc="
+  },
+  {
+    "name": "v16.2.0-canary.6",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.6",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.6",
+    "commit": {
+      "sha": "8bced5bcaf75de912d71cee6da929e7b37fceda5",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/8bced5bcaf75de912d71cee6da929e7b37fceda5"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjY="
+  },
+  {
+    "name": "v16.2.0-canary.5",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.5",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.5",
+    "commit": {
+      "sha": "22fe4cc227c0cf9fa01e69178541e0b2c395202b",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/22fe4cc227c0cf9fa01e69178541e0b2c395202b"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjU="
+  },
+  {
+    "name": "v16.2.0-canary.4",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.4",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.4",
+    "commit": {
+      "sha": "af10864a106068160307338ce6946051f16d8273",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/af10864a106068160307338ce6946051f16d8273"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjQ="
+  },
+  {
+    "name": "v16.2.0-canary.3",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.3",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.3",
+    "commit": {
+      "sha": "0c196049d5fb0f097d852e6cd45c1ccf5eead873",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/0c196049d5fb0f097d852e6cd45c1ccf5eead873"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjM="
+  },
+  {
+    "name": "v16.2.0-canary.2",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.2",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.2",
+    "commit": {
+      "sha": "d4e64f52bb9aeb5dbcf6bb484f204742b2e3d743",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/d4e64f52bb9aeb5dbcf6bb484f204742b2e3d743"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjI="
+  },
+  {
+    "name": "v16.2.0-canary.1",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.1",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.1",
+    "commit": {
+      "sha": "aa8754c3f4095781402e46fd3ef550cc4a50b527",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/aa8754c3f4095781402e46fd3ef550cc4a50b527"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjE="
+  },
+  {
+    "name": "v16.2.0-canary.0",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.2.0-canary.0",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.2.0-canary.0",
+    "commit": {
+      "sha": "3fe7d63f857302d15e753a7a02753eff3fb1f91c",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/3fe7d63f857302d15e753a7a02753eff3fb1f91c"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4yLjAtY2FuYXJ5LjA="
+  },
+  {
+    "name": "v16.1.6",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.6",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.6",
+    "commit": {
+      "sha": "adf8c612adddd103647c90ff0f511ea35c57076e",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/adf8c612adddd103647c90ff0f511ea35c57076e"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjY="
+  },
+  {
+    "name": "v16.1.5",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.5",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.5",
+    "commit": {
+      "sha": "acba4a6b9f48e0a067c592dac322410c0e122018",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/acba4a6b9f48e0a067c592dac322410c0e122018"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjU="
+  },
+  {
+    "name": "v16.1.4",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.4",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.4",
+    "commit": {
+      "sha": "60de6c21144a78622eb8c4763f364fcb59f7aa59",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/60de6c21144a78622eb8c4763f364fcb59f7aa59"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjQ="
+  },
+  {
+    "name": "v16.1.3",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.3",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.3",
+    "commit": {
+      "sha": "f01cf07ab12a37259de42baa4bdae310b4328c72",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/f01cf07ab12a37259de42baa4bdae310b4328c72"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjM="
+  },
+  {
+    "name": "v16.1.2",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.2",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.2",
+    "commit": {
+      "sha": "cb436b3613edb3f741a39fa00ac31d103a5a1518",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/cb436b3613edb3f741a39fa00ac31d103a5a1518"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjI="
+  },
+  {
+    "name": "v16.1.1",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1",
+    "commit": {
+      "sha": "3aa53984e9d6bc4b5860c76e90cccfd6780989af",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/3aa53984e9d6bc4b5860c76e90cccfd6780989af"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjE="
+  },
+  {
+    "name": "v16.1.1-canary.36",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.36",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.36",
+    "commit": {
+      "sha": "b401a5b02d5da41b797beaa8e31b5d387cfe4e57",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/b401a5b02d5da41b797beaa8e31b5d387cfe4e57"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjM2"
+  },
+  {
+    "name": "v16.1.1-canary.35",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.35",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.35",
+    "commit": {
+      "sha": "6e1842801b66bdbf1a1e4b374865b34b55d582dd",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/6e1842801b66bdbf1a1e4b374865b34b55d582dd"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjM1"
+  },
+  {
+    "name": "v16.1.1-canary.34",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.34",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.34",
+    "commit": {
+      "sha": "6c8e9a29d02a7890df04b2379483e64147278712",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/6c8e9a29d02a7890df04b2379483e64147278712"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjM0"
+  },
+  {
+    "name": "v16.1.1-canary.33",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.33",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.33",
+    "commit": {
+      "sha": "dc5939158af99146e9992619b347336a193442c0",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/dc5939158af99146e9992619b347336a193442c0"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjMz"
+  },
+  {
+    "name": "v16.1.1-canary.32",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.32",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.32",
+    "commit": {
+      "sha": "633e274965b78dff11c59702794823dbf92f689a",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/633e274965b78dff11c59702794823dbf92f689a"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjMy"
+  },
+  {
+    "name": "v16.1.1-canary.31",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.31",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.31",
+    "commit": {
+      "sha": "05406f6e73ad9b39bd63d706dea864c009ea76db",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/05406f6e73ad9b39bd63d706dea864c009ea76db"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjMx"
+  },
+  {
+    "name": "v16.1.1-canary.30",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.30",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.30",
+    "commit": {
+      "sha": "f67bc23bcfbcc019c3632ca0317c50653231d573",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/f67bc23bcfbcc019c3632ca0317c50653231d573"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjMw"
+  },
+  {
+    "name": "v16.1.1-canary.29",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.29",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.29",
+    "commit": {
+      "sha": "e5905bded7910afe5785ca8e1e6d05ed99bf1610",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/e5905bded7910afe5785ca8e1e6d05ed99bf1610"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjI5"
+  },
+  {
+    "name": "v16.1.1-canary.28",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.28",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.28",
+    "commit": {
+      "sha": "b186a869dd613ae56434667daa7dab36c12f217b",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/b186a869dd613ae56434667daa7dab36c12f217b"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjI4"
+  },
+  {
+    "name": "v16.1.1-canary.27",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.27",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.27",
+    "commit": {
+      "sha": "0338b046395bcd3d9f761986637e203bd591a12a",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/0338b046395bcd3d9f761986637e203bd591a12a"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjI3"
+  },
+  {
+    "name": "v16.1.1-canary.26",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.26",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.26",
+    "commit": {
+      "sha": "ba5d17590d1817840979b1e9c14aad6cc2a636da",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/ba5d17590d1817840979b1e9c14aad6cc2a636da"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjI2"
+  },
+  {
+    "name": "v16.1.1-canary.25",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.25",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.25",
+    "commit": {
+      "sha": "e1c95fc2094f276eb881539d45e0f6f8e42a83e9",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/e1c95fc2094f276eb881539d45e0f6f8e42a83e9"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjI1"
+  },
+  {
+    "name": "v16.1.1-canary.24",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.24",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.24",
+    "commit": {
+      "sha": "9a55a09627ba682b50e4e90fa9dc040bbb5bf00b",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/9a55a09627ba682b50e4e90fa9dc040bbb5bf00b"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjI0"
+  },
+  {
+    "name": "v16.1.1-canary.23",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.23",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.23",
+    "commit": {
+      "sha": "1afaa65c3204688610bf00a2a33b4c73fb0af533",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/1afaa65c3204688610bf00a2a33b4c73fb0af533"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjIz"
+  },
+  {
+    "name": "v16.1.1-canary.22",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.22",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.22",
+    "commit": {
+      "sha": "917fb0a1e0b660f930eceae0b23010002f92f6ae",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/917fb0a1e0b660f930eceae0b23010002f92f6ae"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjIy"
+  },
+  {
+    "name": "v16.1.1-canary.21",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.21",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.21",
+    "commit": {
+      "sha": "2df811a2461a0bd30d76cafac18455c2bca06346",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/2df811a2461a0bd30d76cafac18455c2bca06346"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjIx"
+  },
+  {
+    "name": "v16.1.1-canary.20",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.20",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.20",
+    "commit": {
+      "sha": "25046dfa1bd78b1f8da478ceda51ae86c07b673c",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/25046dfa1bd78b1f8da478ceda51ae86c07b673c"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjIw"
+  },
+  {
+    "name": "v16.1.1-canary.19",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.19",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.19",
+    "commit": {
+      "sha": "dc5f5b1c14f11ad3348380de3101022042cfc14d",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/dc5f5b1c14f11ad3348380de3101022042cfc14d"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjE5"
+  },
+  {
+    "name": "v16.1.1-canary.18",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.18",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.18",
+    "commit": {
+      "sha": "669b3e74deb9ee3ba64e0eb7f9502f0875924cdf",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/669b3e74deb9ee3ba64e0eb7f9502f0875924cdf"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjE4"
+  },
+  {
+    "name": "v16.1.1-canary.17",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.17",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.17",
+    "commit": {
+      "sha": "d99021e9a2494eb3269a4ca6cb456b23d2879f3a",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/d99021e9a2494eb3269a4ca6cb456b23d2879f3a"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjE3"
+  },
+  {
+    "name": "v16.1.1-canary.16",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.16",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.16",
+    "commit": {
+      "sha": "789d0810a29d644d066bbc183d34d13bc104e2fe",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/789d0810a29d644d066bbc183d34d13bc104e2fe"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjE2"
+  },
+  {
+    "name": "v16.1.1-canary.15",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.15",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.15",
+    "commit": {
+      "sha": "744f86c34d9a828b4f38ac952102e3df05999a18",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/744f86c34d9a828b4f38ac952102e3df05999a18"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjE1"
+  },
+  {
+    "name": "v16.1.1-canary.14",
+    "zipball_url": "https://api.github.com/repos/vercel/next.js/zipball/refs/tags/v16.1.1-canary.14",
+    "tarball_url": "https://api.github.com/repos/vercel/next.js/tarball/refs/tags/v16.1.1-canary.14",
+    "commit": {
+      "sha": "c78d3407aa7fa391ab64c83ead7f960e2266d9e4",
+      "url": "https://api.github.com/repos/vercel/next.js/commits/c78d3407aa7fa391ab64c83ead7f960e2266d9e4"
+    },
+    "node_id": "MDM6UmVmNzAxMDc3ODY6cmVmcy90YWdzL3YxNi4xLjEtY2FuYXJ5LjE0"
+  }
+]
