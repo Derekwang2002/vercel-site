@@ -1,0 +1,232 @@
+
+> personal-website@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.5.12 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 1084ms
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 1245ms
+ GET /blog 200 in 1462ms
+ ✓ Compiled / in 132ms
+ GET / 200 in 180ms
+ ✓ Compiled /tags in 125ms
+ GET /tags 200 in 173ms
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\server\app\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\server\\app\\page\\app-build-manifest.json'
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 926ms
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.1i5thnfarfa'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.1i5thnfarfa'
+}
+[Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\server\app\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\server\\app\\page\\app-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.oqiyyquyro'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.oqiyyquyro'
+}
+[Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.bqa73bo17vf'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.bqa73bo17vf'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\server\app\blog\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\server\\app\\blog\\page\\app-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\server\app\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\server\\app\\page\\app-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.tyqk88u91os'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.tyqk88u91os'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.c4zzdd1p9cb'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.c4zzdd1p9cb'
+}
+[Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\server\app\blog\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\server\\app\\blog\\page\\app-build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\server\app\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\server\\app\\page\\app-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.6mfi0c838ti'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.6mfi0c838ti'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.saqrb3oca1'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.saqrb3oca1'
+}
+[Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.gkhwzjsls85'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.gkhwzjsls85'
+}
+[Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.fqge7qg805'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.fqge7qg805'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\server\app\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\server\\app\\page\\app-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.ny8uljxyj47'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.ny8uljxyj47'
+}
+[Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\server\app\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\server\\app\\page\\app-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.bpkiby9kyyq'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.bpkiby9kyyq'
+}
+[Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.o9k29hr35xf'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.o9k29hr35xf'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\server\app\blog\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\server\\app\\blog\\page\\app-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.yna2w1r3cl'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.yna2w1r3cl'
+}
+[Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\server\app\blog\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\server\\app\\blog\\page\\app-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.ytmiy8a01o'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.ytmiy8a01o'
+}
+[Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.tq1rv5ht7v'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.tq1rv5ht7v'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\server\app\tags\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\server\\app\\tags\\page\\app-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.xh0ap18yldi'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.xh0ap18yldi'
+}
+[Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\server\app\tags\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\server\\app\\tags\\page\\app-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.47xzze3wgh9'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.47xzze3wgh9'
+}
+[Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.90a19oix2be'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.90a19oix2be'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\server\app\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\server\\app\\page\\app-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.zhjt3j5sno'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.zhjt3j5sno'
+}
+[Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\server\app\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\server\\app\\page\\app-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.52hubdso35m'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.52hubdso35m'
+}
+[Error: ENOENT: no such file or directory, open 'S:\Personal\Blogs\.next\static\development\_buildManifest.js.tmp.7cehagbsmdn'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'S:\\Personal\\Blogs\\.next\\static\\development\\_buildManifest.js.tmp.7cehagbsmdn'
+}
+[?25h

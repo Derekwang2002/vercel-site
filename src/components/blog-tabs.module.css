@@ -1,0 +1,24 @@
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border-bottom: 1px solid #d8d8d8;
+  padding-bottom: 0.5rem;
+}
+
+.tab {
+  color: #222222;
+  text-decoration: none;
+  padding: 0.25rem 0.55rem;
+  border-bottom: 1px solid transparent;
+}
+
+.tab:hover,
+.tab:focus-visible {
+  border-bottom-color: #222222;
+}
+
+.tabActive {
+  border-bottom-color: #222222;
+  font-weight: 600;
+}

@@ -1,0 +1,28 @@
+
+> personal-website@0.1.0 dev
+> set NEXT_DIST_DIR=.next-dev&& cmd /c "npx -y node@22 node_modules\next\dist\bin\next dev"
+
+ ⚠ Port 3000 is in use by process 40620, using available port 3001 instead.
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.86.243:3001
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+
+   We detected TypeScript in your project and reconfigured your tsconfig.json file for you.
+   The following suggested values were added to your tsconfig.json. These values can be changed to fit your project's needs:
+
+   	- include was updated to add '.next-dev/types/**/*.ts'
+
+ ✓ Ready in 1867ms
+ ⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.86.243:3001
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 1539ms
