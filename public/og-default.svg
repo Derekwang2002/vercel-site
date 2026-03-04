@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Personal Website Open Graph image">
+  <rect width="1200" height="630" fill="#ffffff" />
+  <rect x="60" y="60" width="1080" height="510" fill="none" stroke="#111111" stroke-width="2" />
+  <text x="100" y="300" fill="#111111" font-family="Georgia, 'Times New Roman', serif" font-size="72">
+    Personal Website
+  </text>
+  <text x="100" y="360" fill="#666666" font-family="Georgia, 'Times New Roman', serif" font-size="34">
+    Timeline-first writing and tags
+  </text>
+</svg>

@@ -87,3 +87,71 @@ https://nextjs.org/docs/messages/module-not-found
  GET /blog/hello-next 200 in 36ms
  GET /test-image.png 404 in 28ms
  GET / 200 in 58ms
+ GET /tags 200 in 29ms
+ GET /blog 200 in 28ms
+ GET / 200 in 20ms
+ GET /blog 200 in 19ms
+ GET /tags 200 in 18ms
+ GET / 200 in 18ms
+ ✓ Compiled in 224ms (392 modules)
+ GET / 200 in 43ms
+ ✓ Compiled in 122ms (392 modules)
+ GET / 200 in 39ms
+ ✓ Compiled in 166ms (392 modules)
+ GET / 200 in 39ms
+ ✓ Compiled in 197ms (392 modules)
+ GET / 200 in 51ms
+ ✓ Compiled in 156ms (392 modules)
+ GET / 200 in 35ms
+ ✓ Compiled in 148ms (392 modules)
+ GET / 200 in 60ms
+ ✓ Compiled in 98ms (392 modules)
+ GET / 200 in 38ms
+ ✓ Compiled in 89ms (392 modules)
+ GET / 200 in 37ms
+ GET /blog 200 in 41ms
+ GET /blog?tab=selected 200 in 20ms
+ GET /blog?tab=all 200 in 20ms
+ GET /tags 200 in 23ms
+ GET /blog 200 in 18ms
+ GET /blog?tab=selected 200 in 17ms
+ GET /blog?tab=all 200 in 17ms
+ GET /blog/hello-next 200 in 39ms
+ ✓ Compiled /_not-found in 392ms (395 modules)
+ GET /test-image.png 404 in 523ms
+ GET /blog/hello-next 200 in 158ms
+ GET /blog 200 in 24ms
+ GET /blog?tab=selected 200 in 24ms
+ GET /blog?tab=all 200 in 18ms
+ GET /blog/hello-next 200 in 27ms
+ GET /test-image.png 404 in 30ms
+ GET /blog 200 in 25ms
+ GET / 200 in 18ms
+ GET /tags 200 in 24ms
+ GET /blog 200 in 18ms
+ GET /blog?tab=selected 200 in 21ms
+ GET /blog?tab=all 200 in 20ms
+ GET /blog/hello-next 200 in 27ms
+ GET /test-image.png 404 in 30ms
+ GET / 200 in 18ms
+ GET /blog 200 in 21ms
+ GET /tags 200 in 29ms
+ GET /blog 200 in 21ms
+ GET /blog?tab=selected 200 in 18ms
+ GET /blog?tab=all 200 in 20ms
+ GET / 200 in 16ms
+ GET /blog 200 in 20ms
+ GET /tags 200 in 18ms
+ GET /blog 200 in 18ms
+ GET / 200 in 14ms
+ GET /blog 200 in 17ms
+ GET /tags 200 in 26ms
+ GET /blog 200 in 19ms
+ GET /blog?tab=selected 200 in 19ms
+ GET /blog?tab=all 200 in 22ms
+ GET /blog?tab=selected 200 in 16ms
+ GET /tags 200 in 24ms
+ GET /blog 200 in 19ms
+ GET /tags 200 in 18ms
+ GET /blog 200 in 18ms
+ GET /blog 200 in 20ms

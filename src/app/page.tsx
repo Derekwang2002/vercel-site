@@ -1,4 +1,25 @@
+import type { Metadata } from "next";
 import styles from "./page.module.css";
+
+export const metadata: Metadata = {
+  title: "Home",
+  description:
+    "Home page for Derek with profile, tagline, and social links to explore writing and tags.",
+  openGraph: {
+    title: "Home | Personal Website",
+    description:
+      "Home page for Derek with profile, tagline, and social links to explore writing and tags.",
+    url: "/",
+    images: [
+      {
+        url: "/og-default.svg",
+        width: 1200,
+        height: 630,
+        alt: "Personal Website Open Graph Image"
+      }
+    ]
+  }
+};
 
 const SOCIAL_LINKS = [
   { label: "GitHub", href: "https://github.com" },

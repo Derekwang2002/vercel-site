@@ -1,13 +1,56 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPostBySlug, normalizeTagSlug } from "../../../../lib/posts";
 import styles from "./page.module.css";
+
+const SITE_NAME = "Personal Website";
+const DEFAULT_OG_IMAGE = "/og-default.svg";
+
+const SITE_URL = (() => {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim() || "http://localhost:3000";
+  return raw.endsWith("/") ? raw.slice(0, -1) : raw;
+})();
 
 type BlogPostPageProps = {
   params: Promise<{
     slug: string;
   }>;
 };
+
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
+
+  if (!post) {
+    return {
+      title: "Post Not Found",
+      description: "The requested post could not be found."
+    };
+  }
+
+  const absoluteUrl = `${SITE_URL}/blog/${post.slug}`;
+
+  return {
+    title: `${post.title} | ${SITE_NAME}`,
+    description: post.summary,
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.summary,
+      url: absoluteUrl,
+      images: [
+        {
+          url: DEFAULT_OG_IMAGE,
+          width: 1200,
+          height: 630,
+          alt: `${post.title} Open Graph Image`
+        }
+      ],
+      publishedTime: `${post.date}T00:00:00.000Z`
+    }
+  };
+}
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
