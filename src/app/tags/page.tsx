@@ -29,7 +29,15 @@ export default async function TagsPage() {
       <h1 className={styles.title}>Tags</h1>
 
       {tags.length === 0 ? (
-        <p className={styles.emptyState}>No tags yet.</p>
+        <>
+          <p className={styles.emptyState}>No tags yet.</p>
+          <p className={styles.emptyState}>
+            <Link href="/blog">Browse Blog</Link>
+          </p>
+          <p className={styles.emptyState}>
+            <Link href="/">Back to Home</Link>
+          </p>
+        </>
       ) : (
         <ul className={styles.tagList}>
           {tags.map((item) => (

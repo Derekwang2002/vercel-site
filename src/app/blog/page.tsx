@@ -39,9 +39,21 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       <BlogTabs activeTab={activeTab} />
 
       {posts.length === 0 ? (
-        <p className={styles.emptyState}>
-          {activeTab === "selected" ? "No selected posts yet." : "No posts yet."}
-        </p>
+        activeTab === "selected" ? (
+          <>
+            <p className={styles.emptyState}>No selected posts yet.</p>
+            <p className={styles.emptyState}>
+              <Link href="/blog?tab=all">View all posts</Link>
+            </p>
+          </>
+        ) : (
+          <>
+            <p className={styles.emptyState}>No posts published yet.</p>
+            <p className={styles.emptyState}>
+              <Link href="/">Back to Home</Link>
+            </p>
+          </>
+        )
       ) : (
         <ul className={styles.postList}>
           {posts.map((post) => (
