@@ -1,0 +1,20 @@
+
+> personal-website@0.1.0 dev
+> set NEXT_DIST_DIR=.next-dev&& cmd /c "npx -y node@22 node_modules\next\dist\bin\next dev"
+
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.247:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 6.2s
+ ○ Compiling / ...
+ ✓ Compiled / in 624ms (588 modules)
+ GET / 200 in 1094ms
+ GET / 200 in 50ms
+ GET / 200 in 35ms
+ ✓ Compiled /blog in 265ms (603 modules)
+ GET /blog 200 in 430ms
+ GET /blog 200 in 42ms

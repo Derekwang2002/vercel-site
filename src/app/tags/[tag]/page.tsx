@@ -17,6 +17,13 @@ type TagPageProps = {
   }>;
 };
 
+export const dynamicParams = false;
+
+export async function generateStaticParams(): Promise<Array<{ tag: string }>> {
+  const tags = await getAllTagsWithCounts();
+  return tags.map((item) => ({ tag: item.slug }));
+}
+
 export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
   const { tag } = await params;
   const allTags = await getAllTagsWithCounts();
