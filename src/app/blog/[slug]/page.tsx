@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPostBySlug, normalizeTagSlug } from "../../../../lib/posts";
+import { getAllPosts, getPostBySlug, normalizeTagSlug } from "../../../../lib/posts";
 import styles from "./page.module.css";
 
 const SITE_NAME = "Personal Website";
@@ -17,6 +17,13 @@ type BlogPostPageProps = {
     slug: string;
   }>;
 };
+
+export const dynamicParams = false;
+
+export async function generateStaticParams(): Promise<Array<{ slug: string }>> {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({ slug: post.slug }));
+}
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -252,6 +259,8 @@ function parseInline(text: string, keyPrefix: string): React.ReactNode[] {
         <img
           alt={match[1]}
           className={styles.image}
+          decoding="async"
+          fetchPriority="low"
           key={`${keyPrefix}-img-${match.index}`}
           loading="lazy"
           src={match[2]}
