@@ -18,3 +18,4 @@
  ✓ Compiled /blog in 265ms (603 modules)
  GET /blog 200 in 430ms
  GET /blog 200 in 42ms
+^C^C^C
