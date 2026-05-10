@@ -122,7 +122,7 @@ function renderMarkdown(markdown: string): React.ReactNode[] {
       continue;
     }
 
-    const codeFence = /^```([A-Za-z0-9_-]+)?\s*$/.exec(trimmed);
+    const codeFence = /^```\s*([A-Za-z0-9_-]+)?\s*$/.exec(trimmed);
     if (codeFence) {
       const language = codeFence[1] ?? "";
       const codeLines: string[] = [];
