@@ -203,7 +203,7 @@ async function readPostFile(fileName: string): Promise<Post> {
 }
 
 function parseFrontmatter(source: string, fileName: string): { frontmatter: Frontmatter; content: string } {
-  const normalized = source.replace(/^\uFEFF/, "");
+  const normalized = source.replace(/^\uFEFF/, "").replace(/\r\n/g, "\n");
 
   if (!normalized.startsWith("---\n")) {
     throw new Error(

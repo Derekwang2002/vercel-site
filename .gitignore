@@ -20,3 +20,13 @@ pnpm-debug.log*
 
 # typescript
 *.tsbuildinfo
+
+# claude
+.claude/
+
+# internal docs
+CLAUDE.md
+TASKS.md
+ARCHITECTURE.md
+PRD.md
+PERFORMANCE_BASELINE.md
