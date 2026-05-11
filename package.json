@@ -8,8 +8,8 @@
   "scripts": {
     "dev": "set NEXT_DIST_DIR=.next-dev&& cmd /c \"npx -y node@22 node_modules\\next\\dist\\bin\\next dev\"",
     "dev:host": "next dev",
-    "build": "set NEXT_DIST_DIR=.next-prod&& next build",
-    "start": "set NEXT_DIST_DIR=.next-prod&& next start",
+    "build": "next build",
+    "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
   },

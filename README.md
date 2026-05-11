@@ -37,6 +37,39 @@ Open `http://localhost:3000`.
 - `npm run build` - create production build
 - `npm run start` - run production server after build
 
+## CI (GitHub Actions)
+
+This project uses a minimal CI workflow at `.github/workflows/ci.yml`.
+
+Triggers:
+- Pull requests to `main`
+- Pushes to `main`
+
+Checks run in CI:
+- `npm ci`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run build`
+
+CI uses Node.js 22 to match the project's runtime constraints.
+
+## Deployment (Vercel)
+
+The project is intended to deploy on Vercel with the standard Next.js setup.
+
+Expected behavior:
+- Every push to `main` can deploy to Production.
+- Every pull request can generate a Vercel Preview deployment.
+
+Recommended Vercel settings:
+- Install command: `npm ci`
+- Build command: `npm run build`
+- Node.js runtime: `22.x`
+
+Environment variable:
+- `NEXT_PUBLIC_SITE_URL` (canonical site URL, e.g. `https://example.com`)
+  - Local fallback exists (`http://localhost:3000`) if unset.
+
 ## Current Routes
 
 - `/` - Home placeholder

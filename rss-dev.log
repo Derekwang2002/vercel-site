@@ -1,0 +1,36 @@
+
+> personal-website@0.1.0 dev
+> set NEXT_DIST_DIR=.next-dev&& cmd /c "npx -y node@22 node_modules\next\dist\bin\next dev"
+
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.86.243:3000
+   - Experiments (use with caution):
+     ⨯ devtoolSegmentExplorer
+
+ ✓ Starting...
+ ✓ Ready in 8.4s
+ ○ Compiling /rss.xml ...
+ ✓ Compiled /rss.xml in 904ms (284 modules)
+ GET /rss.xml 200 in 1339ms
+ GET /rss.xml 200 in 1346ms
+ GET /rss.xml 200 in 35ms
+ GET /rss.xml 200 in 15ms
+ ○ Compiling / ...
+ ✓ Compiled / in 522ms (599 modules)
+ GET / 200 in 798ms
+ ✓ Compiled /blog in 200ms (611 modules)
+ GET /blog 200 in 298ms
+ GET /blog?tab=selected 200 in 25ms
+ ✓ Compiled /blog/[slug] in 189ms (627 modules)
+ GET /blog/hello-next 200 in 830ms
+ ✓ Compiled /_not-found in 151ms (628 modules)
+ GET /test-image.png 404 in 318ms
+ ✓ Compiled /tags in 173ms (636 modules)
+ GET /tags 200 in 234ms
+ ✓ Compiled /tags/[tag] in 223ms (644 modules)
+ GET /tags/next-js 200 in 751ms
+ GET /blog/hello-next 200 in 48ms
+ GET /test-image.png 404 in 105ms
+ GET /blog 200 in 38ms
+^C^C^C
