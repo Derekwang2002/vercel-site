@@ -1,9 +1,13 @@
 import {
   resources,
   type Resource,
-  type ResourceSource,
   type ResourceType
 } from "../content/resources";
+export {
+  getResourceSourceLabel,
+  getResourceTypeLabel,
+  isExternalResourceHref
+} from "./resource-display";
 
 export type ResourceSection = "notes" | "skills" | "demos";
 
@@ -35,19 +39,6 @@ export const RESOURCE_SECTIONS: ResourceSectionDefinition[] = [
   }
 ];
 
-const SOURCE_LABELS: Record<ResourceSource, string> = {
-  "vercel-site": "Vercel site",
-  skills: "Skills repo",
-  "github-pages": "GitHub Pages",
-  external: "External"
-};
-
-const TYPE_LABELS: Record<ResourceType, string> = {
-  note: "Note",
-  skill: "Skill",
-  demo: "Demo"
-};
-
 const allResources: readonly Resource[] = resources;
 
 export function getPublicResources(): Resource[] {
@@ -72,18 +63,6 @@ export function getResourcesBySection(section: ResourceSection): Resource[] {
 
 export function getResourceSection(slug: string): ResourceSectionDefinition | undefined {
   return RESOURCE_SECTIONS.find((section) => section.slug === slug);
-}
-
-export function getResourceTypeLabel(type: ResourceType): string {
-  return TYPE_LABELS[type];
-}
-
-export function getResourceSourceLabel(source: ResourceSource): string {
-  return SOURCE_LABELS[source];
-}
-
-export function isExternalResourceHref(href: string): boolean {
-  return /^https?:\/\//.test(href) || href.startsWith("mailto:");
 }
 
 function sortResources(items: readonly Resource[]): Resource[] {

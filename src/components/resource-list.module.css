@@ -1,0 +1,83 @@
+.section {
+  margin: 2rem 0 0;
+}
+
+.header {
+  align-items: baseline;
+  display: flex;
+  gap: 0.65rem;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 1.25rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.count {
+  color: #666666;
+  font-size: 0.92rem;
+}
+
+.searchLabel {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.95rem 0 1.25rem;
+}
+
+.searchLabel span {
+  color: #555555;
+  font-size: 0.92rem;
+}
+
+.searchInput {
+  border: 1px solid #d8d8d8;
+  border-radius: 0;
+  color: #111111;
+  font: inherit;
+  min-height: 2.35rem;
+  padding: 0.35rem 0.55rem;
+  width: 100%;
+}
+
+.list {
+  display: grid;
+  gap: 1.05rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  border-top: 1px solid #e5e5e5;
+  padding-top: 0.9rem;
+}
+
+.resourceLink {
+  color: #111111;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.resourceLink:hover,
+.resourceLink:focus-visible {
+  text-decoration: underline;
+}
+
+.description {
+  color: #333333;
+  margin: 0.25rem 0 0;
+}
+
+.meta {
+  color: #666666;
+  font-size: 0.92rem;
+  margin: 0.25rem 0 0;
+}
+
+.emptyState {
+  color: #666666;
+  margin: 0.95rem 0 0;
+}
