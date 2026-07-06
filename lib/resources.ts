@@ -42,7 +42,7 @@ export const RESOURCE_SECTIONS: ResourceSectionDefinition[] = [
 const allResources: readonly Resource[] = resources;
 
 export function getPublicResources(): Resource[] {
-  return sortResources(allResources.filter((resource) => resource.status !== "draft"));
+  return sortResources(allResources.filter((resource) => resource.status === "public"));
 }
 
 export function getFeaturedResources(): Resource[] {

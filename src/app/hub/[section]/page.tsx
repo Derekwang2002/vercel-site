@@ -5,8 +5,7 @@ import { ResourceList } from "@/components/resource-list";
 import {
   RESOURCE_SECTIONS,
   getResourceSection,
-  getResourcesBySection,
-  type ResourceSection
+  getResourcesBySection
 } from "../../../../lib/resources";
 import styles from "../page.module.css";
 
@@ -15,6 +14,8 @@ type HubSectionPageProps = {
     section: string;
   }>;
 };
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return RESOURCE_SECTIONS.map((section) => ({
@@ -70,7 +71,7 @@ export default async function HubSectionPage({ params }: HubSectionPageProps) {
         <p className={styles.description}>{section.description}</p>
       </header>
 
-      <HubNav active={section.slug as ResourceSection} />
+      <HubNav active={section.slug} />
 
       <ResourceList
         emptyMessage={`No ${section.label.toLowerCase()} resources yet.`}
