@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts, getAllTagsWithCounts, normalizeTagSlug } from "../../lib/posts";
+import { RESOURCE_SECTIONS, getPublicResources } from "../../lib/resources";
 
 export const dynamic = "force-static";
 
@@ -20,8 +21,18 @@ function toDate(date: string): Date {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl();
   const [posts, tags] = await Promise.all([getAllPosts(), getAllTagsWithCounts()]);
+  const publicResources = getPublicResources();
 
   const latestPostDate = posts.length > 0 ? toDate(posts[0].date) : undefined;
+  const latestResourceDate =
+    publicResources.reduce<Date | undefined>((latest, resource) => {
+      if (!resource.date) {
+        return latest;
+      }
+
+      const resourceDate = toDate(resource.date);
+      return !latest || resourceDate > latest ? resourceDate : latest;
+    }, undefined) ?? latestPostDate;
 
   const latestTagDateBySlug = new Map<string, Date>();
   for (const post of posts) {
@@ -56,8 +67,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: latestPostDate,
       changeFrequency: "weekly",
       priority: 0.8
+    },
+    {
+      url: toAbsoluteUrl(siteUrl, "/hub"),
+      lastModified: latestResourceDate,
+      changeFrequency: "weekly",
+      priority: 0.85
     }
   ];
+
+  const resourceSectionEntries: MetadataRoute.Sitemap = RESOURCE_SECTIONS.map((section) => ({
+    url: toAbsoluteUrl(siteUrl, `/hub/${section.slug}`),
+    lastModified: latestResourceDate,
+    changeFrequency: "weekly",
+    priority: 0.75
+  }));
 
   const postEntries: MetadataRoute.Sitemap = posts.map((post) => ({
     url: toAbsoluteUrl(siteUrl, `/blog/${post.slug}`),
@@ -73,5 +97,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6
   }));
 
-  return [...staticEntries, ...postEntries, ...tagEntries];
+  return [...staticEntries, ...resourceSectionEntries, ...postEntries, ...tagEntries];
 }
