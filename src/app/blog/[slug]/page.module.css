@@ -1,5 +1,5 @@
 .postPage {
-  max-width: 1040px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 2.6rem 1rem 4rem;
 }
@@ -68,9 +68,15 @@
   align-items: start;
   border-top: 1px solid #e5e5e5;
   display: grid;
-  gap: 2.4rem;
-  grid-template-columns: 13rem minmax(0, 720px);
+  column-gap: clamp(3rem, 6vw, 4.75rem);
+  grid-template-columns: 14rem minmax(0, 720px);
   padding-top: 2rem;
+  transition: grid-template-columns 160ms ease, column-gap 160ms ease;
+}
+
+.bodyLayoutCollapsed {
+  column-gap: clamp(1.5rem, 3vw, 2rem);
+  grid-template-columns: 5.5rem minmax(0, 720px);
 }
 
 .paragraph {
@@ -144,6 +150,10 @@
   top: 1.5rem;
 }
 
+.tocCollapsed {
+  padding-right: 0.65rem;
+}
+
 .tocToggle {
   align-items: baseline;
   background: transparent;
@@ -158,6 +168,10 @@
   padding: 0;
   text-align: left;
   width: 100%;
+}
+
+.tocCollapsed .tocToggle {
+  gap: 0.45rem;
 }
 
 .tocToggle:hover,
@@ -213,6 +227,10 @@
   .bodyLayout {
     display: flex;
     flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .bodyLayoutCollapsed {
     gap: 1.25rem;
   }
 

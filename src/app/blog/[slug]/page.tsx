@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PostToc, type TocItem } from "@/components/post-toc";
+import { PostBodyLayout } from "@/components/post-body-layout";
+import type { TocItem } from "@/components/post-toc";
 import { getAllPosts, getPostBySlug, normalizeTagSlug } from "../../../../lib/posts";
 import styles from "./page.module.css";
 
@@ -94,10 +95,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </ul>
       </header>
 
-      <div className={styles.bodyLayout}>
-        <PostToc items={tocItems} />
-        <article className={styles.content}>{renderMarkdown(post.content, tocItems)}</article>
-      </div>
+      <PostBodyLayout tocItems={tocItems}>{renderMarkdown(post.content, tocItems)}</PostBodyLayout>
     </main>
   );
 }

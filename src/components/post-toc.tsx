@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import styles from "../app/blog/[slug]/page.module.css";
 
 export type TocItem = {
@@ -11,22 +8,25 @@ export type TocItem = {
 
 type PostTocProps = {
   items: TocItem[];
+  onOpenChange: (open: boolean) => void;
+  open: boolean;
 };
 
-export function PostToc({ items }: PostTocProps) {
-  const [open, setOpen] = useState(true);
-
+export function PostToc({ items, onOpenChange, open }: PostTocProps) {
   if (items.length === 0) {
     return null;
   }
 
   return (
-    <aside className={styles.toc} aria-label="Post table of contents">
+    <aside
+      className={open ? styles.toc : `${styles.toc} ${styles.tocCollapsed}`}
+      aria-label="Post table of contents"
+    >
       <button
         aria-controls="post-toc-list"
         aria-expanded={open}
         className={styles.tocToggle}
-        onClick={() => setOpen((current) => !current)}
+        onClick={() => onOpenChange(!open)}
         type="button"
       >
         <span>Contents</span>
