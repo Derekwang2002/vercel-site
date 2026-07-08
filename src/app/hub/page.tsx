@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { HubNav } from "@/components/hub-nav";
-import { ResourceList } from "@/components/resource-list";
-import { getPublicResources } from "../../../lib/resources";
-import styles from "./page.module.css";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Hub",
@@ -10,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Hub | Personal Website",
     description: "Unified entry point for featured resources, reusable skills, and demos.",
-    url: "/hub",
+    url: "/hub/featured",
     images: [
       {
         url: "/og-default.svg",
@@ -23,24 +20,5 @@ export const metadata: Metadata = {
 };
 
 export default function HubPage() {
-  const resources = getPublicResources();
-
-  return (
-    <main className={styles.hubPage}>
-      <header className={styles.hero}>
-        <h1 className={styles.title}>Hub</h1>
-        <p className={styles.description}>
-          One entry point for featured resources, reusable skills, and temporary demos.
-        </p>
-      </header>
-
-      <HubNav active="all" />
-
-      <ResourceList
-        emptyMessage="No public resources yet."
-        resources={resources}
-        title="All Resources"
-      />
-    </main>
-  );
+  redirect("/hub/featured");
 }

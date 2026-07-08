@@ -9,7 +9,7 @@ export {
   isExternalResourceHref
 } from "./resource-display";
 
-export type ResourceSection = "featured" | "skills" | "demos";
+export type ResourceSection = "featured" | "all" | "skills" | "demos";
 
 export type ResourceSectionDefinition = {
   slug: ResourceSection;
@@ -23,6 +23,11 @@ export const RESOURCE_SECTIONS: ResourceSectionDefinition[] = [
     slug: "featured",
     label: "Featured",
     description: "Selected resources worth opening first."
+  },
+  {
+    slug: "all",
+    label: "All",
+    description: "All public resources in the hub."
   },
   {
     slug: "skills",
@@ -59,6 +64,10 @@ export function getResourcesBySection(section: ResourceSection): Resource[] {
 
   if (definition.slug === "featured") {
     return getFeaturedResources();
+  }
+
+  if (definition.slug === "all") {
+    return getPublicResources();
   }
 
   if (!definition.type) {

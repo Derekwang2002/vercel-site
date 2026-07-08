@@ -3,29 +3,21 @@ import { RESOURCE_SECTIONS, type ResourceSection } from "../../lib/resources";
 import styles from "./hub-nav.module.css";
 
 type HubNavProps = {
-  active: "all" | ResourceSection;
+  active: ResourceSection;
 };
 
 type NavItem = {
-  slug: "all" | ResourceSection;
+  slug: ResourceSection;
   label: string;
   href: string;
 };
 
 export function HubNav({ active }: HubNavProps) {
-  const items: NavItem[] = [
-    ...RESOURCE_SECTIONS.filter((section) => section.slug === "featured").map((section) => ({
-      slug: section.slug,
-      label: section.label,
-      href: `/hub/${section.slug}`
-    })),
-    { slug: "all", label: "All", href: "/hub" },
-    ...RESOURCE_SECTIONS.map((section) => ({
-      slug: section.slug,
-      label: section.label,
-      href: `/hub/${section.slug}`
-    })).filter((item) => item.slug !== "featured")
-  ];
+  const items: NavItem[] = RESOURCE_SECTIONS.map((section) => ({
+    slug: section.slug,
+    label: section.label,
+    href: `/hub/${section.slug}`
+  }));
 
   return (
     <nav aria-label="Hub sections" className={styles.nav}>
