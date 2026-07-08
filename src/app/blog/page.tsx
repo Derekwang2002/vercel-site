@@ -60,7 +60,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       </header>
 
       <BlogTabs activeTab={activeTab} activeTag={activeTag?.slug} />
-      <TagFilter activeTab={activeTab} activeTag={activeTag} />
+      <TagFilter activeTab={activeTab} activeTag={activeTag} tags={tags} />
 
       {posts.length === 0 ? (
         activeTab === "selected" ? (
@@ -147,22 +147,48 @@ function formatPostDate(date: string): string {
 
 function TagFilter({
   activeTab,
-  activeTag
+  activeTag,
+  tags
 }: {
   activeTab: BlogTab;
   activeTag: TagCount | undefined;
+  tags: TagCount[];
 }) {
-  if (!activeTag) {
+  if (tags.length === 0) {
     return null;
   }
 
   return (
-    <p className={styles.activeTagFilter}>
-      <span>Filtered by {activeTag.tag}</span>
-      <Link href={buildBlogHref(activeTab)} scroll={false}>
-        Clear
-      </Link>
-    </p>
+    <details className={styles.tagMenu}>
+      <summary>
+        <span>Tags</span>
+        {activeTag ? <span className={styles.activeTagName}>{activeTag.tag}</span> : null}
+      </summary>
+      <div className={styles.tagPanel}>
+        {activeTag ? (
+          <Link className={styles.clearTag} href={buildBlogHref(activeTab)} scroll={false}>
+            Clear filter
+          </Link>
+        ) : null}
+        <div className={styles.tagList}>
+          {tags.map((tag) => (
+            <Link
+              aria-current={activeTag?.slug === tag.slug ? "page" : undefined}
+              className={
+                activeTag?.slug === tag.slug
+                  ? `${styles.tagLink} ${styles.tagLinkActive}`
+                  : styles.tagLink
+              }
+              href={buildBlogHref(activeTab, tag.slug)}
+              key={tag.slug}
+              scroll={false}
+            >
+              {tag.tag}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </details>
   );
 }
 
