@@ -41,14 +41,11 @@
 
 .filterBar {
   align-items: flex-start;
-  display: grid;
-  grid-template-columns: minmax(7rem, 1fr) auto minmax(7rem, 1fr);
+  display: inline-flex;
+  gap: 1.35rem;
+  justify-content: center;
   margin: 0 auto;
   max-width: 620px;
-}
-
-.filterBar > :first-child {
-  grid-column: 2;
 }
 
 .postRow {
@@ -120,12 +117,8 @@
 
 @media (max-width: 560px) {
   .filterBar {
-    grid-template-columns: 1fr;
-    justify-items: center;
+    align-items: center;
+    flex-direction: column;
     row-gap: 0.35rem;
-  }
-
-  .filterBar > :first-child {
-    grid-column: 1;
   }
 }

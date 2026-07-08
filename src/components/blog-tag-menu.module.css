@@ -1,8 +1,6 @@
 .menu {
   color: #666666;
   font-size: 0.92rem;
-  grid-column: 3;
-  justify-self: end;
   margin: 0.28rem 0 0;
   position: relative;
 }
@@ -77,11 +75,6 @@
 }
 
 @media (max-width: 560px) {
-  .menu {
-    grid-column: 1;
-    justify-self: center;
-  }
-
   .panel {
     left: 50%;
     right: auto;
