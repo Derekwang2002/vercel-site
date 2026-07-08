@@ -2,6 +2,7 @@
   max-width: 720px;
   margin: 0 auto;
   padding: 2.8rem 1rem 3.5rem;
+  text-align: center;
 }
 
 .hero {
@@ -16,5 +17,6 @@
 
 .description {
   color: #555555;
-  margin: 0;
+  margin: 0 auto;
+  max-width: 54ch;
 }

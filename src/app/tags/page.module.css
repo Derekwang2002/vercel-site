@@ -2,6 +2,7 @@
   max-width: 720px;
   margin: 0 auto;
   padding: 2.8rem 1rem 3.5rem;
+  text-align: center;
 }
 
 .title {
@@ -17,6 +18,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem 0.7rem;
+  justify-content: center;
 }
 
 .tagItem {

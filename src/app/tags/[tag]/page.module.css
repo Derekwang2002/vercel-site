@@ -2,6 +2,7 @@
   max-width: 720px;
   margin: 0 auto;
   padding: 2.8rem 1rem 3.5rem;
+  text-align: center;
 }
 
 .backWrap {
@@ -36,7 +37,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  justify-content: space-between;
+  justify-content: center;
   gap: 0.25rem 1rem;
 }
 
