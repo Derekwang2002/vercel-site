@@ -19,8 +19,12 @@ type BlogTagMenuProps = {
 
 export function BlogTagMenu({ activeTab, selectedTags, tags }: BlogTagMenuProps) {
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
   const rootRef = useRef<HTMLDivElement>(null);
   const selectedTagSet = new Set(selectedTags);
+  const visibleTags = tags.filter((tag) =>
+    tag.tag.toLowerCase().includes(query.trim().toLowerCase())
+  );
 
   useEffect(() => {
     if (!open) return;
@@ -63,8 +67,9 @@ export function BlogTagMenu({ activeTab, selectedTags, tags }: BlogTagMenuProps)
       </button>
 
       {open ? (
-        <div className={styles.panel}>
+        <section aria-label="Tag picker" className={styles.panel}>
           <div className={styles.panelHeader}>
+            <span className={styles.panelTitle}>Filter tags</span>
             {selectedTags.length > 0 ? (
               <Link className={styles.clear} href={buildBlogHref(activeTab, [])} scroll={false}>
                 Clear
@@ -76,8 +81,27 @@ export function BlogTagMenu({ activeTab, selectedTags, tags }: BlogTagMenuProps)
             )}
           </div>
 
+          <input
+            className={styles.search}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search tags"
+            type="search"
+            value={query}
+          />
+
+          <div aria-live="polite" className={styles.selectedList}>
+            {selectedTags.map((selectedTag) => {
+              const tag = tags.find((item) => item.slug === selectedTag);
+              return tag ? (
+                <span className={styles.chip} key={selectedTag}>
+                  {tag.tag}
+                </span>
+              ) : null;
+            })}
+          </div>
+
           <div className={styles.list}>
-            {tags.map((tag) => {
+            {visibleTags.map((tag) => {
               const selected = selectedTagSet.has(tag.slug);
               return (
                 <Link
@@ -87,12 +111,15 @@ export function BlogTagMenu({ activeTab, selectedTags, tags }: BlogTagMenuProps)
                   key={tag.slug}
                   scroll={false}
                 >
-                  {tag.tag}
+                  <span>{tag.tag}</span>
+                  <span className={styles.tagCount}>{tag.count}</span>
                 </Link>
               );
             })}
           </div>
-        </div>
+
+          {visibleTags.length === 0 ? <p className={styles.empty}>No tags found.</p> : null}
+        </section>
       ) : null}
     </div>
   );
