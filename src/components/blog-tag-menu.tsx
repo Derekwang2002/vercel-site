@@ -67,7 +67,12 @@ export function BlogTagMenu({ activeTab, onNavigate, selectedTags, tags }: BlogT
         type="button"
       >
         <span>Tags</span>
-        {selectedTags.length > 0 ? <span className={styles.count}>{selectedTags.length}</span> : null}
+        <span
+          aria-hidden={selectedTags.length === 0 ? "true" : undefined}
+          className={selectedTags.length > 0 ? styles.count : `${styles.count} ${styles.countEmpty}`}
+        >
+          {selectedTags.length > 0 ? selectedTags.length : 0}
+        </span>
       </button>
 
       {open ? (

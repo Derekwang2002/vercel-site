@@ -25,6 +25,14 @@
 
 .count {
   color: #111111;
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  min-width: 2ch;
+  text-align: left;
+}
+
+.countEmpty {
+  visibility: hidden;
 }
 
 .panel {
