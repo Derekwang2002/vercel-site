@@ -58,6 +58,9 @@
 
 .pinnedSection {
   margin-top: 4rem;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
   text-align: left;
 }
 
@@ -90,25 +93,33 @@
   text-decoration: underline;
 }
 
-.pinnedGrid {
+.pinnedList {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.pinnedCard {
-  border: 1px solid #d8d8d8;
-  border-radius: 6px;
-  min-height: 8.75rem;
-  padding: 1rem;
+.pinnedItem {
+  border-bottom: 1px solid #ededed;
+  padding: 0.8rem 0;
+}
+
+.pinnedItem:first-child {
+  padding-top: 0.15rem;
+}
+
+.pinnedItemHeader {
+  align-items: baseline;
+  display: flex;
+  gap: 0.65rem;
+  justify-content: space-between;
 }
 
 .pinnedLink {
   color: #111111;
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
   text-decoration: none;
 }
@@ -119,16 +130,17 @@
 }
 
 .pinnedDescription {
-  color: #333333;
-  line-height: 1.6;
-  margin: 0.45rem 0 0;
+  color: #555555;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin: 0.25rem 0 0;
 }
 
 .pinnedMeta {
   color: #666666;
-  font-size: 0.92rem;
-  line-height: 1.5;
-  margin: 0.55rem 0 0;
+  flex: 0 0 auto;
+  font-size: 0.86rem;
+  line-height: 1.4;
 }
 
 @media (max-width: 480px) {
@@ -154,7 +166,9 @@
     margin-top: 3rem;
   }
 
-  .pinnedGrid {
-    grid-template-columns: 1fr;
+  .pinnedItemHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.2rem;
   }
 }

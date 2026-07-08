@@ -36,7 +36,7 @@ const SOCIAL_LINKS = [
 ];
 
 export default function HomePage() {
-  const pinnedResources = getFeaturedResources();
+  const pinnedResources = getFeaturedResources().slice(0, 3);
 
   return (
     <main className={styles.home}>
@@ -64,12 +64,14 @@ export default function HomePage() {
             <Link href="/hub/all">View all</Link>
           </div>
 
-          <ul className={styles.pinnedGrid}>
+          <ul className={styles.pinnedList}>
             {pinnedResources.map((resource) => (
-              <li className={styles.pinnedCard} key={`${resource.type}-${resource.href}`}>
-                <PinnedResourceLink resource={resource} />
+              <li className={styles.pinnedItem} key={`${resource.type}-${resource.href}`}>
+                <div className={styles.pinnedItemHeader}>
+                  <PinnedResourceLink resource={resource} />
+                  <span className={styles.pinnedMeta}>{getPinnedMeta(resource)}</span>
+                </div>
                 <p className={styles.pinnedDescription}>{resource.description}</p>
-                <p className={styles.pinnedMeta}>{getPinnedMeta(resource)}</p>
               </li>
             ))}
           </ul>
@@ -96,9 +98,5 @@ function PinnedResourceLink({ resource }: { resource: Resource }) {
 }
 
 function getPinnedMeta(resource: Resource): string {
-  return [
-    getResourceTypeLabel(resource.type),
-    getResourceSourceLabel(resource.source),
-    ...resource.tags
-  ].join(" · ");
+  return `${getResourceTypeLabel(resource.type)} · ${getResourceSourceLabel(resource.source)}`;
 }
