@@ -1,13 +1,14 @@
 .section {
-  margin: 2rem 0 0;
-  text-align: center;
+  margin: 1.5rem auto 0;
+  max-width: 620px;
+  text-align: left;
 }
 
 .header {
   align-items: baseline;
   display: flex;
   gap: 0.65rem;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .title {
@@ -19,28 +20,6 @@
 .count {
   color: #666666;
   font-size: 0.92rem;
-}
-
-.searchLabel {
-  display: grid;
-  gap: 0.35rem;
-  margin: 0.95rem 0 1.25rem;
-  text-align: center;
-}
-
-.searchLabel span {
-  color: #555555;
-  font-size: 0.92rem;
-}
-
-.searchInput {
-  border: 1px solid #d8d8d8;
-  border-radius: 0;
-  color: #111111;
-  font: inherit;
-  min-height: 2.35rem;
-  padding: 0.35rem 0.55rem;
-  width: 100%;
 }
 
 .list {
@@ -70,8 +49,7 @@
 
 .description {
   color: #333333;
-  margin: 0.25rem auto 0;
-  max-width: 56ch;
+  margin: 0.25rem 0 0;
 }
 
 .meta {

@@ -67,16 +67,16 @@ export default async function HubSectionPage({ params }: HubSectionPageProps) {
   return (
     <main className={styles.hubPage}>
       <header className={styles.hero}>
-        <h1 className={styles.title}>{section.label}</h1>
-        <p className={styles.description}>{section.description}</p>
+        <h1 className={styles.title}>Hub</h1>
+        <p className={styles.description}>Reusable skills, demos, and public resources.</p>
       </header>
 
       <HubNav active={section.slug} />
+      <p className={styles.sectionDescription}>{section.description}</p>
 
       <ResourceList
         emptyMessage={`No ${section.label.toLowerCase()} resources yet.`}
         resources={resources}
-        title={section.label}
       />
     </main>
   );
