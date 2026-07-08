@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import type { ComponentProps, MouseEvent } from "react";
 import type { BlogTab } from "./blog-tabs";
 import styles from "./blog-tag-menu.module.css";
 
@@ -11,13 +12,16 @@ type BlogTag = {
   tag: string;
 };
 
+export type { BlogTag };
+
 type BlogTagMenuProps = {
   activeTab: BlogTab;
+  onNavigate?: (href: string) => void;
   selectedTags: string[];
   tags: BlogTag[];
 };
 
-export function BlogTagMenu({ activeTab, selectedTags, tags }: BlogTagMenuProps) {
+export function BlogTagMenu({ activeTab, onNavigate, selectedTags, tags }: BlogTagMenuProps) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const rootRef = useRef<HTMLDivElement>(null);
@@ -71,9 +75,14 @@ export function BlogTagMenu({ activeTab, selectedTags, tags }: BlogTagMenuProps)
           <div className={styles.panelHeader}>
             <span className={styles.panelTitle}>Filter tags</span>
             {selectedTags.length > 0 ? (
-              <Link className={styles.clear} href={buildBlogHref(activeTab, [])} scroll={false}>
+              <FilterLink
+                className={styles.clear}
+                href={buildBlogHref(activeTab, [])}
+                onFilterNavigate={onNavigate}
+                prefetch={false}
+              >
                 Clear
-              </Link>
+              </FilterLink>
             ) : (
               <span aria-hidden="true" className={styles.clearPlaceholder}>
                 Clear
@@ -103,17 +112,21 @@ export function BlogTagMenu({ activeTab, selectedTags, tags }: BlogTagMenuProps)
           <div className={styles.list}>
             {visibleTags.map((tag) => {
               const selected = selectedTagSet.has(tag.slug);
+              const href = buildBlogHref(activeTab, toggleTag(selectedTags, tag.slug));
+
               return (
-                <Link
+                <FilterLink
                   aria-current={selected ? "true" : undefined}
                   className={selected ? `${styles.link} ${styles.active}` : styles.link}
-                  href={buildBlogHref(activeTab, toggleTag(selectedTags, tag.slug))}
+                  href={href}
                   key={tag.slug}
+                  onFilterNavigate={onNavigate}
+                  prefetch={false}
                   scroll={false}
                 >
                   <span>{tag.tag}</span>
                   <span className={styles.tagCount}>{tag.count}</span>
-                </Link>
+                </FilterLink>
               );
             })}
           </div>
@@ -123,6 +136,35 @@ export function BlogTagMenu({ activeTab, selectedTags, tags }: BlogTagMenuProps)
       ) : null}
     </div>
   );
+}
+
+function FilterLink({
+  children,
+  href,
+  onFilterNavigate,
+  ...props
+}: ComponentProps<typeof Link> & {
+  href: string;
+  onFilterNavigate?: (href: string) => void;
+}) {
+  return (
+    <Link
+      {...props}
+      href={href}
+      onClick={(event) => {
+        props.onClick?.(event);
+        if (event.defaultPrevented || !onFilterNavigate || isModifiedClick(event)) return;
+        event.preventDefault();
+        onFilterNavigate(href);
+      }}
+    >
+      {children}
+    </Link>
+  );
+}
+
+function isModifiedClick(event: MouseEvent<HTMLAnchorElement>): boolean {
+  return event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
 }
 
 function toggleTag(selectedTags: string[], tag: string): string[] {

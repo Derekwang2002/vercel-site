@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { BlogTagMenu } from "@/components/blog-tag-menu";
-import { BlogTabs, type BlogTab } from "@/components/blog-tabs";
+import { BlogExplorer, type BlogExplorerPost } from "@/components/blog-explorer";
 import {
   getAllPosts,
-  getAllTagsWithCounts,
-  getSelectedPosts,
   normalizeTagSlug,
   type Post,
   type TagCount
 } from "../../../lib/posts";
 import styles from "./page.module.css";
+
+export const dynamic = "force-static";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -30,23 +28,11 @@ export const metadata: Metadata = {
   }
 };
 
-type BlogPageProps = {
-  searchParams?: Promise<{
-    tab?: string | string[];
-    tag?: string | string[];
-  }>;
-};
-
-export default async function BlogPage({ searchParams }: BlogPageProps) {
-  const resolvedSearchParams = searchParams ? await searchParams : undefined;
-  const activeTab = resolveTab(resolvedSearchParams?.tab);
-  const requestedTags = resolveTags(resolvedSearchParams?.tag);
-  const { allPosts, selectedPosts, tags } = await loadBlogData();
-  const activeTags = requestedTags.filter((requestedTag) =>
-    tags.some((tag) => tag.slug === requestedTag)
-  );
-  const basePosts = activeTab === "selected" ? selectedPosts : allPosts;
-  const posts = activeTags.length > 0 ? filterPostsByTags(basePosts, activeTags) : basePosts;
+export default async function BlogPage() {
+  const allPosts = await loadBlogData();
+  const posts = allPosts.map(toExplorerPost);
+  const selectedCount = posts.filter((post) => post.selected).length;
+  const tags = getTagsWithCounts(posts);
   const latestPost = allPosts[0];
 
   return (
@@ -57,91 +43,33 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           Writing, study notes, and implementation records collected chronologically.
         </p>
         <p className={styles.heroMeta}>
-          {allPosts.length} posts · {selectedPosts.length} selected
+          {posts.length} posts · {selectedCount} selected
           {latestPost ? ` · latest ${formatPostDate(latestPost.date)}` : ""}
         </p>
       </header>
 
-      <div className={styles.filterBar}>
-        <BlogTabs activeTab={activeTab} activeTags={activeTags} />
-        <BlogTagMenu activeTab={activeTab} selectedTags={activeTags} tags={tags} />
-      </div>
-
-      {posts.length === 0 ? (
-        activeTab === "selected" ? (
-          <>
-            <p className={styles.emptyState}>No selected posts yet.</p>
-            <p className={styles.emptyState}>
-              <Link href="/blog?tab=all">View all posts</Link>
-            </p>
-          </>
-        ) : (
-          <>
-            <p className={styles.emptyState}>No posts published yet.</p>
-            <p className={styles.emptyState}>
-              <Link href="/">Back to Home</Link>
-            </p>
-          </>
-        )
-      ) : (
-        <ul className={styles.postList}>
-          {posts.map((post) => (
-            <li className={styles.postRow} key={post.slug}>
-              <div className={styles.postHeader}>
-                <Link className={styles.postLink} href={`/blog/${post.slug}`}>
-                  {post.title}
-                </Link>
-                <time className={styles.postDate} dateTime={post.date}>
-                  {formatPostDate(post.date)}
-                </time>
-              </div>
-              <p className={styles.postSummary}>{post.summary}</p>
-              <PostMeta activeTab={activeTab} post={post} />
-            </li>
-          ))}
-        </ul>
-      )}
+      <BlogExplorer posts={posts} tags={tags} />
     </main>
   );
 }
 
-async function loadBlogData(): Promise<{
-  allPosts: Post[];
-  selectedPosts: Post[];
-  tags: TagCount[];
-}> {
+async function loadBlogData(): Promise<Post[]> {
   try {
-    const [allPosts, selectedPosts, tags] = await Promise.all([
-      getAllPosts(),
-      getSelectedPosts(),
-      getAllTagsWithCounts()
-    ]);
-    return { allPosts, selectedPosts, tags };
+    return await getAllPosts();
   } catch {
-    return { allPosts: [], selectedPosts: [], tags: [] };
+    return [];
   }
 }
 
-function resolveTab(tab: string | string[] | undefined): BlogTab {
-  const value = Array.isArray(tab) ? tab[0] : tab;
-  return value === "selected" ? "selected" : "all";
-}
-
-function resolveTags(tag: string | string[] | undefined): string[] {
-  const values = Array.isArray(tag) ? tag : tag ? [tag] : [];
-  const tags = values
-    .map((value) => normalizeTagSlug(value))
-    .filter((value) => value.length > 0);
-
-  return Array.from(new Set(tags));
-}
-
-function filterPostsByTags(posts: Post[], tagSlugs: string[]): Post[] {
-  return posts.filter((post) =>
-    tagSlugs.every((tagSlug) =>
-      post.tags.some((postTag) => normalizeTagSlug(postTag) === tagSlug)
-    )
-  );
+function toExplorerPost(post: Post): BlogExplorerPost {
+  return {
+    date: post.date,
+    selected: post.selected,
+    slug: post.slug,
+    summary: post.summary,
+    tags: post.tags,
+    title: post.title
+  };
 }
 
 function formatPostDate(date: string): string {
@@ -155,28 +83,49 @@ function formatPostDate(date: string): string {
   }).format(parsed);
 }
 
-function PostMeta({ activeTab, post }: { activeTab: BlogTab; post: Post }) {
-  return (
-    <p className={styles.postMeta}>
-      {post.selected ? <span>Selected</span> : null}
-      {post.tags.map((tag) => {
-        const slug = normalizeTagSlug(tag);
-        return (
-          <Link href={buildBlogHref(activeTab, [slug])} key={slug} scroll={false}>
-            {tag}
-          </Link>
-        );
-      })}
-    </p>
-  );
-}
+function getTagsWithCounts(posts: BlogExplorerPost[]): TagCount[] {
+  const tagMap = new Map<string, { count: number; variants: Set<string> }>();
 
-function buildBlogHref(tab: BlogTab, tags: string[]): string {
-  const params = new URLSearchParams({ tab });
+  for (const post of posts) {
+    const uniqueTagsInPost = new Set<string>();
 
-  for (const tag of tags) {
-    params.append("tag", tag);
+    for (const tag of post.tags) {
+      const slug = normalizeTagSlug(tag);
+      if (!slug || uniqueTagsInPost.has(slug)) {
+        continue;
+      }
+
+      uniqueTagsInPost.add(slug);
+      const existing = tagMap.get(slug);
+
+      if (existing) {
+        existing.count += 1;
+        existing.variants.add(tag.trim());
+      } else {
+        tagMap.set(slug, {
+          count: 1,
+          variants: new Set([tag.trim()])
+        });
+      }
+    }
   }
 
-  return `/blog?${params.toString()}`;
+  return Array.from(tagMap.entries())
+    .map(([slug, value]) => ({
+      slug,
+      count: value.count,
+      tag: pickCanonicalTag(value.variants)
+    }))
+    .sort((a, b) => {
+      if (b.count !== a.count) {
+        return b.count - a.count;
+      }
+      return a.tag.localeCompare(b.tag, "en", { sensitivity: "base" });
+    });
+}
+
+function pickCanonicalTag(variants: Set<string>): string {
+  return Array.from(variants).sort((a, b) =>
+    a.localeCompare(b, "en", { sensitivity: "base" })
+  )[0];
 }
