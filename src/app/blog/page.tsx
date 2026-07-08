@@ -59,8 +59,10 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         </p>
       </header>
 
-      <BlogTabs activeTab={activeTab} activeTag={activeTag?.slug} />
-      <TagFilter activeTab={activeTab} activeTag={activeTag} tags={tags} />
+      <div className={styles.filterBar}>
+        <BlogTabs activeTab={activeTab} activeTag={activeTag?.slug} />
+        <TagFilter activeTab={activeTab} activeTag={activeTag} tags={tags} />
+      </div>
 
       {posts.length === 0 ? (
         activeTab === "selected" ? (

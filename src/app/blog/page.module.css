@@ -6,7 +6,6 @@
 }
 
 .hero {
-  border-bottom: 1px solid #e5e5e5;
   margin: 0 0 1rem;
   padding-bottom: 1.1rem;
 }
@@ -40,11 +39,25 @@
   text-align: left;
 }
 
+.filterBar {
+  align-items: flex-start;
+  display: grid;
+  grid-template-columns: minmax(7rem, 1fr) auto minmax(7rem, 1fr);
+  margin: 0 auto;
+  max-width: 620px;
+}
+
+.filterBar > :first-child {
+  grid-column: 2;
+}
+
 .tagMenu {
   color: #666666;
   font-size: 0.92rem;
-  margin: 0.85rem auto 0;
-  max-width: 620px;
+  grid-column: 3;
+  justify-self: end;
+  margin: 0.28rem 0 0;
+  position: relative;
 }
 
 .tagMenu summary {
@@ -69,8 +82,16 @@
 }
 
 .tagPanel {
-  margin: 0.75rem auto 0;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  margin: 0.55rem 0 0;
   max-width: 520px;
+  min-width: 12rem;
+  padding: 0.75rem;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  z-index: 1;
 }
 
 .clearTag {
@@ -173,4 +194,27 @@
   margin: 1.2rem 0 0;
   color: #666666;
   text-align: center;
+}
+
+@media (max-width: 560px) {
+  .filterBar {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    row-gap: 0.35rem;
+  }
+
+  .filterBar > :first-child,
+  .tagMenu {
+    grid-column: 1;
+  }
+
+  .tagMenu {
+    justify-self: center;
+  }
+
+  .tagPanel {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
 }
