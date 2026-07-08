@@ -3,11 +3,11 @@ import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Hub",
-  description: "Unified entry point for featured resources, reusable skills, and demos.",
+  description: "Unified entry point for reusable skills and demos.",
   openGraph: {
     title: "Hub | Personal Website",
-    description: "Unified entry point for featured resources, reusable skills, and demos.",
-    url: "/hub/featured",
+    description: "Unified entry point for reusable skills and demos.",
+    url: "/hub/all",
     images: [
       {
         url: "/og-default.svg",
@@ -20,5 +20,5 @@ export const metadata: Metadata = {
 };
 
 export default function HubPage() {
-  redirect("/hub/featured");
+  redirect("/hub/all");
 }

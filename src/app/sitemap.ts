@@ -67,12 +67,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: latestPostDate,
       changeFrequency: "weekly",
       priority: 0.8
-    },
-    {
-      url: toAbsoluteUrl(siteUrl, "/hub/featured"),
-      lastModified: latestResourceDate,
-      changeFrequency: "weekly",
-      priority: 0.85
     }
   ];
 
@@ -80,7 +74,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: toAbsoluteUrl(siteUrl, `/hub/${section.slug}`),
     lastModified: latestResourceDate,
     changeFrequency: "weekly",
-    priority: 0.75
+    priority: section.slug === "all" ? 0.85 : 0.75
   }));
 
   const postEntries: MetadataRoute.Sitemap = posts.map((post) => ({

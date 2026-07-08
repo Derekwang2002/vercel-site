@@ -49,7 +49,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <nav aria-label="Primary navigation" className="site-nav">
               <Link href="/">Home</Link>
               <Link href="/blog">Blog</Link>
-              <Link href="/hub/featured">Hub</Link>
+              <Link href="/hub/all">Hub</Link>
               <Link href="/tags">Tags</Link>
             </nav>
           </header>

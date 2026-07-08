@@ -76,7 +76,6 @@ export default async function HubSectionPage({ params }: HubSectionPageProps) {
       <ResourceList
         emptyMessage={`No ${section.label.toLowerCase()} resources yet.`}
         resources={resources}
-        searchable={section.slug !== "featured"}
         title={section.label}
       />
     </main>
