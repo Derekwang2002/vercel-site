@@ -51,84 +51,6 @@
   grid-column: 2;
 }
 
-.tagMenu {
-  color: #666666;
-  font-size: 0.92rem;
-  grid-column: 3;
-  justify-self: end;
-  margin: 0.28rem 0 0;
-  position: relative;
-}
-
-.tagMenu summary {
-  cursor: pointer;
-  display: inline-flex;
-  gap: 0.55rem;
-  list-style: none;
-}
-
-.tagMenu summary::-webkit-details-marker {
-  display: none;
-}
-
-.tagMenu summary:hover,
-.tagMenu summary:focus-visible {
-  color: #111111;
-  text-decoration: underline;
-}
-
-.activeTagName {
-  color: #111111;
-}
-
-.tagPanel {
-  background: #ffffff;
-  border: 1px solid #e5e5e5;
-  margin: 0.55rem 0 0;
-  max-width: 520px;
-  min-width: 12rem;
-  padding: 0.75rem;
-  position: absolute;
-  right: 0;
-  text-align: center;
-  z-index: 1;
-}
-
-.clearTag {
-  color: #111111;
-  display: inline-block;
-  margin-bottom: 0.5rem;
-  text-decoration: none;
-}
-
-.clearTag:hover,
-.clearTag:focus-visible {
-  text-decoration: underline;
-}
-
-.tagList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 0.75rem;
-  justify-content: center;
-}
-
-.tagLink {
-  color: #666666;
-  text-decoration: none;
-}
-
-.tagLink:hover,
-.tagLink:focus-visible {
-  color: #111111;
-  text-decoration: underline;
-}
-
-.tagLinkActive {
-  color: #111111;
-  font-weight: 600;
-}
-
 .postRow {
   border-top: 1px solid #e5e5e5;
   padding: 1rem 0;
@@ -203,18 +125,7 @@
     row-gap: 0.35rem;
   }
 
-  .filterBar > :first-child,
-  .tagMenu {
+  .filterBar > :first-child {
     grid-column: 1;
-  }
-
-  .tagMenu {
-    justify-self: center;
-  }
-
-  .tagPanel {
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
   }
 }

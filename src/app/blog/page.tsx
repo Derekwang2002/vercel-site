@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BlogTagMenu } from "@/components/blog-tag-menu";
 import { BlogTabs, type BlogTab } from "@/components/blog-tabs";
 import {
   getAllPosts,
@@ -39,11 +40,13 @@ type BlogPageProps = {
 export default async function BlogPage({ searchParams }: BlogPageProps) {
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const activeTab = resolveTab(resolvedSearchParams?.tab);
-  const requestedTag = resolveTag(resolvedSearchParams?.tag);
+  const requestedTags = resolveTags(resolvedSearchParams?.tag);
   const { allPosts, selectedPosts, tags } = await loadBlogData();
-  const activeTag = tags.find((tag) => tag.slug === requestedTag);
+  const activeTags = requestedTags.filter((requestedTag) =>
+    tags.some((tag) => tag.slug === requestedTag)
+  );
   const basePosts = activeTab === "selected" ? selectedPosts : allPosts;
-  const posts = activeTag ? filterPostsByTag(basePosts, activeTag.slug) : basePosts;
+  const posts = activeTags.length > 0 ? filterPostsByTags(basePosts, activeTags) : basePosts;
   const latestPost = allPosts[0];
 
   return (
@@ -60,8 +63,8 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       </header>
 
       <div className={styles.filterBar}>
-        <BlogTabs activeTab={activeTab} activeTag={activeTag?.slug} />
-        <TagFilter activeTab={activeTab} activeTag={activeTag} tags={tags} />
+        <BlogTabs activeTab={activeTab} activeTags={activeTags} />
+        <BlogTagMenu activeTab={activeTab} selectedTags={activeTags} tags={tags} />
       </div>
 
       {posts.length === 0 ? (
@@ -124,15 +127,20 @@ function resolveTab(tab: string | string[] | undefined): BlogTab {
   return value === "selected" ? "selected" : "all";
 }
 
-function resolveTag(tag: string | string[] | undefined): string | undefined {
-  const value = Array.isArray(tag) ? tag[0] : tag;
-  const slug = value ? normalizeTagSlug(value) : "";
-  return slug || undefined;
+function resolveTags(tag: string | string[] | undefined): string[] {
+  const values = Array.isArray(tag) ? tag : tag ? [tag] : [];
+  const tags = values
+    .map((value) => normalizeTagSlug(value))
+    .filter((value) => value.length > 0);
+
+  return Array.from(new Set(tags));
 }
 
-function filterPostsByTag(posts: Post[], tagSlug: string): Post[] {
+function filterPostsByTags(posts: Post[], tagSlugs: string[]): Post[] {
   return posts.filter((post) =>
-    post.tags.some((postTag) => normalizeTagSlug(postTag) === tagSlug)
+    tagSlugs.every((tagSlug) =>
+      post.tags.some((postTag) => normalizeTagSlug(postTag) === tagSlug)
+    )
   );
 }
 
@@ -147,53 +155,6 @@ function formatPostDate(date: string): string {
   }).format(parsed);
 }
 
-function TagFilter({
-  activeTab,
-  activeTag,
-  tags
-}: {
-  activeTab: BlogTab;
-  activeTag: TagCount | undefined;
-  tags: TagCount[];
-}) {
-  if (tags.length === 0) {
-    return null;
-  }
-
-  return (
-    <details className={styles.tagMenu}>
-      <summary>
-        <span>Tags</span>
-        {activeTag ? <span className={styles.activeTagName}>{activeTag.tag}</span> : null}
-      </summary>
-      <div className={styles.tagPanel}>
-        {activeTag ? (
-          <Link className={styles.clearTag} href={buildBlogHref(activeTab)} scroll={false}>
-            Clear filter
-          </Link>
-        ) : null}
-        <div className={styles.tagList}>
-          {tags.map((tag) => (
-            <Link
-              aria-current={activeTag?.slug === tag.slug ? "page" : undefined}
-              className={
-                activeTag?.slug === tag.slug
-                  ? `${styles.tagLink} ${styles.tagLinkActive}`
-                  : styles.tagLink
-              }
-              href={buildBlogHref(activeTab, tag.slug)}
-              key={tag.slug}
-              scroll={false}
-            >
-              {tag.tag}
-            </Link>
-          ))}
-        </div>
-      </div>
-    </details>
-  );
-}
-
 function PostMeta({ activeTab, post }: { activeTab: BlogTab; post: Post }) {
   return (
     <p className={styles.postMeta}>
@@ -201,7 +162,7 @@ function PostMeta({ activeTab, post }: { activeTab: BlogTab; post: Post }) {
       {post.tags.map((tag) => {
         const slug = normalizeTagSlug(tag);
         return (
-          <Link href={buildBlogHref(activeTab, slug)} key={slug} scroll={false}>
+          <Link href={buildBlogHref(activeTab, [slug])} key={slug} scroll={false}>
             {tag}
           </Link>
         );
@@ -210,11 +171,11 @@ function PostMeta({ activeTab, post }: { activeTab: BlogTab; post: Post }) {
   );
 }
 
-function buildBlogHref(tab: BlogTab, tag?: string): string {
+function buildBlogHref(tab: BlogTab, tags: string[]): string {
   const params = new URLSearchParams({ tab });
 
-  if (tag) {
-    params.set("tag", tag);
+  for (const tag of tags) {
+    params.append("tag", tag);
   }
 
   return `/blog?${params.toString()}`;
