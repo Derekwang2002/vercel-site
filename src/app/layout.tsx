@@ -55,7 +55,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
           <div className="site-content">{children}</div>
 
-          <footer className="site-footer">© 2026 Personal Website</footer>
+          <footer className="site-footer">© 2026 Derek Wang</footer>
         </div>
       </body>
     </html>
