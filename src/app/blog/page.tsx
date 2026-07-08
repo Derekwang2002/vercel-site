@@ -53,24 +53,14 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         <p className={styles.description}>
           Writing, study notes, and implementation records collected chronologically.
         </p>
-        <dl className={styles.metaStrip} aria-label="Blog summary">
-          <div>
-            <dt>Posts</dt>
-            <dd>{allPosts.length}</dd>
-          </div>
-          <div>
-            <dt>Selected</dt>
-            <dd>{selectedPosts.length}</dd>
-          </div>
-          <div>
-            <dt>Latest</dt>
-            <dd>{latestPost ? formatPostDate(latestPost.date) : "None"}</dd>
-          </div>
-        </dl>
+        <p className={styles.heroMeta}>
+          {allPosts.length} posts · {selectedPosts.length} selected
+          {latestPost ? ` · latest ${formatPostDate(latestPost.date)}` : ""}
+        </p>
       </header>
 
       <BlogTabs activeTab={activeTab} activeTag={activeTag?.slug} />
-      <TagFilters activeTab={activeTab} activeTag={activeTag?.slug} tags={tags} />
+      <TagFilter activeTab={activeTab} activeTag={activeTag} />
 
       {posts.length === 0 ? (
         activeTab === "selected" ? (
@@ -155,45 +145,24 @@ function formatPostDate(date: string): string {
   }).format(parsed);
 }
 
-function TagFilters({
+function TagFilter({
   activeTab,
-  activeTag,
-  tags
+  activeTag
 }: {
   activeTab: BlogTab;
-  activeTag: string | undefined;
-  tags: TagCount[];
+  activeTag: TagCount | undefined;
 }) {
-  if (tags.length === 0) {
+  if (!activeTag) {
     return null;
   }
 
   return (
-    <nav aria-label="Blog tags" className={styles.tagFilters}>
-      <Link
-        aria-current={activeTag ? undefined : "page"}
-        className={activeTag ? styles.tagFilter : `${styles.tagFilter} ${styles.tagFilterActive}`}
-        href={buildBlogHref(activeTab)}
-        scroll={false}
-      >
-        All Tags
+    <p className={styles.activeTagFilter}>
+      <span>Filtered by {activeTag.tag}</span>
+      <Link href={buildBlogHref(activeTab)} scroll={false}>
+        Clear
       </Link>
-      {tags.map((tag) => (
-        <Link
-          aria-current={activeTag === tag.slug ? "page" : undefined}
-          className={
-            activeTag === tag.slug
-              ? `${styles.tagFilter} ${styles.tagFilterActive}`
-              : styles.tagFilter
-          }
-          href={buildBlogHref(activeTab, tag.slug)}
-          key={tag.slug}
-          scroll={false}
-        >
-          {tag.tag}
-        </Link>
-      ))}
-    </nav>
+    </p>
   );
 }
 
