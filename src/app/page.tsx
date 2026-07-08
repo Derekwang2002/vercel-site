@@ -58,7 +58,7 @@ export default function HomePage() {
       </section>
 
       {pinnedResources.length > 0 ? (
-        <section className={styles.pinnedSection} aria-labelledby="pinned-title">
+        <section className={styles.pinnedSection} id="pinned" aria-labelledby="pinned-title">
           <div className={styles.pinnedHeader}>
             <h2 id="pinned-title">Pinned</h2>
             <Link href="/hub/all">View all</Link>
