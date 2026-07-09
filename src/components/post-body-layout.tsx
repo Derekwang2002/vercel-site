@@ -15,11 +15,7 @@ export function PostBodyLayout({ children, tocItems }: PostBodyLayoutProps) {
   const [tocOpen, setTocOpen] = useState(true);
 
   return (
-    <div
-      className={
-        tocOpen ? styles.bodyLayout : `${styles.bodyLayout} ${styles.bodyLayoutCollapsed}`
-      }
-    >
+    <div className={styles.bodyLayout}>
       <PostToc items={tocItems} onOpenChange={setTocOpen} open={tocOpen} />
       <article className={styles.content}>{children}</article>
       <PostReadingRail items={tocItems} />

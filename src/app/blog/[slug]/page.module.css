@@ -72,11 +72,6 @@
   display: grid;
   grid-template-columns: minmax(12rem, 1fr) minmax(0, 860px) minmax(12rem, 1fr);
   padding-top: 2rem;
-  transition: grid-template-columns 160ms ease;
-}
-
-.bodyLayoutCollapsed {
-  grid-template-columns: minmax(5.5rem, 1fr) minmax(0, 860px) minmax(5.5rem, 1fr);
 }
 
 .paragraph {
@@ -338,10 +333,6 @@
   .bodyLayout {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-  }
-
-  .bodyLayoutCollapsed {
     gap: 1.25rem;
   }
 
