@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   getFeaturedResources,
-  getResourceSourceLabel,
   getResourceTypeLabel,
   isExternalResourceHref
 } from "../../lib/resources";
@@ -130,5 +129,5 @@ function PinnedResourceLink({ resource }: { resource: Resource }) {
 }
 
 function getPinnedMeta(resource: Resource): string {
-  return `${getResourceTypeLabel(resource.type)} · ${getResourceSourceLabel(resource.source)}`;
+  return getResourceTypeLabel(resource.type);
 }

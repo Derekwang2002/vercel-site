@@ -4,7 +4,6 @@ import {
   type ResourceType
 } from "../content/resources";
 export {
-  getResourceSourceLabel,
   getResourceTypeLabel,
   isExternalResourceHref
 } from "./resource-display";

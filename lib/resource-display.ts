@@ -1,11 +1,4 @@
-import type { ResourceSource, ResourceType } from "../content/resources";
-
-const SOURCE_LABELS: Record<ResourceSource, string> = {
-  "vercel-site": "Vercel site",
-  skills: "Skills repo",
-  "github-pages": "GitHub Pages",
-  external: "External"
-};
+import type { ResourceType } from "../content/resources";
 
 const TYPE_LABELS: Record<ResourceType, string> = {
   skill: "Skill",
@@ -14,10 +7,6 @@ const TYPE_LABELS: Record<ResourceType, string> = {
 
 export function getResourceTypeLabel(type: ResourceType): string {
   return TYPE_LABELS[type];
-}
-
-export function getResourceSourceLabel(source: ResourceSource): string {
-  return SOURCE_LABELS[source];
 }
 
 export function isExternalResourceHref(href: string): boolean {

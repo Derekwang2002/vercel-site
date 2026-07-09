@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import {
-  getResourceSourceLabel,
   getResourceTypeLabel,
   isExternalResourceHref
 } from "../../lib/resource-display";
@@ -67,7 +66,6 @@ function ResourceLink({ resource }: { resource: Resource }) {
 function ResourceMeta({ resource }: { resource: Resource }) {
   const parts = [
     getResourceTypeLabel(resource.type),
-    getResourceSourceLabel(resource.source),
     ...resource.tags,
     resource.date ?? ""
   ].filter(Boolean);
