@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { codeToHtml } from "shiki";
 import { PostBodyLayout } from "@/components/post-body-layout";
 import type { TocItem } from "@/components/post-toc";
 import { getAllPosts, getPostBySlug, normalizeTagSlug } from "../../../../lib/posts";
@@ -70,6 +71,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   const tocItems = getMarkdownHeadings(post.content);
+  const renderedContent = await renderMarkdown(post.content, tocItems);
 
   return (
     <main className={styles.postPage}>
@@ -95,7 +97,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </ul>
       </header>
 
-      <PostBodyLayout tocItems={tocItems}>{renderMarkdown(post.content, tocItems)}</PostBodyLayout>
+      <PostBodyLayout tocItems={tocItems}>{renderedContent}</PostBodyLayout>
     </main>
   );
 }
@@ -111,7 +113,7 @@ function formatPostDate(date: string): string {
   }).format(parsed);
 }
 
-function renderMarkdown(markdown: string, headings: TocItem[]): React.ReactNode[] {
+async function renderMarkdown(markdown: string, headings: TocItem[]): Promise<React.ReactNode[]> {
   const lines = markdown.replace(/\r\n/g, "\n").split("\n");
   const blocks: React.ReactNode[] = [];
   let i = 0;
@@ -127,7 +129,7 @@ function renderMarkdown(markdown: string, headings: TocItem[]): React.ReactNode[
       continue;
     }
 
-    const codeFence = /^```\s*([A-Za-z0-9_-]+)?\s*$/.exec(trimmed);
+    const codeFence = /^```\s*([^\s`]+)?(?:\s+.*)?$/.exec(trimmed);
     if (codeFence) {
       const language = codeFence[1] ?? "";
       const codeLines: string[] = [];
@@ -142,11 +144,7 @@ function renderMarkdown(markdown: string, headings: TocItem[]): React.ReactNode[
         i += 1;
       }
 
-      blocks.push(
-        <pre className={styles.codeBlock} key={`block-${key}`}>
-          <code data-lang={language}>{codeLines.join("\n")}</code>
-        </pre>
-      );
+      blocks.push(await renderCodeBlock(codeLines.join("\n"), language, `block-${key}`));
       key += 1;
       continue;
     }
@@ -189,38 +187,11 @@ function renderMarkdown(markdown: string, headings: TocItem[]): React.ReactNode[
       continue;
     }
 
-    if (/^[-*]\s+/.test(trimmed)) {
-      const items: React.ReactNode[] = [];
-
-      while (i < lines.length && /^[-*]\s+/.test(lines[i].trim())) {
-        const text = lines[i].trim().replace(/^[-*]\s+/, "");
-        items.push(<li key={`li-${key}-${items.length}`}>{parseInline(text, `li-${key}-${items.length}`)}</li>);
-        i += 1;
-      }
-
-      blocks.push(
-        <ul className={styles.list} key={`block-${key}`}>
-          {items}
-        </ul>
-      );
-      key += 1;
-      continue;
-    }
-
-    if (/^\d+\.\s+/.test(trimmed)) {
-      const items: React.ReactNode[] = [];
-
-      while (i < lines.length && /^\d+\.\s+/.test(lines[i].trim())) {
-        const text = lines[i].trim().replace(/^\d+\.\s+/, "");
-        items.push(<li key={`ol-${key}-${items.length}`}>{parseInline(text, `ol-${key}-${items.length}`)}</li>);
-        i += 1;
-      }
-
-      blocks.push(
-        <ol className={styles.list} key={`block-${key}`}>
-          {items}
-        </ol>
-      );
+    const listMarker = parseListMarker(line);
+    if (listMarker) {
+      const listBlock = parseListBlock(lines, i, listMarker.indent, `block-${key}`);
+      blocks.push(listBlock.node);
+      i = listBlock.nextIndex;
       key += 1;
       continue;
     }
@@ -231,8 +202,7 @@ function renderMarkdown(markdown: string, headings: TocItem[]): React.ReactNode[
       lines[i].trim() &&
       !/^```/.test(lines[i].trim()) &&
       !/^(#{1,6})\s+/.test(lines[i].trim()) &&
-      !/^[-*]\s+/.test(lines[i].trim()) &&
-      !/^\d+\.\s+/.test(lines[i].trim())
+      !parseListMarker(lines[i])
     ) {
       paragraphLines.push(lines[i].trim());
       i += 1;
@@ -249,11 +219,220 @@ function renderMarkdown(markdown: string, headings: TocItem[]): React.ReactNode[
   return blocks;
 }
 
+type ListMarker = {
+  content: string;
+  indent: number;
+  ordered: boolean;
+};
+
+type ListBlock = {
+  nextIndex: number;
+  node: React.ReactNode;
+};
+
+function parseListBlock(
+  lines: string[],
+  startIndex: number,
+  baseIndent: number,
+  keyPrefix: string
+): ListBlock {
+  const firstMarker = parseListMarker(lines[startIndex]);
+  const ordered = firstMarker?.ordered ?? false;
+  const items: React.ReactNode[] = [];
+  let i = startIndex;
+
+  while (i < lines.length) {
+    const marker = parseListMarker(lines[i]);
+    if (!marker || marker.indent !== baseIndent || marker.ordered !== ordered) {
+      break;
+    }
+
+    const itemKey = `${keyPrefix}-item-${items.length}`;
+    const itemChildren: React.ReactNode[] = [
+      <span key={`${itemKey}-text`}>{parseInline(marker.content, `${itemKey}-text`)}</span>
+    ];
+
+    i += 1;
+
+    while (i < lines.length) {
+      const rawLine = lines[i];
+      const trimmed = rawLine.trim();
+
+      if (!trimmed) {
+        i += 1;
+        break;
+      }
+
+      const nextMarker = parseListMarker(rawLine);
+      if (nextMarker) {
+        if (nextMarker.indent <= baseIndent) {
+          break;
+        }
+
+        const nestedList = parseListBlock(
+          lines,
+          i,
+          nextMarker.indent,
+          `${itemKey}-nested-${itemChildren.length}`
+        );
+        itemChildren.push(nestedList.node);
+        i = nestedList.nextIndex;
+        continue;
+      }
+
+      const continuationIndent = getIndentWidth(rawLine);
+      if (continuationIndent <= baseIndent) {
+        break;
+      }
+
+      itemChildren.push(
+        <span className={styles.listContinuation} key={`${itemKey}-cont-${itemChildren.length}`}>
+          {parseInline(trimmed, `${itemKey}-cont-${itemChildren.length}`)}
+        </span>
+      );
+      i += 1;
+    }
+
+    items.push(<li key={itemKey}>{itemChildren}</li>);
+  }
+
+  const ListTag = ordered ? "ol" : "ul";
+
+  return {
+    nextIndex: i,
+    node: (
+      <ListTag className={styles.list} key={keyPrefix}>
+        {items}
+      </ListTag>
+    )
+  };
+}
+
+function parseListMarker(line: string): ListMarker | null {
+  const marker = /^([ \t]*)([-*+]|\d+\.)\s+(.+)$/.exec(line);
+  if (!marker) {
+    return null;
+  }
+
+  return {
+    content: marker[3],
+    indent: getIndentWidth(marker[1]),
+    ordered: /^\d+\.$/.test(marker[2])
+  };
+}
+
+function getIndentWidth(line: string): number {
+  const indent = /^([ \t]*)/.exec(line)?.[1] ?? "";
+  return indent.replace(/\t/g, "    ").length;
+}
+
+async function renderCodeBlock(
+  code: string,
+  language: string,
+  key: string
+): Promise<React.ReactNode> {
+  const normalizedLanguage = normalizeCodeLanguage(language);
+  const highlightedCode = await highlightCode(code, normalizedLanguage);
+  const label = getCodeLanguageLabel(language, normalizedLanguage);
+
+  return (
+    <figure className={styles.codeFigure} key={key}>
+      {label ? (
+        <figcaption className={styles.codeHeader}>
+          <span>{label}</span>
+        </figcaption>
+      ) : null}
+      <div
+        className={styles.codeBody}
+        dangerouslySetInnerHTML={{ __html: highlightedCode }}
+      />
+    </figure>
+  );
+}
+
+async function highlightCode(code: string, language: string): Promise<string> {
+  try {
+    return await codeToHtml(code, {
+      lang: language,
+      themes: {
+        light: "github-light",
+        dark: "github-dark"
+      },
+      defaultColor: false
+    });
+  } catch {
+    return codeToHtml(code, {
+      lang: "text",
+      themes: {
+        light: "github-light",
+        dark: "github-dark"
+      },
+      defaultColor: false
+    });
+  }
+}
+
+function normalizeCodeLanguage(language: string): string {
+  const normalized = language.trim().toLowerCase();
+  const aliases: Record<string, string> = {
+    cplusplus: "cpp",
+    js: "javascript",
+    md: "markdown",
+    mysql: "sql",
+    plaintext: "text",
+    psql: "sql",
+    py: "python",
+    shell: "bash",
+    sh: "bash",
+    ts: "typescript",
+    yml: "yaml",
+    zsh: "bash"
+  };
+
+  return aliases[normalized] ?? (normalized || "text");
+}
+
+function getCodeLanguageLabel(language: string, normalizedLanguage: string): string {
+  const rawLanguage = language.trim();
+  if (!rawLanguage) {
+    return "";
+  }
+
+  const labels: Record<string, string> = {
+    bash: "Bash",
+    cpp: "C++",
+    css: "CSS",
+    html: "HTML",
+    java: "Java",
+    javascript: "JavaScript",
+    json: "JSON",
+    markdown: "Markdown",
+    python: "Python",
+    sql: "SQL",
+    text: "Text",
+    tsx: "TSX",
+    typescript: "TypeScript",
+    yaml: "YAML"
+  };
+
+  return labels[normalizedLanguage] ?? rawLanguage;
+}
+
 function getMarkdownHeadings(markdown: string): TocItem[] {
   const usedIds = new Map<string, number>();
   const items: TocItem[] = [];
+  let inCodeFence = false;
 
   for (const line of markdown.replace(/\r\n/g, "\n").split("\n")) {
+    if (/^```\s*/.test(line.trim())) {
+      inCodeFence = !inCodeFence;
+      continue;
+    }
+
+    if (inCodeFence) {
+      continue;
+    }
+
     const heading = /^(#{1,6})\s+(.+)$/.exec(line.trim());
     if (!heading) {
       continue;
@@ -297,7 +476,8 @@ function slugifyHeading(text: string): string {
 
 function parseInline(text: string, keyPrefix: string): React.ReactNode[] {
   const nodes: React.ReactNode[] = [];
-  const pattern = /!\[([^\]]*)\]\(([^)]+)\)|\[([^\]]+)\]\(([^)]+)\)|`([^`]+)`/g;
+  const pattern =
+    /!\[([^\]]*)\]\(([^)]+)\)|\[([^\]]+)\]\(([^)]+)\)|`([^`]+)`|\*\*([^*]+)\*\*|\*([^*]+)\*/g;
   let lastIndex = 0;
   let match = pattern.exec(text);
 
@@ -339,6 +519,18 @@ function parseInline(text: string, keyPrefix: string): React.ReactNode[] {
         <code className={styles.inlineCode} key={`${keyPrefix}-code-${match.index}`}>
           {match[5]}
         </code>
+      );
+    } else if (match[6] !== undefined) {
+      nodes.push(
+        <strong key={`${keyPrefix}-strong-${match.index}`}>
+          {parseInline(match[6], `${keyPrefix}-strong-${match.index}`)}
+        </strong>
+      );
+    } else if (match[7] !== undefined) {
+      nodes.push(
+        <em key={`${keyPrefix}-em-${match.index}`}>
+          {parseInline(match[7], `${keyPrefix}-em-${match.index}`)}
+        </em>
       );
     }
 
