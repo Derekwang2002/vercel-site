@@ -70,16 +70,16 @@
   border-top: 1px solid #e5e5e5;
   display: grid;
   grid-template-columns:
-    14rem clamp(2rem, 4vw, 3rem) minmax(0, 760px)
-    clamp(1.25rem, 2vw, 1.5rem) 7rem;
+    14rem clamp(3.5rem, 5vw, 5rem) minmax(0, 760px)
+    clamp(1.5rem, 3vw, 2rem) 8rem;
   padding-top: 2rem;
   transition: grid-template-columns 160ms ease;
 }
 
 .bodyLayoutCollapsed {
   grid-template-columns:
-    5.5rem clamp(1.5rem, 3vw, 2.25rem) minmax(0, 760px)
-    clamp(0.75rem, 1.5vw, 1rem) 2rem;
+    5.5rem clamp(2.5rem, 4vw, 3.5rem) minmax(0, 760px)
+    clamp(1rem, 2vw, 1.5rem) 2.5rem;
 }
 
 .paragraph {
