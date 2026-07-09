@@ -10,19 +10,19 @@
 
 .link {
   border-bottom: 1px solid transparent;
-  color: #666666;
+  color: var(--color-text-muted);
   padding: 0 0 0.25rem;
   text-decoration: none;
 }
 
 .link:hover,
 .link:focus-visible {
-  color: #111111;
-  border-bottom-color: #999999;
+  color: var(--color-text);
+  border-bottom-color: var(--color-text-faint);
 }
 
 .active {
-  border-bottom-color: #111111;
-  color: #111111;
+  border-bottom-color: var(--color-text);
+  color: var(--color-text);
   font-weight: 700;
 }

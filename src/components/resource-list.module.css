@@ -18,7 +18,7 @@
 }
 
 .count {
-  color: #666666;
+  color: var(--color-text-muted);
   font-size: 0.92rem;
 }
 
@@ -31,12 +31,12 @@
 }
 
 .item {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid var(--color-border-soft);
   padding-top: 0.9rem;
 }
 
 .resourceLink {
-  color: #111111;
+  color: var(--color-text);
   font-size: 1.05rem;
   font-weight: 700;
   text-decoration: none;
@@ -48,17 +48,17 @@
 }
 
 .description {
-  color: #333333;
+  color: var(--color-text-soft);
   margin: 0.25rem 0 0;
 }
 
 .meta {
-  color: #666666;
+  color: var(--color-text-muted);
   font-size: 0.92rem;
   margin: 0.25rem 0 0;
 }
 
 .emptyState {
-  color: #666666;
+  color: var(--color-text-muted);
   margin: 0.95rem 0 0;
 }

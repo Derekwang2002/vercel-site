@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
 
 const SITE_NAME = "Personal Website";
@@ -11,6 +12,23 @@ const SITE_URL = (() => {
   const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim() || "http://localhost:3000";
   return raw.endsWith("/") ? raw.slice(0, -1) : raw;
 })();
+
+const THEME_INIT_SCRIPT = `
+(() => {
+  try {
+    const stored = window.localStorage.getItem("theme");
+    const theme =
+      stored === "dark" || stored === "light"
+        ? stored
+        : window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+    document.documentElement.dataset.theme = theme;
+  } catch {
+    document.documentElement.dataset.theme = "light";
+  }
+})();
+`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -42,14 +60,22 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body>
         <div className="site-shell">
           <header className="site-header">
             <nav aria-label="Primary navigation" className="site-nav">
-              <Link href="/">Home</Link>
-              <Link href="/blog">Blog</Link>
-              <Link href="/hub/all">Hub</Link>
+              <div className="site-nav-links">
+                <Link href="/">Home</Link>
+                <Link href="/blog">Blog</Link>
+                <Link href="/hub/all">Hub</Link>
+              </div>
+              <div className="site-theme-slot">
+                <ThemeToggle />
+              </div>
             </nav>
           </header>
 
