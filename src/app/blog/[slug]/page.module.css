@@ -128,16 +128,18 @@
 }
 
 .codeFigure {
-  background: #0d1117;
-  border: 1px solid #30363d;
+  background: #151a21;
+  border: 1px solid #39414d;
+  border-radius: 0.45rem;
+  box-shadow: 0 0.5rem 1.4rem rgb(0 0 0 / 0.08);
   margin: 1rem 0 1.2rem;
   overflow: hidden;
 }
 
 .codeHeader {
-  background: #161b22;
-  border-bottom: 1px solid #30363d;
-  color: #8b949e;
+  background: #1b222b;
+  border-bottom: 1px solid #39414d;
+  color: #a4adba;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 0.78rem;
   line-height: 1.2;
@@ -145,7 +147,7 @@
 }
 
 .codeBody {
-  background: #0d1117;
+  background: #151a21;
   overflow-x: auto;
 }
 
