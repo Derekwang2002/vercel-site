@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { ReactNode } from "react";
+import { PostReadingRail } from "./post-reading-rail";
 import { PostToc, type TocItem } from "./post-toc";
 import styles from "../app/blog/[slug]/page.module.css";
 
@@ -21,6 +22,7 @@ export function PostBodyLayout({ children, tocItems }: PostBodyLayoutProps) {
     >
       <PostToc items={tocItems} onOpenChange={setTocOpen} open={tocOpen} />
       <article className={styles.content}>{children}</article>
+      <PostReadingRail items={tocItems} />
     </div>
   );
 }

@@ -222,6 +222,113 @@
   padding-left: 1.25rem;
 }
 
+.readingRail {
+  align-self: start;
+  color: #666666;
+  display: grid;
+  gap: 1rem;
+  grid-column: 3;
+  grid-template-columns: 0.18rem minmax(0, 1fr);
+  justify-self: end;
+  max-width: 9rem;
+  position: sticky;
+  top: 1.5rem;
+  width: 100%;
+}
+
+.readingProgress {
+  background: #eeeeee;
+  grid-row: 1 / 4;
+  height: min(16rem, calc(100vh - 6rem));
+  overflow: hidden;
+  position: relative;
+  width: 1px;
+}
+
+.readingProgressFill {
+  background: #111111;
+  display: block;
+  height: 100%;
+  transform: scaleY(0);
+  transform-origin: top;
+  width: 1px;
+}
+
+@supports (animation-timeline: scroll()) {
+  .readingProgressFill {
+    animation: readingProgress linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+@keyframes readingProgress {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.readingMeta {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.readingLabel {
+  color: #888888;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+
+.readingCurrent {
+  color: #222222;
+  display: -webkit-box;
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow: hidden;
+  text-decoration: none;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.readingCurrent:hover,
+.readingCurrent:focus-visible {
+  text-decoration: underline;
+}
+
+.readingActions {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.readingAction {
+  background: transparent;
+  border: 0;
+  color: #555555;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.86rem;
+  padding: 0;
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.18em;
+}
+
+.readingAction:hover,
+.readingAction:focus-visible {
+  color: #111111;
+  text-decoration-color: currentColor;
+}
+
+.readingAction:active {
+  transform: translateY(1px);
+}
+
 @media (max-width: 920px) {
   .postPage,
   .header {
@@ -250,5 +357,9 @@
 
   .tocList {
     max-height: 45vh;
+  }
+
+  .readingRail {
+    display: none;
   }
 }
