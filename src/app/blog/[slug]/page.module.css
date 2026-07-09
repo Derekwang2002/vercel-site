@@ -70,13 +70,13 @@
   border-top: 1px solid #e5e5e5;
   column-gap: clamp(2rem, 3vw, 3.5rem);
   display: grid;
-  grid-template-columns: minmax(12rem, 1fr) minmax(0, 900px) minmax(12rem, 1fr);
+  grid-template-columns: minmax(12rem, 1.18fr) minmax(0, 900px) minmax(8rem, 0.82fr);
   padding-top: 2rem;
   transition: grid-template-columns 160ms ease;
 }
 
 .bodyLayoutCollapsed {
-  grid-template-columns: minmax(5.5rem, 1fr) minmax(0, 900px) minmax(5.5rem, 1fr);
+  grid-template-columns: minmax(5.5rem, 1.18fr) minmax(0, 900px) minmax(4rem, 0.82fr);
 }
 
 .paragraph {
