@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description:
     "Home page for Derek with profile, tagline, and social links to explore writing and tags.",
   openGraph: {
-    title: "Home | Personal Website",
+    title: "Home | Derek Hub",
     description:
       "Home page for Derek with profile, tagline, and social links to explore writing and tags.",
     url: "/",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         url: "/og-default.svg",
         width: 1200,
         height: 630,
-        alt: "Personal Website Open Graph Image"
+        alt: "Derek Hub Open Graph Image"
       }
     ]
   }

@@ -1,7 +1,7 @@
-# Personal Website PRD (MVP)
+# Derek Hub PRD (MVP)
 
 ## 1. Goal
-Build a minimalist personal website that:
+Build a minimalist personal technical hub that:
 - Presents basic identity and links (home).
 - Publishes all writing as a chronological timeline (blog).
 - Uses tags to support lightweight knowledge navigation (tag-driven).

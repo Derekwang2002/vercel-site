@@ -3,9 +3,9 @@ import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
 
-const SITE_NAME = "Personal Website";
+const SITE_NAME = "Derek Hub";
 const DEFAULT_DESCRIPTION =
-  "Minimal personal website for writing, resources, and visual demos.";
+  "Personal technical hub for writing, resources, skills, and visual demos.";
 const DEFAULT_OG_IMAGE = "/og-default.svg";
 
 const SITE_URL = (() => {

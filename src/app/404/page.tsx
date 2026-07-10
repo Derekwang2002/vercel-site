@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "404",
   description: "The requested page could not be found.",
   openGraph: {
-    title: "404 | Personal Website",
+    title: "404 | Derek Hub",
     description: "The requested page could not be found.",
     url: "/404",
     images: [

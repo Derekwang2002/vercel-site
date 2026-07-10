@@ -1,6 +1,6 @@
-# Personal Website
+# Derek Hub
 
-This repository contains a Next.js App Router personal website for writing, resource curation, and interactive demos.
+This repository contains Derek Hub, a Next.js App Router site for writing, resource curation, skill documentation, and interactive demos.
 
 ## Current Capabilities
 

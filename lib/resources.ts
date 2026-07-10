@@ -122,9 +122,28 @@ async function getAllResources(): Promise<Resource[]> {
 }
 
 async function loadAllResources(): Promise<Resource[]> {
-  const collectionResources = (
-    await Promise.all(resourceCollections.map(expandResourceCollection))
-  ).flat();
+  const collectionResults = await Promise.allSettled(
+    resourceCollections.map(expandResourceCollection)
+  );
+  const collectionResources = collectionResults.flatMap((result, index) => {
+    if (result.status === "fulfilled") {
+      return result.value;
+    }
+
+    const collection = resourceCollections[index];
+    const collectionId = getMarkdownCollectionSourceId(collection.source);
+    const reason =
+      result.reason instanceof Error
+        ? result.reason.message
+        : String(result.reason);
+    console.warn(
+      "[resources] Skipping unavailable collection \"" +
+        collectionId +
+        "\": " +
+        reason
+    );
+    return [];
+  });
   const allResources = [...resources, ...collectionResources];
 
   assertUniqueResources(allResources);

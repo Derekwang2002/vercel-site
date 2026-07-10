@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "Hub",
   description: "Unified entry point for reusable skills and demos.",
   openGraph: {
-    title: "Hub | Personal Website",
+    title: "Hub | Derek Hub",
     description: "Unified entry point for reusable skills and demos.",
     url: "/hub/all",
     images: [

@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
     title: `${label} | Blog`,
     description: `Blog posts tagged with ${label}.`,
     openGraph: {
-      title: `${label} | Blog | Personal Website`,
+      title: `${label} | Blog | Derek Hub`,
       description: `Blog posts tagged with ${label}.`,
       url: `/blog?tag=${tag}`,
       images: [

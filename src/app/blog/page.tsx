@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: "Blog",
   description: "Chronological timeline of blog posts with all and selected filters.",
   openGraph: {
-    title: "Blog | Personal Website",
+    title: "Blog | Derek Hub",
     description: "Chronological timeline of blog posts with all and selected filters.",
     url: "/blog",
     images: [

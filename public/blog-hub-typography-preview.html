@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Derek Hub blog and hub item typography hierarchy preview."
+    />
+    <title>Blog / Hub 项目标题层级预览</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #fbfaf7;
+        --text: #141414;
+        --text-soft: #726e66;
+        --text-faint: #8b867c;
+        --border: #d8d5cc;
+        --border-soft: #e7e3da;
+        --focus: #7a4f2a;
+        --tag-bg: #f3f1ec;
+        --selected-bg: #f5eee5;
+        --selected-border: #d8c2a8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: Georgia, "Times New Roman", "Songti SC", serif;
+        line-height: 1.6;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .site-header {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .site-nav {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+        max-width: 720px;
+        min-height: 3.6rem;
+        padding: 0.7rem 1rem;
+        position: relative;
+      }
+
+      .view-switcher {
+        display: flex;
+        gap: 1.1rem;
+      }
+
+      .view-button {
+        background: transparent;
+        border: 0;
+        border-bottom: 1px solid transparent;
+        color: var(--text-faint);
+        cursor: pointer;
+        padding: 0.18rem 0 0.12rem;
+      }
+
+      .view-button:hover,
+      .view-button:focus-visible {
+        color: var(--text);
+      }
+
+      .view-button[aria-selected="true"] {
+        border-bottom-color: var(--text);
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .view-button:focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 4px;
+      }
+
+      .preview-label {
+        color: var(--text-faint);
+        font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        position: absolute;
+        right: 1rem;
+        text-transform: uppercase;
+      }
+
+      main {
+        margin: 0 auto;
+        max-width: 720px;
+        padding: 2.6rem 1rem 4rem;
+      }
+
+      .view[hidden] {
+        display: none;
+      }
+
+      .hero {
+        margin: 0 0 1rem;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: clamp(1.9rem, 6vw, 2.8rem);
+        letter-spacing: -0.025em;
+        line-height: 1.1;
+        margin: 0 0 0.5rem;
+      }
+
+      .hero-description {
+        color: var(--text-soft);
+        font-size: 0.96rem;
+        margin: 0 auto;
+        max-width: 56ch;
+      }
+
+      .hero-meta {
+        color: var(--text-faint);
+        font-size: 0.82rem;
+        margin: 0.48rem 0 0;
+      }
+
+      .filters {
+        align-items: baseline;
+        color: var(--text-soft);
+        display: flex;
+        font-size: 0.92rem;
+        gap: 0.9rem;
+        justify-content: center;
+        margin: 0 auto;
+        max-width: 620px;
+        padding-bottom: 0.55rem;
+      }
+
+      .filter-active {
+        border-bottom: 1px solid var(--text);
+        color: var(--text);
+        font-weight: 600;
+        padding: 0 0.1rem 0.18rem;
+      }
+
+      .filter-divider {
+        background: var(--border);
+        height: 1rem;
+        width: 1px;
+      }
+
+      .section-description {
+        color: var(--text-soft);
+        font-size: 0.92rem;
+        line-height: 1.6;
+        margin: 0.55rem auto 0;
+        max-width: 52ch;
+        text-align: center;
+      }
+
+      .item-list {
+        display: grid;
+        list-style: none;
+        margin: 1.15rem auto 0;
+        max-width: 620px;
+        padding: 0;
+      }
+
+      .item {
+        border-top: 1px solid var(--border-soft);
+        padding: 1rem 0 1.08rem;
+      }
+
+      .item:first-child {
+        padding-top: 0.9rem;
+      }
+
+      .item-header {
+        align-items: baseline;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem 1rem;
+        justify-content: space-between;
+      }
+
+      /* Proposed hierarchy: one clear display line, followed by quieter support copy. */
+      .item-title {
+        color: var(--text);
+        flex: 1 1 24rem;
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: -0.015em;
+        line-height: 1.35;
+        margin: 0;
+        text-wrap: pretty;
+      }
+
+      .item-summary {
+        color: var(--text-soft);
+        font-size: 0.9rem;
+        font-weight: 400;
+        line-height: 1.58;
+        margin: 0.28rem 0 0;
+        max-width: 64ch;
+        text-wrap: pretty;
+      }
+
+      .item-date {
+        color: var(--text-soft);
+        font-size: 0.88rem;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+
+      .item-meta {
+        align-items: center;
+        color: var(--text-faint);
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 0.78rem;
+        gap: 0.34rem 0.45rem;
+        line-height: 1.5;
+        margin: 0.42rem 0 0;
+      }
+
+      .meta-badge {
+        border: 1px solid var(--border);
+        border-radius: 2px;
+        color: var(--text-soft);
+        font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.055em;
+        line-height: 1.45;
+        padding: 0.08rem 0.34rem;
+        text-transform: uppercase;
+      }
+
+      .meta-badge-selected {
+        background: var(--selected-bg);
+        border-color: var(--selected-border);
+        color: #6f4a2e;
+      }
+
+      .meta-separator {
+        color: var(--text-faint);
+        font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+        font-size: 0.72rem;
+        line-height: 1;
+        opacity: 0.68;
+      }
+
+      .tag-list {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+      }
+
+      .tag {
+        background: var(--tag-bg);
+        border: 1px solid var(--border-soft);
+        border-radius: 2px;
+        color: var(--text-soft);
+        line-height: 1.4;
+        padding: 0.06rem 0.34rem;
+      }
+
+      .tag::before {
+        color: var(--focus);
+        content: "#";
+        margin-right: 0.06rem;
+      }
+
+      .meta-date {
+        color: var(--text-faint);
+        font-variant-numeric: tabular-nums;
+        margin-left: 0.14rem;
+        white-space: nowrap;
+      }
+
+      .meta-date::before {
+        color: var(--border);
+        content: "·";
+        margin-right: 0.45rem;
+      }
+
+      .site-footer {
+        border-top: 1px solid var(--border);
+        color: var(--text-faint);
+        font-size: 0.82rem;
+        margin: 0 auto;
+        max-width: 720px;
+        padding: 0.9rem 1rem 1.1rem;
+        text-align: center;
+      }
+
+      @media (max-width: 560px) {
+        .preview-label {
+          display: none;
+        }
+
+        main {
+          padding-top: 2.1rem;
+        }
+
+        .item-title {
+          flex-basis: 100%;
+          font-size: 1.16rem;
+        }
+
+        .item-summary {
+          font-size: 0.88rem;
+        }
+
+        .item-date {
+          order: -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="site-nav" aria-label="预览页面切换">
+        <div class="view-switcher" role="tablist" aria-label="选择页面">
+          <button
+            class="view-button"
+            id="blog-tab"
+            type="button"
+            role="tab"
+            aria-controls="blog-view"
+            aria-selected="true"
+            data-view="blog"
+          >
+            Blog
+          </button>
+          <button
+            class="view-button"
+            id="hub-tab"
+            type="button"
+            role="tab"
+            aria-controls="hub-view"
+            aria-selected="false"
+            data-view="hub"
+          >
+            Hub
+          </button>
+        </div>
+        <span class="preview-label">Typography preview</span>
+      </nav>
+    </header>
+
+    <main>
+      <section class="view" id="blog-view" role="tabpanel" aria-labelledby="blog-tab">
+        <header class="hero">
+          <h1>Blog</h1>
+          <p class="hero-description">
+            Writing, study notes, and implementation records collected chronologically.
+          </p>
+          <p class="hero-meta">4 posts · 2 selected · latest Jul 10, 2026</p>
+        </header>
+
+        <div class="filters" aria-label="Blog filters">
+          <span class="filter-active">All Posts</span>
+          <span>Selected</span>
+          <span class="filter-divider" aria-hidden="true"></span>
+          <span>Tags</span>
+        </div>
+
+        <ol class="item-list">
+          <li class="item">
+            <div class="item-header">
+              <h2 class="item-title">Docker 从零理解：从 Dockerfile 到 Container</h2>
+              <time class="item-date" datetime="2026-07-10">Jul 10, 2026</time>
+            </div>
+            <p class="item-summary">
+              用一个虚构的五服务商店，从构建 Image、启动 Container，一路讲清 Compose、网络、Volume 与 Docker 的底层运行链路。
+            </p>
+            <div class="item-meta">
+              <span class="meta-badge meta-badge-selected">Selected</span>
+              <span class="meta-separator" aria-hidden="true">|</span>
+              <span class="tag-list" aria-label="Tags">
+                <span class="tag">docker</span>
+                <span class="tag">container</span>
+                <span class="tag">devops</span>
+              </span>
+            </div>
+          </li>
+
+          <li class="item">
+            <div class="item-header">
+              <h2 class="item-title">MySQL八股</h2>
+              <time class="item-date" datetime="2026-05-01">May 1, 2026</time>
+            </div>
+            <p class="item-summary">小林coding学习记录</p>
+            <div class="item-meta">
+              <span class="tag-list" aria-label="Tags">
+                <span class="tag">mysql</span><span class="tag">database</span>
+              </span>
+            </div>
+          </li>
+
+          <li class="item">
+            <div class="item-header">
+              <h2 class="item-title">Hello Next</h2>
+              <time class="item-date" datetime="2026-03-03">Mar 3, 2026</time>
+            </div>
+            <p class="item-summary">
+              A simple test post for validating the blog list and post detail pages.
+            </p>
+            <div class="item-meta">
+              <span class="meta-badge meta-badge-selected">Selected</span>
+              <span class="meta-separator" aria-hidden="true">|</span>
+              <span class="tag-list" aria-label="Tags">
+                <span class="tag">Test</span><span class="tag">Next.js</span>
+              </span>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section
+        class="view"
+        id="hub-view"
+        role="tabpanel"
+        aria-labelledby="hub-tab"
+        hidden
+      >
+        <header class="hero">
+          <h1>Hub</h1>
+        </header>
+
+        <div class="filters" aria-label="Hub sections">
+          <span class="filter-active">All</span><span>Skills</span><span>Demos</span>
+        </div>
+        <p class="section-description">
+          Reusable skills and interactive demos collected in one place.
+        </p>
+
+        <ol class="item-list">
+          <li class="item">
+            <div class="item-header">
+              <h2 class="item-title">Docker 运行原理 · 交互阅读版</h2>
+            </div>
+            <p class="item-summary">
+              更轻、更安静的教材式版本，用分步场景和两个小实验解释 Image、Container、网络、Volume 与 Compose。
+            </p>
+            <div class="item-meta">
+              <span class="meta-badge">Demo</span>
+              <span class="tag-list" aria-label="Tags">
+                <span class="tag">docker</span><span class="tag">container</span>
+              </span>
+              <time class="meta-date" datetime="2026-07-09">Jul 9, 2026</time>
+            </div>
+          </li>
+
+          <li class="item">
+            <div class="item-header">
+              <h2 class="item-title">Docker 运行原理动态讲解</h2>
+            </div>
+            <p class="item-summary">
+              从 Dockerfile、Image 到 Container，配合构建、隔离、网络、Volume 与 Compose 动画，从头理解 Docker。
+            </p>
+            <div class="item-meta">
+              <span class="meta-badge">Demo</span>
+              <span class="tag-list" aria-label="Tags">
+                <span class="tag">docker</span><span class="tag">visualization</span>
+              </span>
+              <time class="meta-date" datetime="2026-07-09">Jul 9, 2026</time>
+            </div>
+          </li>
+
+          <li class="item">
+            <div class="item-header">
+              <h2 class="item-title">数据结构可视化讲解</h2>
+            </div>
+            <p class="item-summary">
+              Skip List 与 LRU Cache 的交互式讲解入口，包含动态演示、实现代码和工程取舍。
+            </p>
+            <div class="item-meta">
+              <span class="meta-badge">Demo</span>
+              <span class="tag-list" aria-label="Tags">
+                <span class="tag">algorithm</span><span class="tag">data-structure</span>
+              </span>
+            </div>
+          </li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="site-footer">Local preview · no project styles changed</footer>
+
+    <script>
+      const buttons = Array.from(document.querySelectorAll("[data-view]"));
+      const views = {
+        blog: document.querySelector("#blog-view"),
+        hub: document.querySelector("#hub-view")
+      };
+
+      function showView(activeView) {
+        for (const candidate of buttons) {
+          candidate.setAttribute(
+            "aria-selected",
+            String(candidate.dataset.view === activeView)
+          );
+        }
+
+        for (const [name, view] of Object.entries(views)) {
+          view.hidden = name !== activeView;
+        }
+      }
+
+      for (const button of buttons) {
+        button.addEventListener("click", () => showView(button.dataset.view));
+      }
+
+      const requestedView = new URLSearchParams(window.location.search).get("view");
+      showView(requestedView === "hub" ? "hub" : "blog");
+    </script>
+  </body>
+</html>

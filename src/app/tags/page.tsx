@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "Blog",
   description: "Tags are now handled as filters inside Blog.",
   openGraph: {
-    title: "Blog | Personal Website",
+    title: "Blog | Derek Hub",
     description: "Tags are now handled as filters inside Blog.",
     url: "/blog",
     images: [

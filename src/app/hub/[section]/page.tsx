@@ -39,7 +39,7 @@ export async function generateMetadata({
     title: section.label,
     description: section.description,
     openGraph: {
-      title: `${section.label} | Personal Website`,
+      title: `${section.label} | Derek Hub`,
       description: section.description,
       url: `/hub/${section.slug}`,
       images: [
