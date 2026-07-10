@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { RESOURCE_SECTIONS, type ResourceSection } from "../../lib/resources";
+import { RefreshOnPageRestore } from "./refresh-on-page-restore";
 import styles from "./hub-nav.module.css";
 
 type HubNavProps = {
@@ -20,17 +21,20 @@ export function HubNav({ active }: HubNavProps) {
   }));
 
   return (
-    <nav aria-label="Hub sections" className={styles.nav}>
-      {items.map((item) => (
-        <Link
-          aria-current={active === item.slug ? "page" : undefined}
-          className={active === item.slug ? `${styles.link} ${styles.active}` : styles.link}
-          href={item.href}
-          key={item.slug}
-        >
-          {item.label}
-        </Link>
-      ))}
-    </nav>
+    <>
+      <RefreshOnPageRestore />
+      <nav aria-label="Hub sections" className={styles.nav}>
+        {items.map((item) => (
+          <Link
+            aria-current={active === item.slug ? "page" : undefined}
+            className={active === item.slug ? `${styles.link} ${styles.active}` : styles.link}
+            href={item.href}
+            key={item.slug}
+          >
+            {item.label}
+          </Link>
+        ))}
+      </nav>
+    </>
   );
 }
