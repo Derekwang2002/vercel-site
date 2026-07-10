@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Docker：从源代码到运行中的容器",
+    "subtitle": "虚构的 Maple Shop 示例——一次构建，运行隔离进程，在容器外持久化状态",
+    "output": "architecture.html",
+    "viewBox": [1480, 680]
+  },
+  "components": [
+    {
+      "id": "source",
+      "type": "external",
+      "label": "源代码",
+      "sublabel": "app.jar / dist/",
+      "pos": [48, 330],
+      "size": [140, 66]
+    },
+    {
+      "id": "dockerfile",
+      "type": "security",
+      "label": "Dockerfile",
+      "sublabel": "FROM · COPY · RUN",
+      "pos": [48, 160],
+      "size": [140, 66],
+      "tag": "构建配方"
+    },
+    {
+      "id": "buildkit",
+      "type": "backend",
+      "label": "BuildKit",
+      "sublabel": "构建 + 层缓存",
+      "pos": [280, 245],
+      "size": [150, 70]
+    },
+    {
+      "id": "image",
+      "type": "cloud",
+      "label": "Docker 镜像",
+      "sublabel": "maple-api:1.0",
+      "pos": [530, 245],
+      "size": [170, 70],
+      "tag": "只读模板"
+    },
+    {
+      "id": "registry",
+      "type": "cloud",
+      "label": "镜像仓库",
+      "sublabel": "拉取 / 推送镜像",
+      "pos": [530, 72],
+      "size": [170, 64]
+    },
+    {
+      "id": "containerA",
+      "type": "backend",
+      "label": "API 容器 A",
+      "sublabel": "进程 + 可写层",
+      "pos": [820, 145],
+      "size": [180, 72],
+      "tag": "运行中"
+    },
+    {
+      "id": "containerB",
+      "type": "backend",
+      "label": "API 容器 B",
+      "sublabel": "同一镜像，新实例",
+      "pos": [820, 340],
+      "size": [180, 72],
+      "tag": "已隔离"
+    },
+    {
+      "id": "network",
+      "type": "messagebus",
+      "label": "Docker 网络",
+      "sublabel": "服务名 DNS",
+      "pos": [1080, 245],
+      "size": [165, 64]
+    },
+    {
+      "id": "postgres",
+      "type": "database",
+      "label": "数据库",
+      "sublabel": "PostgreSQL :5432",
+      "pos": [1290, 72],
+      "size": [120, 66]
+    },
+    {
+      "id": "minio",
+      "type": "database",
+      "label": "文件存储",
+      "sublabel": "对象存储 :9000",
+      "pos": [1290, 360],
+      "size": [120, 66]
+    },
+    {
+      "id": "kernel",
+      "type": "cloud",
+      "label": "Linux 内核",
+      "sublabel": "命名空间 + cgroups",
+      "pos": [810, 535],
+      "size": [180, 66],
+      "tag": "共享"
+    },
+    {
+      "id": "volume",
+      "type": "database",
+      "label": "命名卷",
+      "sublabel": "持久化数据库文件",
+      "pos": [1160, 535],
+      "size": [190, 66],
+      "tag": "独立于容器生命周期"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "01 / 镜像构建",
+      "wraps": ["source", "dockerfile", "buildkit", "image", "registry"]
+    },
+    {
+      "kind": "region",
+      "label": "02 / macOS 上的 Docker Desktop Linux VM",
+      "wraps": ["containerA", "containerB", "network", "postgres", "minio", "kernel", "volume"]
+    },
+    {
+      "kind": "security-group",
+      "label": "容器隔离",
+      "wraps": ["containerA", "containerB"]
+    }
+  ],
+  "connections": [
+    {
+      "from": "dockerfile",
+      "to": "buildkit",
+      "label": "构建指令",
+      "variant": "security",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "source",
+      "to": "buildkit",
+      "label": "构建上下文",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "buildkit",
+      "to": "image",
+      "label": "docker build",
+      "variant": "emphasis"
+    },
+    {
+      "from": "registry",
+      "to": "image",
+      "label": "docker pull",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [615, 190]
+    },
+    {
+      "from": "image",
+      "to": "containerA",
+      "label": "docker run",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "image",
+      "to": "containerB",
+      "label": "创建另一实例",
+      "fromSide": "right",
+      "toSide": "left",
+      "route": "orthogonal-h",
+      "via": [[760, 280], [760, 376]]
+    },
+    {
+      "from": "containerA",
+      "to": "network",
+      "label": "服务名 DNS",
+      "fromSide": "right",
+      "toSide": "left",
+      "route": "orthogonal-h"
+    },
+    {
+      "from": "containerB",
+      "to": "network",
+      "fromSide": "right",
+      "toSide": "left",
+      "route": "orthogonal-h"
+    },
+    {
+      "from": "network",
+      "to": "postgres",
+      "label": "SQL",
+      "fromSide": "right",
+      "toSide": "left",
+      "route": "orthogonal-h"
+    },
+    {
+      "from": "network",
+      "to": "minio",
+      "label": "S3 API",
+      "fromSide": "right",
+      "toSide": "left",
+      "route": "orthogonal-h"
+    },
+    {
+      "from": "containerA",
+      "to": "kernel",
+      "label": "隔离机制",
+      "variant": "security",
+      "fromSide": "right",
+      "toSide": "top",
+      "via": [[1045, 181], [1045, 480], [900, 480]],
+      "labelAt": [1068, 325]
+    },
+    {
+      "from": "containerB",
+      "to": "kernel",
+      "variant": "security",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [[910, 480], [900, 480]]
+    },
+    {
+      "from": "postgres",
+      "to": "volume",
+      "label": "数据库文件",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "top",
+      "route": "orthogonal-h",
+      "via": [[1422, 105], [1422, 507], [1255, 507]],
+      "labelAt": [1335, 497]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "虚构示例",
+      "items": [
+        "Maple Shop 是虚构的在线商店",
+        "网页前端 + API + 数据库 + 文件存储 + 后台任务",
+        "所有名称与数据均为教学用别名"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "运行时",
+      "items": [
+        "容器是隔离的 Linux 进程",
+        "主 PID 退出 → 容器停止",
+        "多个容器可以共享同一镜像"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "数据与网络",
+      "items": [
+        "在 Compose 网络中使用服务名",
+        "使用卷保存持久化数据",
+        "localhost 始终指当前容器"
+      ]
+    }
+  ]
+}

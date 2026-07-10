@@ -80,6 +80,45 @@
   line-height: 1.8;
 }
 
+.blockquote {
+  background: var(--color-surface-raised);
+  border-left: 3px solid var(--color-text);
+  color: var(--color-text-soft);
+  margin: 1rem 0 1.25rem;
+  padding: 0.85rem 1rem;
+  line-height: 1.75;
+}
+
+.tableScroll {
+  margin: 1rem 0 1.35rem;
+  overflow-x: auto;
+}
+
+.table {
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  min-width: 100%;
+}
+
+.table th,
+.table td {
+  border-bottom: 1px solid var(--color-border-soft);
+  padding: 0.68rem 0.8rem;
+  vertical-align: top;
+}
+
+.table th {
+  background: var(--color-surface-raised);
+  color: var(--color-text);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.table tbody tr:hover {
+  background: var(--color-surface-raised);
+}
+
 .h1,
 .h2,
 .h3,

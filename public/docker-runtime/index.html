@@ -1,0 +1,1387 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="从 Dockerfile、Image 到 Container，配合构建、隔离、网络、Volume 与 Docker Compose 动画，从头理解 Docker 的运行原理。">
+  <meta name="theme-color" content="#f1eee4">
+  <title>Docker 怎么跑起来的？｜动态运行原理讲解</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap");
+
+    :root {
+      color-scheme: light;
+      --bg: #f1eee4;
+      --paper: #fbfaf4;
+      --paper-2: #fff;
+      --ink: #111b22;
+      --muted: #5f696c;
+      --faint: #8d9695;
+      --line: #25343d;
+      --soft-line: rgba(37, 52, 61, .18);
+      --grid: rgba(37, 52, 61, .06);
+      --cyan: #009a9f;
+      --cyan-bright: #22baba;
+      --cyan-soft: rgba(0, 154, 159, .11);
+      --orange: #e6532f;
+      --orange-soft: rgba(230, 83, 47, .12);
+      --lime: #84ac20;
+      --lime-soft: rgba(132, 172, 32, .13);
+      --blue: #1d6687;
+      --yellow: #c99116;
+      --terminal: #0d171c;
+      --terminal-ink: #d9ebe7;
+      --terminal-muted: #7f9793;
+      --header: rgba(241, 238, 228, .93);
+      --shadow: 8px 8px 0 rgba(17, 27, 34, .11);
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0e171b;
+      --paper: #151f24;
+      --paper-2: #1b272d;
+      --ink: #edf4f1;
+      --muted: #a6b3b0;
+      --faint: #788583;
+      --line: #d3e1de;
+      --soft-line: rgba(211, 225, 222, .17);
+      --grid: rgba(211, 225, 222, .055);
+      --cyan: #3acaca;
+      --cyan-bright: #68dddd;
+      --cyan-soft: rgba(58, 202, 202, .13);
+      --orange: #ff7049;
+      --orange-soft: rgba(255, 112, 73, .14);
+      --lime: #b2da4d;
+      --lime-soft: rgba(178, 218, 77, .13);
+      --blue: #6bb9d8;
+      --yellow: #efbd4f;
+      --terminal: #071014;
+      --terminal-ink: #e0f4ef;
+      --terminal-muted: #829c97;
+      --header: rgba(14, 23, 27, .94);
+      --shadow: 8px 8px 0 rgba(0, 0, 0, .28);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg); }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+      line-height: 1.65;
+      background:
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        var(--bg);
+      background-size: 28px 28px;
+      overflow-x: clip;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      opacity: .18;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.11'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+    a { color: inherit; }
+    button { color: inherit; font: inherit; }
+    :focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+    .skip {
+      position: fixed;
+      left: 16px;
+      top: -80px;
+      z-index: 99;
+      padding: 10px 14px;
+      color: var(--paper);
+      background: var(--ink);
+    }
+    .skip:focus { top: 16px; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 15;
+      min-height: 58px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 max(18px, calc((100vw - 1320px) / 2));
+      border-bottom: 1px solid var(--soft-line);
+      background: var(--header);
+      backdrop-filter: blur(14px);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      width: max-content;
+      text-decoration: none;
+      font: 800 14px/1 "JetBrains Mono", monospace;
+    }
+    .brandmark {
+      display: grid;
+      grid-template-columns: repeat(3, 7px);
+      grid-template-rows: repeat(2, 7px);
+      gap: 2px;
+      transform: skewY(-6deg);
+    }
+    .brandmark i { display: block; background: var(--cyan); border: 1px solid currentColor; }
+    .brandmark i:first-child { grid-column: 2; }
+    nav { display: flex; gap: 20px; font: 700 12px/1 "JetBrains Mono", monospace; color: var(--muted); }
+    nav a { text-decoration: none; border-bottom: 1px solid transparent; }
+    nav a:hover { color: var(--ink); border-color: currentColor; }
+    .top-actions { display: flex; justify-content: flex-end; gap: 8px; }
+    .top-link {
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      text-decoration: none;
+      font: 700 11px/1 "JetBrains Mono", monospace;
+      white-space: nowrap;
+      transition: transform .15s ease, color .15s ease, border-color .15s ease;
+    }
+    .top-link:hover {
+      color: var(--cyan);
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+    }
+    .icon-btn {
+      appearance: none;
+      width: 36px;
+      height: 36px;
+      display: inline-grid;
+      place-items: center;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      cursor: pointer;
+      transition: transform .15s ease, color .15s ease;
+    }
+    .icon-btn:hover { color: var(--cyan); transform: translateY(-2px); }
+    .progress { position: absolute; left: 0; bottom: -1px; height: 3px; width: 0; background: var(--orange); }
+
+    .page { width: min(1320px, calc(100% - 36px)); margin: 0 auto; }
+    .hero {
+      min-height: calc(100svh - 58px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(360px, .85fr);
+      gap: clamp(38px, 7vw, 96px);
+      align-items: center;
+      padding: 70px 0 64px;
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      color: var(--cyan);
+      font: 700 12px/1 "JetBrains Mono", monospace;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 42px; height: 3px; background: currentColor; }
+    h1, h3, .display {
+      font-family: "Barlow Condensed", "Noto Sans SC", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: -.045em;
+    }
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      display: grid;
+      gap: 7px;
+      line-height: 1;
+      font-weight: 900;
+    }
+    .hero-latin {
+      display: block;
+      color: var(--ink);
+      font: 900 clamp(70px, 7.2vw, 108px)/.82 "Barlow Condensed", sans-serif;
+      letter-spacing: -.045em;
+      text-transform: uppercase;
+    }
+    .hero-cn {
+      display: block;
+      color: var(--ink);
+      font: 900 clamp(48px, 5vw, 70px)/1.08 "Noto Sans SC", sans-serif;
+      letter-spacing: -.075em;
+      text-transform: none;
+    }
+    .lead { max-width: 700px; margin: 34px 0 0; color: var(--muted); font-size: clamp(16px, 1.6vw, 20px); }
+    .lead strong { color: var(--ink); }
+    .case-note {
+      max-width: 700px;
+      margin-top: 24px;
+      padding: 15px 17px;
+      border-left: 4px solid var(--cyan);
+      background: var(--cyan-soft);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .case-note b {
+      color: var(--ink);
+      font-family: "JetBrains Mono", monospace;
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .btn {
+      appearance: none;
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 0 17px;
+      border: 2px solid var(--line);
+      border-radius: 2px;
+      color: var(--paper);
+      background: var(--ink);
+      box-shadow: 4px 4px 0 var(--cyan);
+      text-decoration: none;
+      font: 800 13px/1 "JetBrains Mono", monospace;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--cyan); }
+    .btn.alt { color: var(--ink); background: var(--paper); box-shadow: none; }
+    .btn.small { min-height: 40px; padding: 0 13px; font-size: 11px; }
+
+    .mental {
+      position: relative;
+      min-height: 570px;
+      padding: 28px;
+      border: 2px solid var(--line);
+      background: var(--paper);
+      box-shadow: 14px 14px 0 var(--soft-line);
+    }
+    .mental::before {
+      content: "MENTAL MODEL / 001";
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      color: var(--faint);
+      font: 600 11px/1 "JetBrains Mono", monospace;
+    }
+    .barcode {
+      height: 14px;
+      margin: 27px 0 34px;
+      border-top: 2px solid var(--line);
+      border-bottom: 1px solid var(--soft-line);
+      background: repeating-linear-gradient(90deg, var(--line) 0 2px, transparent 2px 11px);
+      opacity: .34;
+    }
+    .chain { display: grid; gap: 24px; padding: 0 12px; }
+    .chain-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 17px;
+      align-items: center;
+      padding: 17px;
+      border: 2px solid var(--line);
+      background: var(--paper-2);
+    }
+    .chain-item + .chain-item::before {
+      content: "";
+      position: absolute;
+      left: 45px;
+      top: -26px;
+      width: 2px;
+      height: 26px;
+      background: repeating-linear-gradient(to bottom, var(--cyan) 0 5px, transparent 5px 9px);
+      animation: vflow .7s linear infinite;
+    }
+    .chain-num {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      color: var(--paper);
+      background: var(--line);
+      font: 900 24px/1 "Barlow Condensed", sans-serif;
+    }
+    .chain-item:nth-child(2) .chain-num { background: var(--cyan); }
+    .chain-item:nth-child(3) .chain-num { background: var(--orange); }
+    .chain-item b { display: block; font: 800 25px/1 "Barlow Condensed", sans-serif; text-transform: uppercase; }
+    .chain-item small { display: block; margin-top: 7px; color: var(--muted); font-size: 13px; }
+    .formula {
+      margin: 28px 12px 0;
+      padding: 15px 17px;
+      color: var(--terminal-ink);
+      background: var(--terminal);
+      border-left: 5px solid var(--lime);
+      font: 600 13px/1.7 "JetBrains Mono", monospace;
+    }
+    .formula mark { color: var(--lime); background: transparent; }
+    @keyframes vflow { to { background-position-y: 9px; } }
+
+    .section { padding: 92px 0; border-top: 2px solid var(--line); }
+    .section-head {
+      display: grid;
+      grid-template-columns: 105px minmax(0, 1fr) minmax(260px, 410px);
+      gap: 30px;
+      align-items: end;
+      margin-bottom: 40px;
+    }
+    .section-no { align-self: start; color: var(--orange); font: 900 56px/.8 "Barlow Condensed", sans-serif; }
+    h2 {
+      margin: 0;
+      font: 900 clamp(42px, 4.6vw, 64px)/1.07 "Noto Sans SC", sans-serif;
+      letter-spacing: -.065em;
+      text-transform: none;
+    }
+    .section-head p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .sim {
+      border: 2px solid var(--line);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+    .simbar {
+      min-height: 53px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 18px;
+      color: var(--terminal-ink);
+      background: var(--terminal);
+      border-bottom: 2px solid var(--line);
+      font: 700 12px/1 "JetBrains Mono", monospace;
+    }
+    .signal { display: inline-block; width: 9px; height: 9px; margin-right: 10px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 5px rgba(132, 172, 32, .14); animation: pulse 1.5s infinite; }
+    @keyframes pulse { 50% { opacity: .45; transform: scale(.75); } }
+    .simbody { display: grid; grid-template-columns: 235px minmax(0, 1fr); min-height: 610px; }
+    .stepnav { display: block; border-right: 2px solid var(--line); background: var(--paper-2); }
+    .step {
+      appearance: none;
+      width: 100%;
+      min-height: 79px;
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 11px;
+      align-items: center;
+      padding: 11px 15px;
+      border: 0;
+      border-bottom: 1px solid var(--soft-line);
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+    }
+    .step:hover { background: var(--cyan-soft); }
+    .step[aria-current="step"] { color: var(--paper); background: var(--cyan); }
+    .stepnum { width: 33px; height: 33px; display: grid; place-items: center; border: 1px solid currentColor; font: 700 11px/1 "JetBrains Mono", monospace; }
+    .step b { display: block; font-size: 14px; line-height: 1.25; }
+    .step small { display: block; margin-top: 5px; color: var(--muted); font: 500 11px/1.35 "JetBrains Mono", monospace; }
+    .step[aria-current="step"] small { color: rgba(255,255,255,.72); }
+    .workspace { min-width: 0; display: grid; grid-template-rows: auto 1fr auto; }
+    .simcopy {
+      min-height: 128px;
+      display: grid;
+      grid-template-columns: 1fr minmax(250px, .72fr);
+      gap: 22px;
+      padding: 20px 22px;
+      border-bottom: 1px solid var(--soft-line);
+    }
+    .simcopy small { color: var(--orange); font: 700 11px/1 "JetBrains Mono", monospace; }
+    .simcopy h3 { margin: 7px 0 0; font-size: 33px; line-height: 1; }
+    .simcopy p { margin: 0; color: var(--muted); font-size: 14px; }
+    .stage-scroll {
+      overflow-x: auto;
+      background:
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        var(--bg);
+      background-size: 22px 22px;
+    }
+    .stage {
+      --diagram-left: calc((100% - 850px) / 2);
+      position: relative;
+      min-width: 850px;
+      min-height: 560px;
+      overflow: hidden;
+    }
+    .stage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 43px; height: 2px; background: var(--line); opacity: .4; }
+    .floor { position: absolute; left: calc(var(--diagram-left) + 18px); bottom: 14px; color: var(--faint); font: 600 11px/1 "JetBrains Mono", monospace; }
+    .node {
+      position: absolute;
+      z-index: 3;
+      width: 140px;
+      min-height: 78px;
+      padding: 11px;
+      border: 2px solid var(--line);
+      background: var(--paper);
+      opacity: .3;
+      filter: grayscale(1);
+      transform: translateY(5px);
+      transition: opacity .28s ease, filter .28s ease, transform .28s ease, box-shadow .28s ease;
+    }
+    .node.active { opacity: 1; filter: none; transform: none; box-shadow: 5px 5px 0 var(--soft-line); }
+    .node.current { box-shadow: 6px 6px 0 var(--cyan); }
+    .node small { display: block; margin-bottom: 7px; color: var(--faint); font: 700 11px/1 "JetBrains Mono", monospace; text-transform: uppercase; }
+    .node b { display: block; font: 800 21px/1 "Barlow Condensed", sans-serif; text-transform: uppercase; }
+    .node code { display: block; max-width: 100%; margin-top: 8px; color: var(--muted); font: 600 11px/1.4 "JetBrains Mono", monospace; overflow-wrap: anywhere; word-break: break-word; }
+    .source { left: calc(var(--diagram-left) + 40px); top: 85px; }
+    .dockerfile-node { left: calc(var(--diagram-left) + 40px); top: 250px; }
+    .builder { left: calc(var(--diagram-left) + 245px); top: 165px; width: 150px; border-color: var(--orange); }
+    .image { left: calc(var(--diagram-left) + 450px); top: 75px; width: 170px; border-color: var(--cyan); }
+    .container { left: calc(var(--diagram-left) + 655px); top: 175px; width: 180px; min-height: 122px; border-color: var(--lime); }
+    .network { left: calc(var(--diagram-left) + 450px); top: 300px; width: 170px; min-height: 63px; border-color: var(--blue); }
+    .volume { left: calc(var(--diagram-left) + 655px); top: 375px; width: 180px; min-height: 56px; border-color: var(--yellow); }
+    .layers { display: grid; gap: 3px; margin-top: 8px; }
+    .layers i { display: block; height: 6px; border: 1px solid var(--cyan); background: var(--cyan-soft); }
+    .pid {
+      margin-top: 11px;
+      padding: 6px;
+      color: var(--terminal-ink);
+      background: var(--terminal);
+      opacity: 0;
+      transform: translateY(4px);
+      font: 600 11px/1.35 "JetBrains Mono", monospace;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+    .stage[data-step="4"] .pid, .stage[data-step="5"] .pid, .stage[data-step="6"] .pid { opacity: 1; transform: none; }
+    .flows { position: absolute; left: var(--diagram-left); top: 0; z-index: 1; width: 850px; height: 400px; pointer-events: none; }
+    .path {
+      fill: none;
+      stroke: var(--faint);
+      stroke-width: 2;
+      stroke-dasharray: 6 7;
+      opacity: .14;
+      marker-end: url("#arrow");
+      transition: opacity .25s ease, stroke .25s ease;
+    }
+    .arrowhead { fill: var(--cyan); }
+    .path.past { stroke: var(--cyan); opacity: .46; }
+    .path.active { stroke: var(--cyan); opacity: .95; animation: dash .7s linear infinite; }
+    .flowdot { fill: var(--orange); opacity: 0; filter: drop-shadow(0 0 4px var(--orange)); }
+    .flowdot.active { opacity: 1; }
+    @keyframes dash { to { stroke-dashoffset: -13; } }
+    .terminal {
+      min-height: 116px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      padding: 16px 19px;
+      color: var(--terminal-ink);
+      background: var(--terminal);
+      border-top: 2px solid var(--line);
+    }
+    .command { margin: 0; color: var(--cyan-bright); font: 600 12px/1.55 "JetBrains Mono", monospace; white-space: normal; overflow-wrap: anywhere; }
+    .command::before { content: "$ "; color: var(--lime); }
+    .log { margin: 7px 0 0; color: var(--terminal-muted); font: 500 11px/1.55 "JetBrains Mono", monospace; }
+    .controls { display: flex; align-items: center; gap: 7px; }
+    .terminal .icon-btn { color: var(--terminal-ink); background: rgba(255,255,255,.04); border-color: rgba(213,231,228,.35); }
+    .icon-btn:disabled { opacity: .3; cursor: not-allowed; }
+
+    .objects { display: grid; grid-template-columns: repeat(3, 1fr); border: 2px solid var(--line); background: var(--paper); }
+    .object { position: relative; min-height: 360px; padding: 28px; overflow: hidden; }
+    .object + .object { border-left: 2px solid var(--line); }
+    .object::after { content: attr(data-letter); position: absolute; right: -10px; bottom: -35px; color: var(--soft-line); font: 900 145px/1 "Barlow Condensed", sans-serif; }
+    .tag { display: inline-block; padding: 7px 9px; color: var(--paper); background: var(--line); font: 700 11px/1 "JetBrains Mono", monospace; }
+    .object:nth-child(2) .tag { background: var(--cyan); }
+    .object:nth-child(3) .tag { background: var(--orange); }
+    .object h3 { position: relative; z-index: 1; margin: 21px 0 0; font-size: 44px; line-height: .9; }
+    .object p { position: relative; z-index: 1; margin: 18px 0 0; color: var(--muted); font-size: 14px; }
+    .analogy { position: relative; z-index: 1; margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--soft-line); }
+    .analogy b { display: block; color: var(--orange); font: 700 11px/1 "JetBrains Mono", monospace; }
+    .analogy span { display: block; margin-top: 8px; font-size: 14px; font-weight: 700; }
+    .code { position: relative; z-index: 1; margin-top: 20px; padding: 12px 14px; color: var(--terminal-ink); background: var(--terminal); font: 600 11px/1.55 "JetBrains Mono", monospace; overflow-x: auto; }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+      border: 2px solid var(--line);
+      background: var(--paper);
+    }
+    .labcopy { padding: 30px; border-right: 2px solid var(--line); }
+    .labcopy h3 { margin: 0; font-size: 39px; line-height: .95; }
+    .labcopy > p { color: var(--muted); font-size: 14px; }
+    .dockerfile { margin-top: 22px; border: 1px solid var(--line); background: var(--terminal); }
+    .dockerline {
+      appearance: none;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 27px 1fr;
+      gap: 9px;
+      padding: 11px;
+      border: 0;
+      border-bottom: 1px solid rgba(213,231,228,.11);
+      color: var(--terminal-muted);
+      background: transparent;
+      text-align: left;
+      font: 500 12px/1.45 "JetBrains Mono", monospace;
+      cursor: pointer;
+    }
+    .dockerline:last-child { border: 0; }
+    .dockerline strong { color: var(--orange); }
+    .dockerline[aria-selected="true"] { color: var(--terminal-ink); background: rgba(0,154,159,.16); box-shadow: inset 4px 0 0 var(--cyan); }
+    .layernote { min-height: 90px; margin-top: 17px; padding: 14px; border-left: 4px solid var(--cyan); background: var(--cyan-soft); font-size: 13px; }
+    .layernote b { display: block; margin-bottom: 6px; font: 700 11px/1 "JetBrains Mono", monospace; }
+    .layerstage {
+      min-height: 520px;
+      display: grid;
+      place-items: center;
+      padding: 44px;
+      background:
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        var(--bg);
+      background-size: 24px 24px;
+    }
+    .imagestack { width: min(430px, 92%); display: grid; gap: 8px; }
+    .imagecap { margin-bottom: 16px; text-align: center; }
+    .imagecap b { display: block; font: 900 38px/.9 "Barlow Condensed", sans-serif; }
+    .imagecap small { color: var(--muted); font: 600 11px/1 "JetBrains Mono", monospace; }
+    .layer {
+      min-height: 61px;
+      display: grid;
+      grid-template-columns: 40px 1fr auto;
+      gap: 13px;
+      align-items: center;
+      padding: 10px 15px;
+      border: 2px solid var(--line);
+      background: var(--paper);
+      box-shadow: 6px 6px 0 var(--soft-line);
+      transition: transform .22s ease, border-color .22s ease, background .22s ease;
+    }
+    .layer.selected { transform: translateX(12px); border-color: var(--cyan); background: var(--cyan-soft); }
+    .layer em { color: var(--faint); font: 900 17px/1 "Barlow Condensed", sans-serif; }
+    .layer b { display: block; font: 700 11px/1.25 "JetBrains Mono", monospace; }
+    .layer small { color: var(--muted); font-size: 11px; }
+    .cache { padding: 5px 7px; color: var(--lime); border: 1px solid currentColor; font: 700 11px/1 "JetBrains Mono", monospace; }
+
+    .runtime-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr); gap: 24px; }
+    .runtime { min-height: 540px; border: 2px solid var(--line); background: var(--paper); }
+    .tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 2px solid var(--line); }
+    .tab { appearance: none; min-height: 52px; border: 0; background: transparent; font: 700 12px/1 "JetBrains Mono", monospace; cursor: pointer; }
+    .tab + .tab { border-left: 1px solid var(--line); }
+    .tab[aria-selected="true"] { color: var(--paper); background: var(--cyan); }
+    .runtime-diagram {
+      min-height: 488px;
+      display: grid;
+      align-content: center;
+      gap: 12px;
+      padding: 33px;
+      background:
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+        linear-gradient(var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .runtime-row { display: grid; gap: 11px; }
+    .runtime-row.apps { grid-template-columns: 1fr 1fr; }
+    .rbox { padding: 16px; text-align: center; border: 2px solid var(--line); background: var(--paper-2); font: 700 12px/1.35 "JetBrains Mono", monospace; }
+    .rbox span { display: block; margin-top: 6px; color: var(--muted); font: 500 11px/1.4 "Noto Sans SC", sans-serif; }
+    .rbox.app { border-color: var(--cyan); }
+    .rbox.guest { border-color: var(--orange); }
+    .rbox.kernel { color: var(--paper); background: var(--line); }
+    .rbox.host { color: var(--muted); border-style: dashed; }
+    .down { height: 20px; display: grid; place-items: center; color: var(--cyan); font-weight: 900; }
+    .notes { display: grid; align-content: start; gap: 13px; }
+    .note { padding: 21px; border: 2px solid var(--line); background: var(--paper); }
+    .note.dark { color: var(--terminal-ink); background: var(--terminal); border-color: var(--terminal); }
+    .note b { display: block; margin-bottom: 8px; font: 800 14px/1.2 "JetBrains Mono", monospace; }
+    .note p { margin: 0; color: var(--muted); font-size: 13px; }
+    .note.dark p { color: var(--terminal-muted); }
+    .note code { color: var(--cyan-bright); font-family: "JetBrains Mono", monospace; }
+
+    .experiments { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .experiment { display: grid; grid-template-rows: auto 1fr auto; border: 2px solid var(--line); background: var(--paper); box-shadow: var(--shadow); }
+    .exhead { padding: 23px; border-bottom: 2px solid var(--line); }
+    .exhead small { color: var(--orange); font: 700 11px/1 "JetBrains Mono", monospace; }
+    .exhead h3 { margin: 9px 0 0; font-size: 36px; line-height: .95; }
+    .exhead p { margin: 11px 0 0; color: var(--muted); font-size: 13px; }
+    .exstage {
+      padding: 26px;
+      background:
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        var(--bg);
+      background-size: 22px 22px;
+    }
+    .storage { min-height: 250px; display: grid; grid-template-columns: 1fr 55px 1fr; gap: 11px; align-items: center; }
+    .storebox {
+      min-height: 187px;
+      display: grid;
+      align-content: center;
+      gap: 11px;
+      padding: 18px;
+      border: 3px solid var(--line);
+      background: var(--paper);
+      text-align: center;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+    .storebox.removed { opacity: .22; transform: scale(.94); border-style: dashed; }
+    .storebox.volume-box { border-color: var(--yellow); border-radius: 50% / 12%; }
+    .storebox strong { font: 900 34px/1 "Barlow Condensed", sans-serif; }
+    .storebox b { font: 800 12px/1.25 "JetBrains Mono", monospace; }
+    .file { min-height: 30px; padding: 6px; color: var(--muted); border: 1px dashed currentColor; font: 600 11px/1.45 "JetBrains Mono", monospace; }
+    .link { color: var(--yellow); text-align: center; font: 900 22px/1 "JetBrains Mono", monospace; }
+    .exlog { min-height: 76px; margin-top: 16px; padding: 12px; color: var(--terminal-muted); background: var(--terminal); font: 500 11px/1.6 "JetBrains Mono", monospace; }
+    .exactions { display: flex; flex-wrap: wrap; gap: 7px; padding: 17px; border-top: 1px solid var(--soft-line); }
+    .action {
+      appearance: none;
+      min-height: 36px;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      background: var(--paper-2);
+      font: 700 11px/1 "JetBrains Mono", monospace;
+      cursor: pointer;
+    }
+    .action:hover:not(:disabled) { color: var(--paper); background: var(--cyan); border-color: var(--cyan); }
+    .action:disabled { opacity: .35; cursor: not-allowed; }
+    .netmap { position: relative; min-height: 275px; }
+    .service {
+      position: absolute;
+      z-index: 2;
+      width: 128px;
+      min-height: 85px;
+      display: grid;
+      place-items: center;
+      padding: 11px;
+      border: 2px solid var(--line);
+      background: var(--paper);
+      text-align: center;
+    }
+    .service b { display: block; font: 800 12px/1.25 "JetBrains Mono", monospace; }
+    .service small { color: var(--muted); font-size: 11px; }
+    .backend { left: calc(50% - 64px); top: 8px; border-color: var(--cyan); }
+    .postgres { left: 15px; bottom: 18px; border-color: var(--yellow); }
+    .minio { right: 15px; bottom: 18px; border-color: var(--blue); }
+    .netsvg { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; }
+    .netpath { fill: none; stroke: var(--faint); stroke-width: 2; stroke-dasharray: 7 6; opacity: .24; marker-end: url("#netarrow"); }
+    .netmap[data-test="service"] #servicePath { stroke: var(--lime); opacity: 1; animation: dash .7s infinite; }
+    .netmap[data-test="localhost"] #localPath { stroke: var(--orange); opacity: 1; animation: dash .7s infinite; }
+    .addresses { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+    .address { appearance: none; min-height: 50px; padding: 9px; border: 2px solid var(--line); background: var(--paper); font: 600 11px/1.45 "JetBrains Mono", monospace; overflow-wrap: anywhere; cursor: pointer; }
+    .address:hover { border-color: var(--cyan); }
+    .netresult { min-height: 65px; margin-top: 9px; padding: 12px; border-left: 4px solid var(--faint); background: var(--paper); color: var(--muted); font-size: 13px; }
+    .netresult.ok { border-color: var(--lime); background: var(--lime-soft); }
+    .netresult.fail { border-color: var(--orange); background: var(--orange-soft); }
+
+    .compose {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 325px;
+      border: 2px solid var(--line);
+      background: var(--terminal);
+      box-shadow: var(--shadow);
+    }
+    .compose-terminal { min-height: 590px; padding: 23px; color: var(--terminal-ink); border-right: 2px solid rgba(213,231,228,.16); font-family: "JetBrains Mono", monospace; }
+    .dots { display: flex; gap: 7px; margin-bottom: 25px; }
+    .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--lime); }
+    .dots i:first-child { background: var(--orange); }
+    .dots i:nth-child(2) { background: var(--yellow); }
+    .compose-command { margin-bottom: 21px; color: var(--cyan-bright); font-size: 12px; }
+    .compose-command::before { content: "derek@mac $ "; color: var(--terminal-muted); }
+    .rows { display: grid; gap: 7px; }
+    .row {
+      min-height: 37px;
+      display: grid;
+      grid-template-columns: 19px 1fr auto;
+      gap: 9px;
+      align-items: center;
+      padding: 6px 8px;
+      color: #536b68;
+      border-left: 2px solid transparent;
+      opacity: .34;
+      transform: translateX(-6px);
+      font-size: 12px;
+      transition: opacity .22s ease, transform .22s ease, color .22s ease;
+    }
+    .row.done { color: var(--terminal-ink); opacity: 1; transform: none; border-color: var(--lime); background: rgba(132,172,32,.055); }
+    .row .check { color: var(--lime); }
+    .row .time { color: var(--terminal-muted); font-size: 11px; }
+    .compose-side { padding: 27px; color: var(--ink); background: var(--paper); }
+    .progress-notation {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 11px;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 12px;
+      border: 2px solid var(--line);
+      background: var(--cyan-soft);
+    }
+    .progress-notation code {
+      color: var(--cyan);
+      font: 800 20px/1 "JetBrains Mono", monospace;
+    }
+    .progress-notation span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .compose-side h3 { margin: 0; font-size: 36px; line-height: 1.08; }
+    .compose-side > p { color: var(--muted); font-size: 13px; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; margin: 23px 0; border: 2px solid var(--line); }
+    .stat { min-height: 94px; display: grid; place-items: center; align-content: center; text-align: center; }
+    .stat + .stat { border-left: 1px solid var(--line); }
+    .stat b { color: var(--orange); font: 900 42px/.8 "Barlow Condensed", sans-serif; }
+    .stat span { margin-top: 8px; color: var(--muted); font-size: 11px; }
+    .legend { display: grid; gap: 10px; margin: 22px 0; font-size: 12px; }
+    .legend div { display: grid; grid-template-columns: 10px 1fr; gap: 9px; }
+    .legend i { width: 9px; height: 9px; margin-top: 5px; background: var(--cyan); }
+    .legend div:nth-child(2) i { background: var(--lime); }
+    .legend div:nth-child(3) i { background: var(--orange); }
+
+    .commands { border: 2px solid var(--line); background: var(--paper); }
+    .cmdrow { display: grid; grid-template-columns: minmax(245px, .82fr) minmax(0, 1.18fr) 42px; align-items: center; min-height: 69px; border-bottom: 1px solid var(--soft-line); }
+    .cmdrow:last-child { border: 0; }
+    .cmdrow code { height: 100%; display: flex; align-items: center; padding: 14px 19px; color: var(--cyan-bright); background: var(--terminal); font: 600 11px/1.5 "JetBrains Mono", monospace; overflow-wrap: anywhere; }
+    .cmdrow span { padding: 14px 20px; color: var(--muted); font-size: 13px; }
+    .copy { appearance: none; width: 31px; height: 31px; border: 1px solid var(--soft-line); background: transparent; cursor: pointer; }
+    .copy:hover { color: var(--paper); background: var(--cyan); }
+    .quiz {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 22px;
+      align-items: center;
+      padding: 24px;
+      color: var(--terminal-ink);
+      background: var(--terminal);
+      border-left: 8px solid var(--orange);
+    }
+    .quiz b { display: block; font: 800 18px/1.2 "JetBrains Mono", monospace; }
+    .quiz span { display: block; margin-top: 7px; color: var(--terminal-muted); font-size: 13px; }
+    .quiz-actions { display: flex; gap: 7px; }
+    .quizbtn { appearance: none; min-height: 42px; padding: 0 13px; color: var(--terminal-ink); border: 1px solid rgba(213,231,228,.35); background: transparent; font: 700 11px/1 "JetBrains Mono", monospace; cursor: pointer; }
+    .quizbtn:hover { color: var(--cyan-bright); border-color: var(--cyan-bright); }
+    .hood { display: grid; grid-template-columns: repeat(4, 1fr); border: 2px solid var(--line); background: var(--paper); }
+    .hood article { position: relative; min-height: 220px; padding: 24px; }
+    .hood article + article { border-left: 2px solid var(--line); }
+    .hood article::before { content: attr(data-no); position: absolute; top: 16px; right: 17px; color: var(--soft-line); font: 900 50px/1 "Barlow Condensed", sans-serif; }
+    .hood b { display: block; margin-top: 50px; font: 900 26px/.95 "Barlow Condensed", sans-serif; text-transform: uppercase; }
+    .hood p { margin: 14px 0 0; color: var(--muted); font-size: 12px; }
+    .hood code { display: inline-block; margin-top: 12px; color: var(--orange); font: 600 11px/1.45 "JetBrains Mono", monospace; }
+
+    footer {
+      width: min(1320px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 36px 0 52px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      border-top: 2px solid var(--line);
+      color: var(--muted);
+      font: 600 11px/1.5 "JetBrains Mono", monospace;
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 17px; }
+    footer a:hover { color: var(--cyan); }
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 30;
+      padding: 11px 15px;
+      color: var(--terminal-ink);
+      background: var(--terminal);
+      border-left: 4px solid var(--lime);
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      font: 600 11px/1.45 "JetBrains Mono", monospace;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .toast.show { opacity: 1; transform: none; }
+    .reveal { opacity: 0; transform: translateY(23px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 1050px) {
+      .topbar { grid-template-columns: 1fr auto; }
+      nav { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .mental { min-height: auto; }
+      .section-head { grid-template-columns: 80px 1fr; }
+      .section-head p { grid-column: 2; }
+      .simbody { grid-template-columns: 1fr; }
+      .stepnav { display: flex; overflow-x: auto; border-right: 0; border-bottom: 2px solid var(--line); }
+      .step { flex: 0 0 180px; border-right: 1px solid var(--soft-line); border-bottom: 0; }
+      .objects { grid-template-columns: 1fr; }
+      .object { min-height: 290px; }
+      .object + .object { border-left: 0; border-top: 2px solid var(--line); }
+      .split, .runtime-grid, .compose { grid-template-columns: 1fr; }
+      .labcopy, .compose-terminal { border-right: 0; border-bottom: 2px solid var(--line); }
+      .hood { grid-template-columns: 1fr 1fr; }
+      .hood article:nth-child(3) { border-left: 0; }
+      .hood article:nth-child(n+3) { border-top: 2px solid var(--line); }
+    }
+
+    @media (max-width: 740px) {
+      .page, footer { width: min(100% - 22px, 1320px); }
+      .topbar { padding: 0 12px; }
+      .brand > span:last-child { display: none; }
+      .top-link { padding: 0 9px; font-size: 11px; }
+      .hero { padding: 52px 0; }
+      .hero-latin { font-size: clamp(64px, 20vw, 88px); }
+      .hero-cn { font-size: clamp(42px, 12vw, 58px); }
+      .mental { padding: 18px 11px; box-shadow: 7px 7px 0 var(--soft-line); }
+      .chain { padding: 0; }
+      .chain-item { grid-template-columns: 46px 1fr; padding: 13px; }
+      .chain-num { width: 42px; height: 42px; }
+      .chain-item + .chain-item::before { left: 33px; }
+      .section { padding: 66px 0; }
+      .section-head { grid-template-columns: 1fr; gap: 15px; }
+      .section-head p { grid-column: auto; }
+      .section-no { font-size: 42px; }
+      h2 { font-size: clamp(38px, 12vw, 52px); }
+      .simcopy, .terminal { grid-template-columns: 1fr; }
+      .controls { justify-content: flex-end; }
+      .labcopy, .layerstage { padding: 21px; }
+      .experiments { grid-template-columns: 1fr; }
+      .storage { grid-template-columns: 1fr; }
+      .link { transform: rotate(90deg); }
+      .addresses { grid-template-columns: 1fr; }
+      .compose-terminal { padding: 15px 9px; overflow-x: auto; }
+      .rows { min-width: 500px; }
+      .cmdrow { grid-template-columns: 1fr 40px; }
+      .cmdrow code { grid-column: 1; }
+      .cmdrow span { grid-column: 1; grid-row: 2; }
+      .copy { grid-column: 2; grid-row: 1 / span 2; }
+      .quiz { grid-template-columns: 1fr; }
+      .quiz-actions { flex-wrap: wrap; }
+      .hood { grid-template-columns: 1fr; }
+      .hood article + article { border-left: 0; border-top: 2px solid var(--line); }
+      footer { display: grid; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="topbar">
+    <a class="brand" href="/hub/demos" aria-label="返回 Derek Hub Demos">
+      <span class="brandmark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span>DOCKER RUNTIME LAB</span>
+    </a>
+    <nav aria-label="本页目录">
+      <a href="#simulator">运行链路</a><a href="#objects">三个对象</a><a href="#experiments">数据与网络</a><a href="#compose">Compose</a>
+    </nav>
+    <div class="top-actions">
+      <a class="top-link" href="reading.html">阅读版</a>
+      <a class="top-link" href="architecture.html">架构图 ↗</a>
+      <button class="icon-btn" id="theme" type="button" aria-label="切换深浅主题">◐</button>
+    </div>
+    <div class="progress" id="progress" aria-hidden="true"></div>
+  </header>
+
+  <main id="main">
+    <section class="page hero">
+      <div>
+        <div class="eyebrow">From zero to PID 1 · 动态讲解</div>
+        <h1><span class="hero-latin">Docker</span><span class="hero-cn">怎么跑起来的？</span></h1>
+        <p class="lead">不要先把 Container 想成“小电脑”。抓住一条主线：<strong>Docker 把程序文件和启动方式做成 Image，再把 Image 启动成受隔离的 Linux 进程。</strong></p>
+        <div class="case-note"><b>贯穿全文的虚构案例｜Maple Shop</b><br>一家小型在线商店，由 web（React 页面）、api（Java 服务）、db（PostgreSQL）、files（对象存储）和 worker（后台任务）组成。所有名称与数据均为教学别名，与真实项目无关。</div>
+        <div class="actions">
+          <a class="btn" href="#simulator">▶ 从第 1 步开始</a>
+          <a class="btn alt" href="architecture.html">查看完整架构图 ↗</a>
+        </div>
+      </div>
+      <aside class="mental" aria-label="Docker 核心心智模型">
+        <div class="barcode" aria-hidden="true"></div>
+        <div class="chain">
+          <div class="chain-item"><span class="chain-num">01</span><div><b>Dockerfile</b><small>配方：FROM、COPY、RUN、ENTRYPOINT</small></div></div>
+          <div class="chain-item"><span class="chain-num">02</span><div><b>Image</b><small>只读模板：文件层 + 启动元数据</small></div></div>
+          <div class="chain-item"><span class="chain-num">03</span><div><b>Container</b><small>运行实例：可写层 + 网络 + 主进程</small></div></div>
+        </div>
+        <div class="formula"><mark>Dockerfile</mark> --build--&gt; <mark>Image</mark><br><mark>Image</mark> --create/start--&gt; <mark>Container</mark></div>
+      </aside>
+    </section>
+
+    <section class="page section" id="simulator">
+      <header class="section-head reveal">
+        <div class="section-no">01</div>
+        <h2>从代码到运行进程</h2>
+        <p>点击步骤或自动播放。build 只负责制作 Image；create/start 才把 Image 变成 Container。</p>
+      </header>
+      <div class="sim reveal">
+        <div class="simbar"><span><i class="signal"></i>docker-engine / guided-run</span><span id="counter">STEP 01 / 07</span></div>
+        <div class="simbody">
+          <div class="stepnav" id="stepnav" aria-label="Docker 运行步骤"></div>
+          <div class="workspace">
+            <div class="simcopy">
+              <div><small id="kicker">01 / INPUT</small><h3 id="stepTitle">准备代码与 Dockerfile</h3></div>
+              <p id="stepDesc">Dockerfile 只是一份配方，描述基础环境、复制哪些文件，以及以后如何启动程序。</p>
+            </div>
+            <div class="stage-scroll" tabindex="0" aria-label="Docker 动画舞台，可横向滚动">
+              <div class="stage" id="stage" data-step="0">
+                <svg class="flows" viewBox="0 0 850 400" role="img" aria-labelledby="flowtitle flowdesc">
+                  <title id="flowtitle">Docker 从源代码到容器的流程</title>
+                  <desc id="flowdesc">源代码和 Dockerfile 交给 BuildKit，生成 Image，再创建 Container，并连接网络与数据卷。</desc>
+                  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" class="arrowhead"></path></marker></defs>
+                  <path class="path" data-flow="1" id="p1" d="M180 135 C215 135 215 185 245 195"></path>
+                  <path class="path" data-flow="1" d="M180 300 C215 300 215 230 245 220"></path>
+                  <path class="path" data-flow="2" id="p2" d="M395 190 C425 190 425 150 450 150"></path>
+                  <path class="path" data-flow="3" id="p3" d="M620 145 C648 145 630 210 655 218"></path>
+                  <path class="path" data-flow="5" id="p5" d="M655 255 C630 265 640 340 620 340"></path>
+                  <path class="path" data-flow="6" id="p6" d="M745 329 L745 375"></path>
+                  <circle class="flowdot" data-flow="1" r="4"><animateMotion dur="1.8s" repeatCount="indefinite"><mpath href="#p1"></mpath></animateMotion></circle>
+                  <circle class="flowdot" data-flow="2" r="4"><animateMotion dur="1.7s" repeatCount="indefinite"><mpath href="#p2"></mpath></animateMotion></circle>
+                  <circle class="flowdot" data-flow="3" r="4"><animateMotion dur="1.8s" repeatCount="indefinite"><mpath href="#p3"></mpath></animateMotion></circle>
+                  <circle class="flowdot" data-flow="5" r="4"><animateMotion dur="1.7s" repeatCount="indefinite"><mpath href="#p5"></mpath></animateMotion></circle>
+                  <circle class="flowdot" data-flow="6" r="4"><animateMotion dur="1.2s" repeatCount="indefinite"><mpath href="#p6"></mpath></animateMotion></circle>
+                </svg>
+                <div class="node source" data-active="0"><small>build context</small><b>项目代码</b><code>app.jar<br>config/</code></div>
+                <div class="node dockerfile-node" data-active="0"><small>recipe</small><b>Dockerfile</b><code>FROM java:21<br>COPY app.jar</code></div>
+                <div class="node builder" data-active="1"><small>builder</small><b>BuildKit</b><code>执行指令 · 复用缓存</code></div>
+                <div class="node image" data-active="2"><small>read-only template</small><b>Image</b><code>maple-api:1.0</code><span class="layers"><i></i><i></i><i></i></span></div>
+                <div class="node container" data-active="3"><small>runtime instance</small><b>Container</b><code>writable layer + isolation</code><div class="pid">PID 1 · java -jar app.jar</div></div>
+                <div class="node network" data-active="5"><small>private network</small><b>Service DNS</b><code>db:5432</code></div>
+                <div class="node volume" data-active="6"><small>persistent storage</small><b>Volume</b><code>/var/lib/postgresql/<wbr>data</code></div>
+                <span class="floor">DOCKER DESKTOP / LINUX VM / RUNTIME FLOOR</span>
+              </div>
+            </div>
+            <div class="terminal">
+              <div aria-live="polite"><p class="command" id="terminalCommand">ls app.jar Dockerfile</p><p class="log" id="terminalLog">找到程序文件和构建配方。此时还没有 Image，也没有 Container。</p></div>
+              <div class="controls">
+                <button class="icon-btn" id="prev" type="button" aria-label="上一步">←</button>
+                <button class="icon-btn" id="play" type="button" aria-label="自动播放">▶</button>
+                <button class="icon-btn" id="next" type="button" aria-label="下一步">→</button>
+                <button class="icon-btn" id="reset" type="button" aria-label="重新开始">↻</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page section" id="objects">
+      <header class="section-head reveal">
+        <div class="section-no">02</div><h2>三个对象，不要混在一起</h2><p>用“菜谱 → 预制餐包 → 正在营业的餐车”区分制作模板和启动实例。</p>
+      </header>
+      <div class="objects reveal">
+        <article class="object" data-letter="D"><span class="tag">RECIPE</span><h3>Dockerfile</h3><p>文本配方。指定基础环境、复制什么、执行什么，以及容器默认运行哪条命令。</p><div class="analogy"><b>简单例子</b><span>菜谱：写清楚原料与制作步骤。</span></div><div class="code">FROM java:21 · COPY app.jar · ENTRYPOINT</div></article>
+        <article class="object" data-letter="I"><span class="tag">TEMPLATE</span><h3>Image</h3><p>构建完成的只读模板。由文件层和启动元数据组成，可以打标签、推送、复用。</p><div class="analogy"><b>简单例子</b><span>密封餐包：内容已准备好，但还没有营业。</span></div><div class="code">maple-api:1.0 · immutable layers</div></article>
+        <article class="object" data-letter="C"><span class="tag">INSTANCE</span><h3>Container</h3><p>Image 的运行实例。拥有可写层、进程视图和网络；主进程退出，Container 就停止。</p><div class="analogy"><b>简单例子</b><span>营业中的餐车：同一餐包能开出多辆。</span></div><div class="code">PID 1 + writable layer + network</div></article>
+      </div>
+    </section>
+
+    <section class="page section" id="layers">
+      <header class="section-head reveal">
+        <div class="section-no">03</div><h2>Build 在“制作模板”</h2><p>点击 Dockerfile 每一行。上游没变化时，下次 build 可以直接复用只读层缓存。</p>
+      </header>
+      <div class="split reveal">
+        <div class="labcopy">
+          <h3>Layer Cache Lab</h3>
+          <p>示例后端镜像：Java 环境 + 工作目录 + 业务 JAR + 启动命令。</p>
+          <div class="dockerfile" role="tablist" aria-label="Dockerfile 指令">
+            <button class="dockerline" type="button" role="tab" aria-selected="true" data-layer="0"><span>01</span><span><strong>FROM</strong> eclipse-temurin:21-jre</span></button>
+            <button class="dockerline" type="button" role="tab" aria-selected="false" data-layer="1"><span>02</span><span><strong>WORKDIR</strong> /app</span></button>
+            <button class="dockerline" type="button" role="tab" aria-selected="false" data-layer="2"><span>03</span><span><strong>COPY</strong> app.jar app.jar</span></button>
+            <button class="dockerline" type="button" role="tab" aria-selected="false" data-layer="3"><span>04</span><span><strong>ENTRYPOINT</strong> ["java","-jar","app.jar"]</span></button>
+          </div>
+          <div class="layernote" id="layerNote" aria-live="polite"><b>01 / BASE LAYER</b>Java 21 用户空间来自基础镜像；它不包含 Linux 内核，运行时共享宿主 Linux 内核。</div>
+        </div>
+        <div class="layerstage" aria-label="Docker Image 文件层">
+          <div class="imagestack">
+            <div class="imagecap"><b>maple-api:1.0</b><small>content-addressed / read-only</small></div>
+            <div class="layer" data-view="3"><em>L4</em><div><b>ENTRYPOINT</b><small>启动元数据</small></div><span class="cache">CACHED</span></div>
+            <div class="layer" data-view="2"><em>L3</em><div><b>app.jar</b><small>业务代码变化通常从这里失效</small></div><span class="cache">12 MB</span></div>
+            <div class="layer" data-view="1"><em>L2</em><div><b>/app</b><small>工作目录元数据</small></div><span class="cache">CACHED</span></div>
+            <div class="layer selected" data-view="0"><em>L1</em><div><b>Java 21 Runtime</b><small>基础文件系统</small></div><span class="cache">CACHED</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page section" id="isolation">
+      <header class="section-head reveal">
+        <div class="section-no">04</div><h2>Container 是隔离进程，不是完整 VM</h2><p>namespaces 隔离“看见什么”，cgroups 约束“能用多少”；容器通常不启动独立内核。</p>
+      </header>
+      <div class="runtime-grid reveal">
+        <div class="runtime">
+          <div class="tabs" role="tablist" aria-label="容器与虚拟机对比">
+            <button class="tab" type="button" role="tab" aria-selected="true" data-model="container">Container 模型</button>
+            <button class="tab" type="button" role="tab" aria-selected="false" data-model="vm">Virtual Machine 模型</button>
+          </div>
+          <div class="runtime-diagram" id="runtime" role="tabpanel">
+            <div class="runtime-row apps" id="runtimeApps"><div class="rbox app">Container A<span>java · 独立 PID / FS / Network</span></div><div class="rbox app">Container B<span>nginx · 独立 PID / FS / Network</span></div></div>
+            <div class="down">↓</div>
+            <div class="runtime-row" id="runtimeMiddle"><div class="rbox">Docker Runtime<span>containerd → runc</span></div></div>
+            <div class="down">↓</div>
+            <div class="runtime-row"><div class="rbox kernel" id="runtimeKernel">共享 Linux Kernel<span>namespaces · cgroups · overlay filesystem</span></div></div>
+            <div class="down">↓</div>
+            <div class="runtime-row"><div class="rbox host" id="runtimeHost">Docker Desktop Linux VM<span>因为 macOS 本身没有 Linux 内核</span></div></div>
+          </div>
+        </div>
+        <aside class="notes">
+          <div class="note dark"><b>主进程就是生命线</b><p>容器启动 <code>ENTRYPOINT + CMD</code>，该进程成为 PID 1。它退出，容器通常进入 Exited。</p></div>
+          <div class="note"><b>为什么启动快？</b><p>不为每个 Container 启动完整 Guest OS；只创建隔离环境，然后启动进程。</p></div>
+          <div class="note"><b>为什么 macOS 还要 VM？</b><p>Linux Container 依赖 Linux 内核。Docker Desktop 先提供轻量 Linux VM，再在里面运行容器。</p></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="page section" id="experiments">
+      <header class="section-head reveal">
+        <div class="section-no">05</div><h2>两个小实验：数据与网络</h2><p>亲手删一次容器，再试一次 localhost，两个最常见误区会立即变得直观。</p>
+      </header>
+      <div class="experiments">
+        <article class="experiment reveal">
+          <header class="exhead"><small>EXPERIMENT A / STORAGE</small><h3>删除 Container 后，什么留下？</h3><p>写入数据后删除并重建：可写层消失，Named Volume 留存。</p></header>
+          <div class="exstage">
+            <div class="storage">
+              <div class="storebox" id="containerBox"><strong id="generation">C1</strong><b>Container 可写层</b><span class="file" id="tmpFile">empty</span></div>
+              <div class="link" aria-hidden="true">↔</div>
+              <div class="storebox volume-box"><strong>VOL</strong><b>Named Volume</b><span class="file" id="volumeFile">empty</span></div>
+            </div>
+            <div class="exlog" id="storageLog" aria-live="polite">$ 等待操作：先写入两类数据。</div>
+          </div>
+          <div class="exactions">
+            <button class="action" id="write" type="button">1. 写入数据</button>
+            <button class="action" id="remove" type="button">2. 删除容器</button>
+            <button class="action" id="recreate" type="button" disabled>3. 重建容器</button>
+            <button class="action" id="storageReset" type="button">↻ 重置</button>
+          </div>
+        </article>
+
+        <article class="experiment reveal">
+          <header class="exhead"><small>EXPERIMENT B / NETWORK</small><h3>API 怎样找 PostgreSQL？</h3><p>Maple Shop 的 Compose 网络提供服务名 DNS；容器里的 localhost 指向它自己。</p></header>
+          <div class="exstage">
+            <div class="netmap" id="netmap" data-test="none">
+              <svg class="netsvg" viewBox="0 0 480 275" aria-hidden="true">
+                <defs><marker id="netarrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" class="arrowhead"></path></marker></defs>
+                <path class="netpath" id="servicePath" d="M240 94 C210 142 126 140 84 190"></path>
+                <path class="netpath" d="M240 94 C270 142 354 140 396 190"></path>
+                <path class="netpath" id="localPath" d="M222 62 C170 16 310 10 258 62"></path>
+              </svg>
+              <div class="service backend"><div><b>api</b><small>Java service :8080</small></div></div>
+              <div class="service postgres"><div><b>db</b><small>PostgreSQL :5432</small></div></div>
+              <div class="service minio"><div><b>files</b><small>Object storage :9000</small></div></div>
+            </div>
+            <div class="addresses">
+              <button class="address" type="button" data-address="localhost">jdbc:postgresql://localhost:5432/shop</button>
+              <button class="address" type="button" data-address="service">jdbc:postgresql://db:5432/shop</button>
+            </div>
+            <div class="netresult" id="netresult" aria-live="polite">请选择 api Container 内部使用的数据库地址。</div>
+          </div>
+          <div class="exactions"><span class="action">宿主 localhost:8080 → api:8080</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="page section" id="compose">
+      <header class="section-head reveal">
+        <div class="section-no">06</div><h2>Compose 一次编排整套服务</h2><p>Maple Shop 需要构建 web、api、worker 三个自有 Image，并复用 PostgreSQL 与对象存储的现成 Image，最后启动 5 个 Container。</p>
+      </header>
+      <div class="compose reveal">
+        <div class="compose-terminal">
+          <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="compose-command">docker compose up --build</div>
+          <div class="rows" aria-live="polite">
+            <div class="row"><span class="check">·</span><span>Image maple-worker:1.0</span><span class="time">Built</span></div>
+            <div class="row"><span class="check">·</span><span>Image maple-api:1.0</span><span class="time">Built</span></div>
+            <div class="row"><span class="check">·</span><span>Image maple-web:1.0</span><span class="time">Built</span></div>
+            <div class="row"><span class="check">·</span><span>Container maple-db</span><span class="time">Healthy</span></div>
+            <div class="row"><span class="check">·</span><span>Container maple-files</span><span class="time">Healthy</span></div>
+            <div class="row"><span class="check">·</span><span>Container maple-worker</span><span class="time">Healthy</span></div>
+            <div class="row"><span class="check">·</span><span>Container maple-api</span><span class="time">Healthy</span></div>
+            <div class="row"><span class="check">·</span><span>Container maple-web</span><span class="time">Started</span></div>
+          </div>
+        </div>
+        <aside class="compose-side">
+          <div class="progress-notation"><code>BUILD → RUN</code><span>先构建 3 个 Image<br>再启动 5 个 Container</span></div>
+          <h3>构建模板，再启动实例</h3>
+          <p>Compose 先制作 web、api、worker 的 Image，再从对应 Image 创建并启动五个服务实例。最终运行的是 5 个 Container。</p>
+          <div class="stats"><div class="stat"><b>3</b><span>构建 Image</span></div><div class="stat"><b>5</b><span>启动 Container</span></div></div>
+          <div class="legend">
+            <div><i></i><span><b>Built</b>：Dockerfile 已制成 Image。</span></div>
+            <div><i></i><span><b>Healthy</b>：启动且健康检查通过。</span></div>
+            <div><i></i><span><b>Started</b>：主进程已启动，可能无 Healthcheck。</span></div>
+          </div>
+          <button class="btn small" id="composePlay" type="button">▶ 播放 Compose 启动过程</button>
+        </aside>
+      </div>
+    </section>
+
+    <section class="page section" id="commands">
+      <header class="section-head reveal">
+        <div class="section-no">07</div><h2>把命令放回正确阶段</h2><p>判断命令是在“制作模板”还是“管理实例”，Docker 命令体系就不会乱。</p>
+      </header>
+      <div class="commands reveal">
+        <div class="cmdrow"><code>docker build -t demo:1.0 .</code><span>Dockerfile → Image：构建并打标签。</span><button class="copy" type="button" aria-label="复制 build 命令" data-copy="docker build -t demo:1.0 .">⧉</button></div>
+        <div class="cmdrow"><code>docker pull postgres:16</code><span>Registry → 本地：下载现成 Image。</span><button class="copy" type="button" aria-label="复制 pull 命令" data-copy="docker pull postgres:16">⧉</button></div>
+        <div class="cmdrow"><code>docker create demo:1.0</code><span>Image → 停止状态的 Container。</span><button class="copy" type="button" aria-label="复制 create 命令" data-copy="docker create demo:1.0">⧉</button></div>
+        <div class="cmdrow"><code>docker run demo:1.0</code><span>create + start；缺 Image 时会 pull，但不会读取 Dockerfile build。</span><button class="copy" type="button" aria-label="复制 run 命令" data-copy="docker run demo:1.0">⧉</button></div>
+        <div class="cmdrow"><code>docker compose up --build</code><span>构建自有 Images，再创建或重建并启动整套 Containers。</span><button class="copy" type="button" aria-label="复制 compose 命令" data-copy="docker compose up --build">⧉</button></div>
+        <div class="cmdrow"><code>docker compose down</code><span>删除 Compose Containers 与网络；默认保留 Named Volumes。</span><button class="copy" type="button" aria-label="复制 down 命令" data-copy="docker compose down">⧉</button></div>
+      </div>
+      <div class="quiz reveal">
+        <div><b>最后检查：同一个 Image 能启动几个 Container？</b><span id="feedback" aria-live="polite">Image 是模板，因此答案与“模板能复印几次”类似。</span></div>
+        <div class="quiz-actions"><button class="quizbtn" type="button" data-answer="one">只能 1 个</button><button class="quizbtn" type="button" data-answer="many">可以很多个</button></div>
+      </div>
+    </section>
+
+    <section class="page section" id="under-hood">
+      <header class="section-head reveal">
+        <div class="section-no">08</div><h2>再深入一层：谁做了什么</h2><p>平时只操作 Docker CLI；下面是它通向 Linux 内核的内部链路。</p>
+      </header>
+      <div class="hood reveal">
+        <article data-no="01"><b>Docker CLI / Compose</b><p>读取命令与 compose.yml，通过 API 请求 Docker Engine。</p><code>docker compose up</code></article>
+        <article data-no="02"><b>Engine / BuildKit</b><p>管理 Images、Containers、Networks、Volumes；BuildKit 负责构建与缓存。</p><code>dockerd + buildkit</code></article>
+        <article data-no="03"><b>containerd / runc</b><p>准备 root filesystem 和运行配置，最终创建容器主进程。</p><code>OCI image + runtime</code></article>
+        <article data-no="04"><b>Linux Kernel</b><p>提供 namespaces、cgroups、网络和联合文件系统，执行隔离后的进程。</p><code>PID 1 starts here</code></article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Docker Runtime Lab · standalone interactive explainer</span>
+    <div class="footer-links"><a href="/hub/demos">← 返回 Demos</a><a href="/blog/docker-runtime-guide">纯文本教学版</a><a href="reading.html">交互阅读版</a><a href="architecture.html">可导出架构图 ↗</a><a href="#main">回到顶部 ↑</a></div>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite">已复制</div>
+
+  <script>
+    (function () {
+      "use strict";
+      var root = document.documentElement;
+      var theme = document.getElementById("theme");
+      var saved = localStorage.getItem("docker-lab-theme");
+      root.dataset.theme = saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      function themeLabel() {
+        var dark = root.dataset.theme === "dark";
+        theme.textContent = dark ? "☀" : "◐";
+        theme.setAttribute("aria-label", dark ? "切换到浅色主题" : "切换到深色主题");
+        document.querySelector('meta[name="theme-color"]').content = dark ? "#0e171b" : "#f1eee4";
+      }
+      themeLabel();
+      theme.addEventListener("click", function () {
+        root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
+        localStorage.setItem("docker-lab-theme", root.dataset.theme);
+        themeLabel();
+      });
+
+      var progress = document.getElementById("progress");
+      function reading() {
+        var max = document.documentElement.scrollHeight - innerHeight;
+        progress.style.width = (max > 0 ? Math.min(100, scrollY / max * 100) : 0) + "%";
+      }
+      addEventListener("scroll", reading, { passive: true });
+      reading();
+
+      var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var reveals = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window && !reduce) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: .12 });
+        reveals.forEach(function (item) { observer.observe(item); });
+      } else {
+        reveals.forEach(function (item) { item.classList.add("visible"); });
+      }
+
+      var steps = [
+        ["准备输入", "source + recipe", "01 / INPUT", "准备代码与 Dockerfile", "Dockerfile 只是一份配方，描述基础环境、复制哪些文件，以及以后如何启动程序。", "ls app.jar Dockerfile", "找到程序文件和构建配方。此时还没有 Image，也没有 Container。"],
+        ["执行 build", "BuildKit", "02 / BUILD", "BuildKit 执行配方", "Docker 读取 build context 和 Dockerfile，生成文件层；未变化的上游层可以复用缓存。", "docker build -t maple-api:1.0 .", "[+] FROM java:21 · COPY app.jar · exporting layers"],
+        ["得到 Image", "read-only layers", "03 / IMAGE", "只读 Image 构建完成", "镜像可以被打标签、推送和复用，但它仍是模板，没有业务进程正在运行。", "docker image inspect maple-api:1.0", "Image ready · immutable filesystem layers + ENTRYPOINT metadata"],
+        ["创建实例", "docker create", "04 / CREATE", "Engine 创建 Container", "Docker 在 Image 上增加可写层，准备 root filesystem、环境变量、network namespace 和资源限制。", "docker create --name maple-api maple-api:1.0", "Container created · state=created · process not started"],
+        ["启动 PID 1", "containerd / runc", "05 / START", "启动容器主进程", "containerd/runc 执行 ENTRYPOINT + CMD。主进程成为 PID 1；它退出时容器停止。", "docker start maple-api", "PID 1 → java -jar app.jar · state=running"],
+        ["加入网络", "service-name DNS", "06 / NETWORK", "通过服务名发现其他容器", "Compose 默认网络提供内部 DNS。api 使用 db:5432，而不是 localhost:5432。", "getent hosts db", "172.20.0.2 db · private network ready"],
+        ["挂载 Volume", "persistent data", "07 / STORAGE", "把持久数据放到容器外", "容器可写层适合临时变化；数据库挂载 Volume，删除容器后数据仍可复用。", "docker volume inspect maple_db_data", "Volume mounted → /var/lib/postgresql/data · stack ready"]
+      ];
+      var stepnav = document.getElementById("stepnav");
+      var stage = document.getElementById("stage");
+      var current = 0;
+      var timer = null;
+      steps.forEach(function (s, i) {
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className = "step";
+        button.innerHTML = '<span class="stepnum">' + String(i + 1).padStart(2, "0") + '</span><span><b>' + s[0] + '</b><small>' + s[1] + '</small></span>';
+        button.addEventListener("click", function () { stop(); render(i); });
+        stepnav.appendChild(button);
+      });
+      function render(i) {
+        current = Math.max(0, Math.min(steps.length - 1, i));
+        var s = steps[current];
+        document.getElementById("counter").textContent = "STEP " + String(current + 1).padStart(2, "0") + " / 07";
+        document.getElementById("kicker").textContent = s[2];
+        document.getElementById("stepTitle").textContent = s[3];
+        document.getElementById("stepDesc").textContent = s[4];
+        document.getElementById("terminalCommand").textContent = s[5];
+        document.getElementById("terminalLog").textContent = s[6];
+        stage.dataset.step = current;
+        stepnav.querySelectorAll(".step").forEach(function (b, n) {
+          b.removeAttribute("aria-current");
+          if (n === current) { b.setAttribute("aria-current", "step"); }
+        });
+        stage.querySelectorAll("[data-active]").forEach(function (node) {
+          var at = Number(node.dataset.active);
+          node.classList.toggle("active", current >= at);
+          node.classList.toggle("current", current === at);
+        });
+        stage.querySelectorAll("[data-flow]").forEach(function (path) {
+          var flowStep = Number(path.dataset.flow);
+          path.classList.toggle("active", flowStep === current);
+          path.classList.toggle("past", flowStep < current);
+        });
+        document.getElementById("prev").disabled = current === 0;
+        document.getElementById("next").disabled = current === steps.length - 1;
+      }
+      function stop() {
+        clearInterval(timer);
+        timer = null;
+        document.getElementById("play").textContent = "▶";
+        document.getElementById("play").setAttribute("aria-label", "自动播放");
+      }
+      function start() {
+        if (current === steps.length - 1) { render(0); }
+        document.getElementById("play").textContent = "Ⅱ";
+        timer = setInterval(function () {
+          if (current === steps.length - 1) { stop(); } else { render(current + 1); }
+        }, reduce ? 700 : 2200);
+      }
+      document.getElementById("prev").addEventListener("click", function () { stop(); render(current - 1); });
+      document.getElementById("next").addEventListener("click", function () { stop(); render(current + 1); });
+      document.getElementById("reset").addEventListener("click", function () { stop(); render(0); });
+      document.getElementById("play").addEventListener("click", function () { timer ? stop() : start(); });
+      render(0);
+
+      var layerNotes = [
+        ["01 / BASE LAYER", "Java 21 用户空间来自基础镜像；它不包含 Linux 内核，运行时共享宿主 Linux 内核。"],
+        ["02 / METADATA", "工作目录几乎不增加文件，但会成为镜像配置；上游不变就能命中缓存。"],
+        ["03 / APP LAYER", "业务代码最常变化。把 COPY 放在依赖之后，可以保留前面昂贵的缓存层。"],
+        ["04 / STARTUP", "ENTRYPOINT 规定容器默认执行什么。它不是 build 时运行，而是 start 时运行。"]
+      ];
+      document.querySelectorAll(".dockerline").forEach(function (line) {
+        line.addEventListener("click", function () {
+          var i = Number(line.dataset.layer);
+          document.querySelectorAll(".dockerline").forEach(function (x) { x.setAttribute("aria-selected", x === line ? "true" : "false"); });
+          document.querySelectorAll("[data-view]").forEach(function (x) { x.classList.toggle("selected", Number(x.dataset.view) === i); });
+          document.getElementById("layerNote").innerHTML = "<b>" + layerNotes[i][0] + "</b>" + layerNotes[i][1];
+        });
+      });
+
+      var middle = document.getElementById("runtimeMiddle");
+      document.querySelectorAll(".tab").forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          var model = tab.dataset.model;
+          document.querySelectorAll(".tab").forEach(function (x) { x.setAttribute("aria-selected", x === tab ? "true" : "false"); });
+          if (model === "container") {
+            document.getElementById("runtimeApps").innerHTML = '<div class="rbox app">Container A<span>java · 独立 PID / FS / Network</span></div><div class="rbox app">Container B<span>nginx · 独立 PID / FS / Network</span></div>';
+            middle.innerHTML = '<div class="rbox">Docker Runtime<span>containerd → runc</span></div>';
+            middle.style.gridTemplateColumns = "1fr";
+            document.getElementById("runtimeKernel").innerHTML = '共享 Linux Kernel<span>namespaces · cgroups · overlay filesystem</span>';
+            document.getElementById("runtimeHost").innerHTML = 'Docker Desktop Linux VM<span>因为 macOS 本身没有 Linux 内核</span>';
+          } else {
+            document.getElementById("runtimeApps").innerHTML = '<div class="rbox app">App A<span>运行在 Guest OS A</span></div><div class="rbox app">App B<span>运行在 Guest OS B</span></div>';
+            middle.innerHTML = '<div class="rbox guest">Guest OS A + Kernel</div><div class="rbox guest">Guest OS B + Kernel</div>';
+            middle.style.gridTemplateColumns = "1fr 1fr";
+            document.getElementById("runtimeKernel").innerHTML = 'Hypervisor<span>为每台 VM 虚拟化硬件</span>';
+            document.getElementById("runtimeHost").innerHTML = 'Host Hardware / Host OS<span>每台 VM 都带自己的内核</span>';
+          }
+        });
+      });
+
+      var store = { running: true, n: 1, tmp: "", vol: "" };
+      function drawStore() {
+        document.getElementById("containerBox").classList.toggle("removed", !store.running);
+        document.getElementById("generation").textContent = "C" + store.n;
+        document.getElementById("tmpFile").textContent = store.running ? (store.tmp || "empty") : "container removed";
+        document.getElementById("volumeFile").textContent = store.vol || "empty";
+        document.getElementById("write").disabled = !store.running;
+        document.getElementById("remove").disabled = !store.running;
+        document.getElementById("recreate").disabled = store.running;
+      }
+      document.getElementById("write").addEventListener("click", function () {
+        store.tmp = "/tmp/session.log"; store.vol = "orders.db · row #42";
+        document.getElementById("storageLog").textContent = "$ 临时日志进入可写层；订单进入 Named Volume。"; drawStore();
+      });
+      document.getElementById("remove").addEventListener("click", function () {
+        store.running = false; store.tmp = "";
+        document.getElementById("storageLog").textContent = "$ docker rm C" + store.n + " → 可写层删除；Volume 仍保存 " + (store.vol || "empty") + "。"; drawStore();
+      });
+      document.getElementById("recreate").addEventListener("click", function () {
+        store.n += 1; store.running = true;
+        document.getElementById("storageLog").textContent = "$ 创建 C" + store.n + " 并挂载 Volume → 临时日志为空，订单仍在。"; drawStore();
+      });
+      document.getElementById("storageReset").addEventListener("click", function () {
+        store = { running: true, n: 1, tmp: "", vol: "" };
+        document.getElementById("storageLog").textContent = "$ 等待操作：先写入两类数据。"; drawStore();
+      });
+      drawStore();
+
+      document.querySelectorAll(".address").forEach(function (button) {
+        button.addEventListener("click", function () {
+          var mode = button.dataset.address;
+          document.getElementById("netmap").dataset.test = mode;
+          var result = document.getElementById("netresult");
+          if (mode === "service") {
+            result.className = "netresult ok";
+            result.innerHTML = "<b>连接成功。</b> Compose DNS 把 db 解析到 PostgreSQL Container。";
+          } else {
+            result.className = "netresult fail";
+            result.innerHTML = "<b>连接失败。</b> api 内的 localhost 指向 api Container 自己。";
+          }
+        });
+      });
+
+      var rows = Array.prototype.slice.call(document.querySelectorAll(".row"));
+      var composeTimers = [];
+      document.getElementById("composePlay").addEventListener("click", function () {
+        var button = this;
+        composeTimers.forEach(clearTimeout);
+        rows.forEach(function (row) { row.classList.remove("done"); row.querySelector(".check").textContent = "·"; });
+        button.disabled = true;
+        rows.forEach(function (row, i) {
+          composeTimers.push(setTimeout(function () {
+            row.classList.add("done");
+            row.querySelector(".check").textContent = "✓";
+            if (i === rows.length - 1) { button.disabled = false; button.textContent = "↻ 再播放一次"; }
+          }, i * (reduce ? 80 : 420)));
+        });
+      });
+
+      var toast = document.getElementById("toast");
+      var toastTimer;
+      function showToast(text) {
+        toast.textContent = text;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 1600);
+      }
+      document.querySelectorAll(".copy").forEach(function (button) {
+        button.addEventListener("click", function () {
+          var text = button.dataset.copy;
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(function () { showToast("已复制：" + text); });
+          } else {
+            var area = document.createElement("textarea");
+            area.value = text; area.style.position = "fixed"; area.style.opacity = "0";
+            document.body.appendChild(area); area.select(); document.execCommand("copy"); area.remove();
+            showToast("已复制：" + text);
+          }
+        });
+      });
+      document.querySelectorAll(".quizbtn").forEach(function (button) {
+        button.addEventListener("click", function () {
+          var feedback = document.getElementById("feedback");
+          if (button.dataset.answer === "many") {
+            feedback.textContent = "正确：同一个 Image 可以创建很多相互隔离的 Container，它们共享只读镜像层。";
+            feedback.style.color = "var(--lime)";
+          } else {
+            feedback.textContent = "再想一下：Image 是模板，不是正在运行的实例；模板可以实例化很多次。";
+            feedback.style.color = "var(--orange)";
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

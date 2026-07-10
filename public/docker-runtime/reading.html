@@ -1,0 +1,1022 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="一份清爽的 Docker 交互阅读笔记：从 Dockerfile、Image、Container 到网络、Volume 与 Compose。">
+  <meta name="theme-color" content="#f7f6f1">
+  <title>Docker 到底在运行什么？｜交互阅读版</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap");
+
+    :root {
+      --background: #f7f6f1;
+      --surface: #ffffff;
+      --ink: #202620;
+      --muted: #66706a;
+      --quiet: #98a19b;
+      --rule: #d9ddd7;
+      --blue: #315fca;
+      --blue-soft: #e9effd;
+      --green: #27755a;
+      --green-soft: #e1f0e9;
+      --coral: #e76f51;
+      --coral-soft: #fbe8e1;
+      --yellow: #ba8526;
+      --yellow-soft: #f8eed8;
+      --code: #26312e;
+      --code-ink: #eaf3ef;
+      --shadow: 0 18px 50px rgba(45, 55, 49, .08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--background); }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background: var(--background);
+      font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+      line-height: 1.75;
+    }
+    button, input { font: inherit; color: inherit; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid rgba(49, 95, 202, .35); outline-offset: 3px; }
+
+    .skip {
+      position: fixed;
+      left: 18px;
+      top: -70px;
+      z-index: 20;
+      padding: 9px 13px;
+      color: white;
+      background: var(--blue);
+      text-decoration: none;
+      border-radius: 8px;
+    }
+    .skip:focus { top: 18px; }
+
+    .site-head {
+      position: sticky;
+      top: 0;
+      z-index: 12;
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 0 max(22px, calc((100vw - 1120px) / 2));
+      border-bottom: 1px solid rgba(217, 221, 215, .85);
+      background: rgba(247, 246, 241, .92);
+      backdrop-filter: blur(16px);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .logo-dot {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: var(--blue);
+      border-radius: 50%;
+      font: 600 11px/1 "IBM Plex Mono", monospace;
+    }
+    .head-links { display: flex; gap: 18px; align-items: center; font-size: 12px; color: var(--muted); }
+    .head-links a { text-decoration: none; }
+    .head-links a:hover { color: var(--blue); }
+    .version-link {
+      padding: 7px 11px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      background: var(--surface);
+    }
+    .reading-line { position: absolute; left: 0; bottom: -1px; width: 0; height: 2px; background: var(--blue); }
+
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .hero {
+      padding: 96px 0 88px;
+      text-align: center;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 11px;
+      color: var(--green);
+      border: 1px solid #bcd7ca;
+      border-radius: 999px;
+      background: var(--green-soft);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    h1, h2, h3 {
+      font-family: "Source Serif 4", "Noto Sans SC", serif;
+      letter-spacing: -.035em;
+      line-height: 1.12;
+    }
+    h1 {
+      max-width: 860px;
+      margin: 26px auto 0;
+      font-size: clamp(52px, 7.5vw, 88px);
+    }
+    .hero-lead {
+      max-width: 680px;
+      margin: 26px auto 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+    .example-note {
+      max-width: 800px;
+      margin: 28px auto 0;
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 18px;
+      padding: 18px 20px;
+      border: 1px solid #bcd7ca;
+      border-radius: 14px;
+      background: var(--green-soft);
+      text-align: left;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .example-note b { color: var(--green); }
+    .hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .button {
+      appearance: none;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 16px;
+      border: 1px solid var(--blue);
+      border-radius: 10px;
+      color: white;
+      background: var(--blue);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .button:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(49, 95, 202, .18); }
+    .button.secondary { color: var(--ink); border-color: var(--rule); background: var(--surface); box-shadow: none; }
+
+    .core-map {
+      position: relative;
+      max-width: 920px;
+      margin: 70px auto 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 72px;
+      text-align: left;
+    }
+    .core-item {
+      position: relative;
+      min-height: 215px;
+      padding: 26px;
+      border: 1px solid var(--rule);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .core-item + .core-item::before {
+      content: "";
+      position: absolute;
+      left: -73px;
+      top: 104px;
+      width: 72px;
+      height: 1px;
+      background: var(--rule);
+    }
+    .core-item + .core-item::after {
+      content: "→";
+      position: absolute;
+      left: -43px;
+      top: 87px;
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      color: var(--blue);
+      background: var(--background);
+      font: 600 18px/1 "IBM Plex Mono", monospace;
+      animation: nudge 1.8s ease-in-out infinite;
+    }
+    @keyframes nudge { 50% { transform: translateX(5px); } }
+    .core-icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 22px;
+      border-radius: 14px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      font: 600 14px/1 "IBM Plex Mono", monospace;
+    }
+    .core-item:nth-child(2) .core-icon { color: var(--green); background: var(--green-soft); }
+    .core-item:nth-child(3) .core-icon { color: var(--coral); background: var(--coral-soft); }
+    .core-item h3 { margin: 0; font-size: 26px; }
+    .core-item p { margin: 9px 0 0; color: var(--muted); font-size: 14px; }
+    .core-item code { display: block; margin-top: 18px; color: var(--quiet); font: 500 11px/1.55 "IBM Plex Mono", monospace; overflow-wrap: anywhere; }
+
+    .chapter {
+      padding: 86px 0;
+      border-top: 1px solid var(--rule);
+    }
+    .chapter-head {
+      max-width: 760px;
+      margin-bottom: 38px;
+    }
+    .chapter-label { color: var(--blue); font: 600 12px/1 "IBM Plex Mono", monospace; letter-spacing: .04em; }
+    h2 { margin: 12px 0 0; font-size: clamp(40px, 5vw, 60px); }
+    .chapter-head p { margin: 14px 0 0; color: var(--muted); font-size: 15px; }
+
+    .story {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      min-height: 590px;
+      border: 1px solid var(--rule);
+      border-radius: 22px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .story-nav { padding: 18px; border-right: 1px solid var(--rule); background: #fbfbf8; }
+    .story-step {
+      appearance: none;
+      width: 100%;
+      min-height: 70px;
+      display: grid;
+      grid-template-columns: 31px 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+    }
+    .story-step:hover { background: var(--blue-soft); }
+    .story-step[aria-current="step"] { color: var(--blue); background: var(--blue-soft); }
+    .story-step i {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--rule);
+      border-radius: 50%;
+      background: var(--surface);
+      font: normal 600 11px/1 "IBM Plex Mono", monospace;
+    }
+    .story-step b { display: block; font-size: 13px; }
+    .story-step small { display: block; margin-top: 3px; color: var(--quiet); font-size: 11px; }
+    .story-main { min-width: 0; display: grid; grid-template-rows: auto 1fr auto; }
+    .story-copy { min-height: 166px; padding: 34px 38px 24px; border-bottom: 1px solid var(--rule); }
+    .story-copy small { color: var(--coral); font: 600 11px/1 "IBM Plex Mono", monospace; }
+    .story-copy h3 { margin: 9px 0 0; font-size: 34px; }
+    .story-copy p { max-width: 650px; margin: 10px 0 0; color: var(--muted); font-size: 14px; }
+
+    .scene {
+      position: relative;
+      min-height: 330px;
+      overflow: hidden;
+      background: linear-gradient(#fafaf7, #f4f6f1);
+    }
+    .scene::before {
+      content: "";
+      position: absolute;
+      left: 7%;
+      right: 7%;
+      bottom: 46px;
+      height: 1px;
+      background: #cfd5cf;
+    }
+    .scene-item {
+      position: absolute;
+      z-index: 2;
+      width: 145px;
+      min-height: 78px;
+      padding: 15px;
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: 0 10px 25px rgba(45, 55, 49, .07);
+      opacity: .2;
+      transform: translateY(6px) scale(.98);
+      transition: opacity .35s ease, transform .35s ease, box-shadow .35s ease;
+    }
+    .scene-item.show { opacity: 1; transform: none; }
+    .scene-item.focus { box-shadow: 0 0 0 4px rgba(49, 95, 202, .13), 0 12px 28px rgba(45, 55, 49, .08); }
+    .scene-item small { display: block; color: var(--quiet); font: 500 11px/1 "IBM Plex Mono", monospace; }
+    .scene-item b { display: block; margin-top: 6px; font-size: 14px; }
+    .scene-item span { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; }
+    .scene-source { left: 5%; top: 70px; }
+    .scene-builder { left: calc(35% - 72px); top: 160px; }
+    .scene-image { left: calc(62% - 72px); top: 62px; }
+    .scene-container { right: 4%; top: 150px; min-height: 115px; }
+    .scene-volume { left: calc(62% - 72px); bottom: 28px; }
+    .scene-arrow {
+      position: absolute;
+      z-index: 1;
+      height: 1px;
+      background: var(--blue);
+      opacity: .18;
+      transform-origin: left center;
+      transition: opacity .3s ease;
+    }
+    .scene-arrow.show { opacity: .8; }
+    .arrow-a { left: 22%; top: 132px; width: 17%; transform: rotate(24deg); }
+    .arrow-b { left: 43%; top: 171px; width: 19%; transform: rotate(-26deg); }
+    .arrow-c { left: 70%; top: 115px; width: 17%; transform: rotate(25deg); }
+    .arrow-d { left: 68%; top: 235px; width: 13%; transform: rotate(-78deg); }
+    .scene-arrow::after { content: "›"; position: absolute; right: -3px; top: -13px; color: var(--blue); font-size: 20px; }
+    .story-foot {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 22px;
+      border-top: 1px solid var(--rule);
+    }
+    .story-command { color: var(--green); font: 500 12px/1.5 "IBM Plex Mono", monospace; overflow-wrap: anywhere; }
+    .story-controls { display: flex; gap: 7px; }
+    .round-button {
+      appearance: none;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--rule);
+      border-radius: 50%;
+      background: var(--surface);
+      cursor: pointer;
+    }
+    .round-button:hover:not(:disabled) { color: white; border-color: var(--blue); background: var(--blue); }
+    .round-button:disabled { opacity: .35; cursor: not-allowed; }
+
+    .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .choice-card {
+      padding: 30px;
+      border: 1px solid var(--rule);
+      border-radius: 18px;
+      background: var(--surface);
+    }
+    .choice-card.build { border-top: 5px solid var(--blue); }
+    .choice-card.run { border-top: 5px solid var(--coral); }
+    .choice-card small { color: var(--quiet); font: 600 11px/1 "IBM Plex Mono", monospace; }
+    .choice-card h3 { margin: 12px 0 0; font-size: 30px; }
+    .choice-card p { color: var(--muted); font-size: 14px; }
+    .choice-card ul { margin: 22px 0 0; padding: 0; list-style: none; }
+    .choice-card li { position: relative; padding: 11px 0 11px 25px; border-top: 1px solid var(--rule); font-size: 13px; }
+    .choice-card li::before { content: "✓"; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+    .choice-card code {
+      display: block;
+      margin-top: 22px;
+      padding: 13px 14px;
+      border-radius: 10px;
+      color: var(--code-ink);
+      background: var(--code);
+      font: 500 11px/1.6 "IBM Plex Mono", monospace;
+      overflow-wrap: anywhere;
+    }
+
+    .kernel-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(300px, .88fr);
+      gap: 34px;
+      padding: 42px;
+      border: 1px solid var(--rule);
+      border-radius: 22px;
+      background: var(--surface);
+    }
+    .kernel-diagram { display: grid; gap: 10px; }
+    .kernel-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .kernel-box {
+      padding: 17px;
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      background: #fbfbf8;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .kernel-box span { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; font-weight: 400; }
+    .kernel-box.shared { grid-column: 1 / -1; color: white; border-color: var(--green); background: var(--green); }
+    .kernel-box.mac { grid-column: 1 / -1; border-style: dashed; color: var(--muted); }
+    .kernel-copy h3 { margin: 0; font-size: 34px; }
+    .kernel-copy p { color: var(--muted); font-size: 14px; }
+    .fact {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 12px;
+      background: var(--yellow-soft);
+      font-size: 13px;
+    }
+    .fact b { color: var(--yellow); }
+
+    .labs { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .lab {
+      min-height: 450px;
+      padding: 28px;
+      border: 1px solid var(--rule);
+      border-radius: 18px;
+      background: var(--surface);
+    }
+    .lab > small { color: var(--coral); font: 600 11px/1 "IBM Plex Mono", monospace; }
+    .lab h3 { margin: 10px 0 0; font-size: 28px; }
+    .lab > p { color: var(--muted); font-size: 13px; }
+    .address-list { display: grid; gap: 10px; margin-top: 24px; }
+    .address-button {
+      appearance: none;
+      min-height: 52px;
+      padding: 10px 13px;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      background: #fbfbf8;
+      text-align: left;
+      font: 500 11px/1.5 "IBM Plex Mono", monospace;
+      overflow-wrap: anywhere;
+      cursor: pointer;
+    }
+    .address-button:hover { border-color: var(--blue); }
+    .answer {
+      min-height: 76px;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 10px;
+      color: var(--muted);
+      background: #f4f4ef;
+      font-size: 13px;
+    }
+    .answer.good { color: var(--green); background: var(--green-soft); }
+    .answer.bad { color: #b04731; background: var(--coral-soft); }
+    .storage-demo { margin-top: 25px; display: grid; grid-template-columns: 1fr 55px 1fr; gap: 10px; align-items: center; }
+    .storage-box {
+      min-height: 145px;
+      display: grid;
+      place-items: center;
+      align-content: center;
+      padding: 15px;
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      text-align: center;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+    .storage-box.gone { opacity: .2; transform: scale(.94); }
+    .storage-box.volume { border-color: #d6bd86; background: var(--yellow-soft); }
+    .storage-box b { font-size: 13px; }
+    .storage-box span { display: block; margin-top: 7px; color: var(--muted); font: 500 11px/1.45 "IBM Plex Mono", monospace; }
+    .storage-link { text-align: center; color: var(--quiet); }
+    .lab-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .soft-button {
+      appearance: none;
+      min-height: 37px;
+      padding: 0 12px;
+      border: 1px solid var(--rule);
+      border-radius: 9px;
+      background: var(--surface);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .soft-button:hover:not(:disabled) { color: var(--blue); border-color: var(--blue); }
+    .soft-button:disabled { opacity: .35; cursor: not-allowed; }
+
+    .compose-card {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      border: 1px solid var(--rule);
+      border-radius: 22px;
+      background: var(--surface);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .services { padding: 34px; }
+    .services h3 { margin: 0; font-size: 32px; }
+    .services > p { color: var(--muted); font-size: 14px; }
+    .service-list { display: grid; gap: 10px; margin-top: 26px; }
+    .service-row {
+      min-height: 62px;
+      display: grid;
+      grid-template-columns: 12px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 14px;
+      border: 1px solid var(--rule);
+      border-radius: 11px;
+      opacity: .45;
+      transition: opacity .22s ease, transform .22s ease, border-color .22s ease;
+    }
+    .service-row.ready { opacity: 1; transform: translateX(5px); border-color: #b8d2c5; }
+    .service-row i { width: 8px; height: 8px; border-radius: 50%; background: var(--quiet); }
+    .service-row.ready i { background: var(--green); box-shadow: 0 0 0 4px var(--green-soft); }
+    .service-row b { display: block; font-size: 12px; }
+    .service-row small { display: block; color: var(--muted); font-size: 11px; }
+    .service-row span { color: var(--quiet); font: 500 11px/1 "IBM Plex Mono", monospace; }
+    .compose-side {
+      padding: 34px;
+      border-left: 1px solid var(--rule);
+      background: #f5f7f3;
+    }
+    .compose-side code {
+      display: block;
+      padding: 13px;
+      border-radius: 10px;
+      color: var(--code-ink);
+      background: var(--code);
+      font: 500 11px/1.55 "IBM Plex Mono", monospace;
+      overflow-wrap: anywhere;
+    }
+    .count {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin: 24px 0;
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .count div { min-height: 95px; display: grid; place-items: center; align-content: center; background: var(--surface); }
+    .count div + div { border-left: 1px solid var(--rule); }
+    .count b { color: var(--blue); font: 700 32px/1 "Source Serif 4", serif; }
+    .count span { margin-top: 5px; color: var(--muted); font-size: 11px; }
+    .compose-note { color: var(--muted); font-size: 13px; }
+
+    .summary-table { border-top: 1px solid var(--rule); }
+    .summary-row {
+      display: grid;
+      grid-template-columns: 200px 1fr 1fr;
+      gap: 24px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 13px;
+    }
+    .summary-row b { font-family: "IBM Plex Mono", monospace; color: var(--blue); }
+    .summary-row span { color: var(--muted); }
+    .closing {
+      margin-top: 40px;
+      padding: 28px;
+      border-radius: 18px;
+      background: var(--blue-soft);
+      text-align: center;
+    }
+    .closing b { display: block; font: 700 24px/1.3 "Source Serif 4", serif; }
+    .closing span { display: block; margin-top: 8px; color: var(--muted); font-size: 13px; }
+
+    footer {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 38px 0 54px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    footer div { display: flex; flex-wrap: wrap; gap: 16px; }
+    footer a:hover { color: var(--blue); }
+
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      .core-map { grid-template-columns: 1fr; gap: 18px; text-align: center; }
+      .core-item { min-height: auto; }
+      .core-icon { margin-left: auto; margin-right: auto; }
+      .core-item + .core-item::before, .core-item + .core-item::after { display: none; }
+      .story { grid-template-columns: 1fr; }
+      .story-nav { display: flex; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--rule); }
+      .story-step { flex: 0 0 175px; }
+      .kernel-card, .compose-card { grid-template-columns: 1fr; }
+      .compose-side { border-left: 0; border-top: 1px solid var(--rule); }
+    }
+
+    @media (max-width: 700px) {
+      .wrap, footer { width: min(100% - 24px, 1120px); }
+      .site-head { padding: 0 12px; }
+      .head-links a:not(.version-link) { display: none; }
+      .hero { padding: 68px 0 62px; }
+      h1 { font-size: clamp(48px, 15vw, 68px); }
+      .example-note { grid-template-columns: 1fr; gap: 6px; }
+      .chapter { padding: 65px 0; }
+      .story-copy { padding: 26px 22px 20px; }
+      .scene { overflow-x: auto; }
+      .scene > * { min-width: 0; }
+      .scene-item { transform: scale(.87); transform-origin: center; }
+      .story-foot { display: grid; }
+      .story-controls { justify-content: flex-end; }
+      .choice-grid, .labs { grid-template-columns: 1fr; }
+      .kernel-card { padding: 24px; }
+      .storage-demo { grid-template-columns: 1fr; }
+      .storage-link { transform: rotate(90deg); }
+      .summary-row { grid-template-columns: 1fr; gap: 6px; }
+      footer { display: grid; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">跳到正文</a>
+  <header class="site-head">
+    <a class="logo" href="/hub/demos"><span class="logo-dot">D</span><span>Docker, step by step</span></a>
+    <div class="head-links">
+      <a href="#story">运行过程</a>
+      <a href="#labs">动手试试</a>
+      <a href="#compose">Compose</a>
+      <a class="version-link" href="index.html">切换到控制台版</a>
+    </div>
+    <div class="reading-line" id="readingLine" aria-hidden="true"></div>
+  </header>
+
+  <main id="content">
+    <section class="wrap hero">
+      <span class="pill">零基础 · 交互阅读</span>
+      <h1>Docker 到底在运行什么？</h1>
+      <p class="hero-lead">从一份配方开始，到一个真正运行的 Linux 进程结束。我们不用复杂术语堆砌，只沿着 Dockerfile → Image → Container 走一遍。</p>
+      <div class="example-note"><b>虚构案例：Maple Shop</b><span>一家小型在线商店，包含 web（React）、api（Java）、db（PostgreSQL）、files（对象存储）和 worker（后台任务）。全文只使用这些教学别名，不对应任何真实项目或业务数据。</span></div>
+      <div class="hero-actions">
+        <a class="button" href="#story">开始阅读 <span aria-hidden="true">↓</span></a>
+        <a class="button secondary" href="index.html">查看控制台版</a>
+      </div>
+
+      <div class="core-map" aria-label="Docker 三个核心对象">
+        <article class="core-item">
+          <div class="core-icon">TXT</div>
+          <h3>Dockerfile</h3>
+          <p>一份文字配方，描述环境、文件和启动方式。</p>
+          <code>FROM · COPY · RUN · ENTRYPOINT</code>
+        </article>
+        <article class="core-item">
+          <div class="core-icon">IMG</div>
+          <h3>Image</h3>
+          <p>根据配方制成的只读模板，尚未运行。</p>
+          <code>maple-api:1.0</code>
+        </article>
+        <article class="core-item">
+          <div class="core-icon">PID</div>
+          <h3>Container</h3>
+          <p>模板启动后的实例，核心是一组受隔离的进程。</p>
+          <code>PID 1 · java -jar app.jar</code>
+        </article>
+      </div>
+    </section>
+
+    <section class="chapter" id="story">
+      <div class="wrap">
+        <header class="chapter-head reveal">
+          <div class="chapter-label">CHAPTER 01 / FOLLOW THE PROCESS</div>
+          <h2>从项目代码到运行中的 Container</h2>
+          <p>按顺序点开六个场景。注意 Image 在第三步已经完成，但直到第五步才真正出现运行进程。</p>
+        </header>
+
+        <div class="story reveal">
+          <div class="story-nav" id="storyNav" aria-label="Docker 教学步骤"></div>
+          <div class="story-main">
+            <div class="story-copy">
+              <small id="sceneLabel">01 / PREPARE</small>
+              <h3 id="sceneTitle">准备项目与 Dockerfile</h3>
+              <p id="sceneText">代码是原料，Dockerfile 是配方。此时还没有镜像，更没有容器。</p>
+            </div>
+            <div class="scene" id="scene" data-scene="0">
+              <span class="scene-arrow arrow-a" data-arrow="1"></span>
+              <span class="scene-arrow arrow-b" data-arrow="2"></span>
+              <span class="scene-arrow arrow-c" data-arrow="3"></span>
+              <span class="scene-arrow arrow-d" data-arrow="5"></span>
+              <div class="scene-item scene-source" data-show="0"><small>INPUT</small><b>代码 + Dockerfile</b><span>app.jar / FROM java:21</span></div>
+              <div class="scene-item scene-builder" data-show="1"><small>BUILDER</small><b>BuildKit</b><span>执行指令并复用缓存</span></div>
+              <div class="scene-item scene-image" data-show="2"><small>TEMPLATE</small><b>Image</b><span>只读层 + 启动元数据</span></div>
+              <div class="scene-item scene-container" data-show="3"><small>INSTANCE</small><b>Container</b><span id="pidText">created · process not started</span></div>
+              <div class="scene-item scene-volume" data-show="5"><small>STORAGE</small><b>Named Volume</b><span>容器删除后仍保存数据</span></div>
+            </div>
+            <div class="story-foot">
+              <span class="story-command" id="sceneCommand">$ ls Dockerfile app.jar</span>
+              <div class="story-controls">
+                <button class="round-button" id="storyPrev" type="button" aria-label="上一步">←</button>
+                <button class="round-button" id="storyPlay" type="button" aria-label="自动播放">▶</button>
+                <button class="round-button" id="storyNext" type="button" aria-label="下一步">→</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter">
+      <div class="wrap">
+        <header class="chapter-head reveal">
+          <div class="chapter-label">CHAPTER 02 / BUILD IS NOT RUN</div>
+          <h2>构建模板和启动实例，是两件事</h2>
+          <p>这是最重要的分界线。看到 Built，只说明模板制作完成；看到 Started 或 Running，才说明进程已经启动。</p>
+        </header>
+        <div class="choice-grid">
+          <article class="choice-card build reveal">
+            <small>MAKES AN IMAGE</small>
+            <h3>docker build</h3>
+            <p>读取 Dockerfile 与 build context，生成不可变的镜像层。</p>
+            <ul><li>可能拉取基础 Image</li><li>执行 COPY、RUN 等指令</li><li>复用没有变化的缓存层</li><li>输出带标签的 Image</li></ul>
+            <code>$ docker build -t demo:1.0 .<br>Successfully tagged demo:1.0</code>
+          </article>
+          <article class="choice-card run reveal">
+            <small>STARTS AN INSTANCE</small>
+            <h3>docker run</h3>
+            <p>基于已有 Image 创建 Container，然后启动它的主进程。</p>
+            <ul><li>增加 Container 可写层</li><li>准备网络和挂载目录</li><li>应用 namespaces 与 cgroups</li><li>执行 ENTRYPOINT + CMD</li></ul>
+            <code>$ docker run --name demo demo:1.0<br>PID 1: java -jar app.jar</code>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter">
+      <div class="wrap">
+        <header class="chapter-head reveal">
+          <div class="chapter-label">CHAPTER 03 / A CONTAINER IS A PROCESS</div>
+          <h2>容器不是一台完整的小电脑</h2>
+          <p>它更接近一个被隔离起来的 Linux 进程。多个 Container 可以共享一个内核，但彼此看到不同的进程、文件和网络。</p>
+        </header>
+        <div class="kernel-card reveal">
+          <div class="kernel-diagram" aria-label="容器共享 Linux 内核示意">
+            <div class="kernel-row">
+              <div class="kernel-box">Container A<span>Java · 独立 PID / FS / Net</span></div>
+              <div class="kernel-box">Container B<span>Nginx · 独立 PID / FS / Net</span></div>
+            </div>
+            <div class="kernel-row">
+              <div class="kernel-box shared">共享 Linux Kernel<span>namespaces · cgroups · networking</span></div>
+              <div class="kernel-box mac">Docker Desktop Linux VM<span>macOS 上的 Linux 容器实际运行在这里</span></div>
+            </div>
+          </div>
+          <div class="kernel-copy">
+            <h3>主进程决定 Container 的生命</h3>
+            <p>启动命令生成的进程会成为容器里的 PID 1。它运行，Container 就是 Running；它退出，Container 通常就变成 Exited。</p>
+            <div class="fact"><b>为什么启动快？</b><br>因为每个 Container 不需要再启动一套完整 Guest OS。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter" id="labs">
+      <div class="wrap">
+        <header class="chapter-head reveal">
+          <div class="chapter-label">CHAPTER 04 / TWO SMALL EXPERIMENTS</div>
+          <h2>用两个选择题排除常见误区</h2>
+          <p>一个关于网络，一个关于数据。两者都来自“每个 Container 有自己的运行环境”这件事。</p>
+        </header>
+        <div class="labs">
+          <article class="lab reveal">
+            <small>NETWORK</small>
+            <h3>API 如何连接 PostgreSQL？</h3>
+            <p>假设 Maple Shop 的 api 与 db 都在同一个 Compose 网络里。</p>
+            <div class="address-list">
+              <button class="address-button" type="button" data-network="local">jdbc:postgresql://localhost:5432/shop</button>
+              <button class="address-button" type="button" data-network="service">jdbc:postgresql://db:5432/shop</button>
+            </div>
+            <div class="answer" id="networkAnswer" aria-live="polite">选一个地址看看。提示：容器内的 localhost 指向当前容器自己。</div>
+          </article>
+
+          <article class="lab reveal">
+            <small>STORAGE</small>
+            <h3>删除 Container 后，数据去哪了？</h3>
+            <p>临时文件在可写层；订单数据被放进 Named Volume。</p>
+            <div class="storage-demo">
+              <div class="storage-box" id="readingContainer"><b id="readingGeneration">Container C1</b><span id="readingTemp">/tmp/session.log</span></div>
+              <div class="storage-link">↔</div>
+              <div class="storage-box volume"><b>Named Volume</b><span id="readingData">orders.db · #42</span></div>
+            </div>
+            <div class="answer" id="storageAnswer" aria-live="polite">当前两份数据都存在。试着删除 Container。</div>
+            <div class="lab-actions">
+              <button class="soft-button" id="deleteReadingContainer" type="button">删除 Container</button>
+              <button class="soft-button" id="newReadingContainer" type="button" disabled>创建新 Container</button>
+              <button class="soft-button" id="resetReadingStorage" type="button">重置</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter" id="compose">
+      <div class="wrap">
+        <header class="chapter-head reveal">
+          <div class="chapter-label">CHAPTER 05 / COMPOSE</div>
+          <h2>一个命令，描述并启动整套服务</h2>
+          <p>Compose 读取 compose.yml，构建需要本地制作的 Images，复用 PostgreSQL、MinIO 等现成 Images，再创建并启动各个 Container。</p>
+        </header>
+        <div class="compose-card reveal">
+          <div class="services">
+            <h3>Maple Shop 示例</h3>
+            <p>点击“运行 Compose”，观察三个 Build 与五个 Container 启动。</p>
+            <div class="service-list">
+              <div class="service-row"><i></i><div><b>web</b><small>本地 Dockerfile</small></div><span>BUILD</span></div>
+              <div class="service-row"><i></i><div><b>api</b><small>本地 Dockerfile</small></div><span>BUILD</span></div>
+              <div class="service-row"><i></i><div><b>worker</b><small>本地 Dockerfile</small></div><span>BUILD</span></div>
+              <div class="service-row"><i></i><div><b>db + files</b><small>使用现成 Images</small></div><span>PULL / REUSE</span></div>
+              <div class="service-row"><i></i><div><b>5 Containers</b><small>创建网络、挂载并启动</small></div><span>START</span></div>
+            </div>
+          </div>
+          <aside class="compose-side">
+            <code>$ docker compose up --build</code>
+            <div class="count">
+              <div><b>3</b><span>构建 Image</span></div>
+              <div><b>5</b><span>启动 Container</span></div>
+            </div>
+            <button class="button" id="runReadingCompose" type="button">运行 Compose</button>
+            <p class="compose-note">这里有两类不同结果：3 个 Image 是构建得到的只读模板；5 个 Container 才是从这些模板启动的服务实例。</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter">
+      <div class="wrap">
+        <header class="chapter-head reveal">
+          <div class="chapter-label">CHAPTER 06 / KEEP THIS MODEL</div>
+          <h2>最后，把六个概念放回各自位置</h2>
+        </header>
+        <div class="summary-table reveal">
+          <div class="summary-row"><b>Dockerfile</b><span>构建配方</span><span>告诉 Docker 怎样制作 Image</span></div>
+          <div class="summary-row"><b>Image</b><span>只读模板</span><span>可以被复用、推送和多次实例化</span></div>
+          <div class="summary-row"><b>Container</b><span>运行实例</span><span>隔离环境中的主进程 + 可写层</span></div>
+          <div class="summary-row"><b>Volume</b><span>持久数据</span><span>独立于 Container 生命周期</span></div>
+          <div class="summary-row"><b>Network</b><span>服务通信</span><span>Compose 内通过服务名 DNS 互相寻找</span></div>
+          <div class="summary-row"><b>Compose</b><span>多服务编排</span><span>统一声明 build、image、ports、volumes</span></div>
+        </div>
+        <div class="closing reveal">
+          <b>Dockerfile 制作 Image，Image 启动 Container。</b>
+          <span>如果这句话清楚，其余命令都只是围绕它展开。</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Docker 交互阅读版 · calm learning edition</span>
+    <div><a href="/blog/docker-runtime-guide">纯文本教学版</a><a href="/hub/demos">返回 Demos</a><a href="index.html">控制台版</a><a href="#content">回到顶部</a></div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+      var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var readingLine = document.getElementById("readingLine");
+      function updateProgress() {
+        var max = document.documentElement.scrollHeight - innerHeight;
+        readingLine.style.width = (max > 0 ? Math.min(100, scrollY / max * 100) : 0) + "%";
+      }
+      addEventListener("scroll", updateProgress, { passive: true });
+      updateProgress();
+
+      var reveals = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window && !reduce) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: .12 });
+        reveals.forEach(function (item) { observer.observe(item); });
+      } else {
+        reveals.forEach(function (item) { item.classList.add("visible"); });
+      }
+
+      var stories = [
+        ["准备输入", "代码 + 配方", "01 / PREPARE", "准备项目与 Dockerfile", "代码是原料，Dockerfile 是配方。此时还没有镜像，更没有容器。", "$ ls Dockerfile app.jar"],
+        ["读取配方", "BuildKit", "02 / BUILD", "BuildKit 开始构建", "Docker 读取 build context，执行 FROM、COPY、RUN，并尽量复用没有变化的缓存层。", "$ docker build -t maple-api:1.0 ."],
+        ["完成模板", "Image", "03 / IMAGE", "Image 已经构建完成", "Image 包含只读文件层和启动元数据。它已经能被保存和复用，但没有进程在运行。", "$ docker image inspect maple-api:1.0"],
+        ["创建实例", "Container", "04 / CREATE", "从 Image 创建 Container", "Docker 添加可写层，并准备环境变量、网络、挂载和隔离配置。Container 仍未启动。", "$ docker create --name maple-api maple-api:1.0"],
+        ["启动进程", "PID 1", "05 / START", "启动 Container 的主进程", "runc 执行 ENTRYPOINT + CMD。java 进程成为 PID 1，Container 进入 Running。", "$ docker start maple-api"],
+        ["连接外部状态", "Network + Volume", "06 / CONNECT", "加入网络并挂载 Volume", "api 通过 db:5432 连接数据库；数据库文件放进 Volume，不跟着 Container 一起删除。", "$ docker compose up"]
+      ];
+      var storyNav = document.getElementById("storyNav");
+      var storyIndex = 0;
+      var storyTimer = null;
+      stories.forEach(function (story, index) {
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className = "story-step";
+        button.innerHTML = '<i>' + String(index + 1).padStart(2, "0") + '</i><span><b>' + story[0] + '</b><small>' + story[1] + '</small></span>';
+        button.addEventListener("click", function () { stopStory(); showStory(index); });
+        storyNav.appendChild(button);
+      });
+
+      function showStory(index) {
+        storyIndex = Math.max(0, Math.min(stories.length - 1, index));
+        var story = stories[storyIndex];
+        document.getElementById("sceneLabel").textContent = story[2];
+        document.getElementById("sceneTitle").textContent = story[3];
+        document.getElementById("sceneText").textContent = story[4];
+        document.getElementById("sceneCommand").textContent = story[5];
+        document.getElementById("scene").dataset.scene = storyIndex;
+        storyNav.querySelectorAll(".story-step").forEach(function (button, i) {
+          button.removeAttribute("aria-current");
+          if (i === storyIndex) { button.setAttribute("aria-current", "step"); }
+        });
+        document.querySelectorAll(".scene-item").forEach(function (item) {
+          var at = Number(item.dataset.show);
+          item.classList.toggle("show", storyIndex >= at);
+          item.classList.toggle("focus", storyIndex === at || (storyIndex === 4 && at === 3));
+        });
+        document.querySelectorAll(".scene-arrow").forEach(function (arrow) {
+          arrow.classList.toggle("show", storyIndex >= Number(arrow.dataset.arrow));
+        });
+        document.getElementById("pidText").textContent = storyIndex >= 4 ? "running · PID 1: java" : "created · process not started";
+        document.getElementById("storyPrev").disabled = storyIndex === 0;
+        document.getElementById("storyNext").disabled = storyIndex === stories.length - 1;
+      }
+      function stopStory() {
+        clearInterval(storyTimer);
+        storyTimer = null;
+        document.getElementById("storyPlay").textContent = "▶";
+      }
+      function playStory() {
+        if (storyIndex === stories.length - 1) { showStory(0); }
+        document.getElementById("storyPlay").textContent = "Ⅱ";
+        storyTimer = setInterval(function () {
+          if (storyIndex === stories.length - 1) { stopStory(); } else { showStory(storyIndex + 1); }
+        }, reduce ? 650 : 2400);
+      }
+      document.getElementById("storyPrev").addEventListener("click", function () { stopStory(); showStory(storyIndex - 1); });
+      document.getElementById("storyNext").addEventListener("click", function () { stopStory(); showStory(storyIndex + 1); });
+      document.getElementById("storyPlay").addEventListener("click", function () { storyTimer ? stopStory() : playStory(); });
+      showStory(0);
+
+      document.querySelectorAll("[data-network]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          var answer = document.getElementById("networkAnswer");
+          if (button.dataset.network === "service") {
+            answer.className = "answer good";
+            answer.innerHTML = "<b>正确。</b> Compose DNS 会把 db 解析到 PostgreSQL Container。";
+          } else {
+            answer.className = "answer bad";
+            answer.innerHTML = "<b>连接失败。</b> api 里的 localhost 指向 api Container 自己。";
+          }
+        });
+      });
+
+      var readingStore = { running: true, generation: 1 };
+      function renderReadingStore() {
+        document.getElementById("readingContainer").classList.toggle("gone", !readingStore.running);
+        document.getElementById("readingGeneration").textContent = "Container C" + readingStore.generation;
+        document.getElementById("readingTemp").textContent = readingStore.running ? (readingStore.generation === 1 ? "/tmp/session.log" : "empty") : "removed";
+        document.getElementById("deleteReadingContainer").disabled = !readingStore.running;
+        document.getElementById("newReadingContainer").disabled = readingStore.running;
+      }
+      document.getElementById("deleteReadingContainer").addEventListener("click", function () {
+        readingStore.running = false;
+        document.getElementById("storageAnswer").className = "answer bad";
+        document.getElementById("storageAnswer").innerHTML = "C" + readingStore.generation + " 的可写层消失；右侧 Volume 中的 orders.db 仍然存在。";
+        renderReadingStore();
+      });
+      document.getElementById("newReadingContainer").addEventListener("click", function () {
+        readingStore.running = true;
+        readingStore.generation += 1;
+        document.getElementById("storageAnswer").className = "answer good";
+        document.getElementById("storageAnswer").innerHTML = "C" + readingStore.generation + " 是新实例，临时目录为空；重新挂载后仍能读到订单 #42。";
+        renderReadingStore();
+      });
+      document.getElementById("resetReadingStorage").addEventListener("click", function () {
+        readingStore = { running: true, generation: 1 };
+        document.getElementById("storageAnswer").className = "answer";
+        document.getElementById("storageAnswer").textContent = "当前两份数据都存在。试着删除 Container。";
+        renderReadingStore();
+      });
+      renderReadingStore();
+
+      var serviceRows = Array.prototype.slice.call(document.querySelectorAll(".service-row"));
+      var composeTimers = [];
+      document.getElementById("runReadingCompose").addEventListener("click", function () {
+        var button = this;
+        composeTimers.forEach(clearTimeout);
+        serviceRows.forEach(function (row) { row.classList.remove("ready"); });
+        button.disabled = true;
+        serviceRows.forEach(function (row, index) {
+          composeTimers.push(setTimeout(function () {
+            row.classList.add("ready");
+            if (index === serviceRows.length - 1) {
+              button.disabled = false;
+              button.textContent = "重新运行";
+            }
+          }, index * (reduce ? 80 : 520)));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

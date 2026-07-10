@@ -80,6 +80,37 @@ export async function renderMarkdown(
       continue;
     }
 
+    const tableBlock = parseTableBlock(lines, i, `block-${key}`);
+    if (tableBlock) {
+      blocks.push(tableBlock.node);
+      i = tableBlock.nextIndex;
+      key += 1;
+      continue;
+    }
+
+    const quote = /^>\s?(.*)$/.exec(trimmed);
+    if (quote) {
+      const quoteLines: string[] = [];
+
+      while (i < lines.length) {
+        const quoteLine = /^>\s?(.*)$/.exec(lines[i].trim());
+        if (!quoteLine) {
+          break;
+        }
+
+        quoteLines.push(quoteLine[1]);
+        i += 1;
+      }
+
+      blocks.push(
+        <blockquote className={styles.blockquote} key={`block-${key}`}>
+          {parseInline(quoteLines.join(" "), `quote-${key}`)}
+        </blockquote>
+      );
+      key += 1;
+      continue;
+    }
+
     const listMarker = parseListMarker(line);
     if (listMarker) {
       const listBlock = parseListBlock(lines, i, listMarker.indent, `block-${key}`);
@@ -95,6 +126,8 @@ export async function renderMarkdown(
       lines[i].trim() &&
       !/^```/.test(lines[i].trim()) &&
       !/^(#{1,6})\s+/.test(lines[i].trim()) &&
+      !isTableStart(lines, i) &&
+      !/^>\s?/.test(lines[i].trim()) &&
       !parseListMarker(lines[i])
     ) {
       paragraphLines.push(lines[i].trim());
@@ -110,6 +143,115 @@ export async function renderMarkdown(
   }
 
   return blocks;
+}
+
+type TableBlock = {
+  nextIndex: number;
+  node: ReactNode;
+};
+
+function parseTableBlock(
+  lines: string[],
+  startIndex: number,
+  keyPrefix: string
+): TableBlock | null {
+  if (!isTableStart(lines, startIndex)) {
+    return null;
+  }
+
+  const headers = parseTableRow(lines[startIndex]);
+  const separators = parseTableRow(lines[startIndex + 1]);
+  const alignments = separators.map((separator) => {
+    const value = separator.trim();
+    const left = value.startsWith(":");
+    const right = value.endsWith(":");
+
+    if (left && right) {
+      return "center" as const;
+    }
+
+    if (right) {
+      return "right" as const;
+    }
+
+    return "left" as const;
+  });
+  const rows: string[][] = [];
+  let i = startIndex + 2;
+
+  while (i < lines.length && isTableRow(lines[i])) {
+    const cells = parseTableRow(lines[i]);
+    if (cells.length !== headers.length) {
+      break;
+    }
+
+    rows.push(cells);
+    i += 1;
+  }
+
+  return {
+    nextIndex: i,
+    node: (
+      <div className={styles.tableScroll} key={keyPrefix}>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              {headers.map((header, columnIndex) => (
+                <th
+                  key={`${keyPrefix}-head-${columnIndex}`}
+                  style={{ textAlign: alignments[columnIndex] }}
+                >
+                  {parseInline(header, `${keyPrefix}-head-${columnIndex}`)}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, rowIndex) => (
+              <tr key={`${keyPrefix}-row-${rowIndex}`}>
+                {row.map((cell, columnIndex) => (
+                  <td
+                    key={`${keyPrefix}-cell-${rowIndex}-${columnIndex}`}
+                    style={{ textAlign: alignments[columnIndex] }}
+                  >
+                    {parseInline(cell, `${keyPrefix}-cell-${rowIndex}-${columnIndex}`)}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+  };
+}
+
+function isTableStart(lines: string[], index: number): boolean {
+  if (index + 1 >= lines.length || !isTableRow(lines[index])) {
+    return false;
+  }
+
+  const headers = parseTableRow(lines[index]);
+  const separators = parseTableRow(lines[index + 1]);
+
+  return (
+    headers.length > 0 &&
+    headers.length === separators.length &&
+    separators.every((cell) => /^:?-{3,}:?$/.test(cell.trim()))
+  );
+}
+
+function isTableRow(line: string): boolean {
+  const trimmed = line.trim();
+  return trimmed.startsWith("|") && trimmed.endsWith("|");
+}
+
+function parseTableRow(line: string): string[] {
+  return line
+    .trim()
+    .slice(1, -1)
+    .split(/(?<!\\)\|/)
+    .map((cell) => cell.trim().replace(/\\\|/g, "|"));
 }
 
 type ListMarker = {

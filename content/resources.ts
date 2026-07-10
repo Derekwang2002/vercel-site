@@ -36,6 +36,25 @@ export type ResourceCollection = {
 
 export const resources = [
   {
+    title: "Docker 运行原理 · 交互阅读版",
+    description: "更轻、更安静的教材式版本，用分步场景和两个小实验解释 Image、Container、网络、Volume 与 Compose。",
+    type: "demo",
+    href: "/docker-runtime/reading.html",
+    tags: ["docker", "container", "learning", "visualization"],
+    date: "2026-07-09",
+    status: "public"
+  },
+  {
+    title: "Docker 运行原理动态讲解",
+    description: "从 Dockerfile、Image 到 Container，配合构建、隔离、网络、Volume 与 Compose 动画，从头理解 Docker。",
+    type: "demo",
+    href: "/docker-runtime/index.html",
+    tags: ["docker", "container", "devops", "visualization"],
+    date: "2026-07-09",
+    status: "public",
+    featured: true
+  },
+  {
     title: "数据结构可视化讲解",
     description: "Skip List 与 LRU Cache 的交互式讲解入口，包含动态演示、实现代码和工程取舍。",
     type: "demo",
