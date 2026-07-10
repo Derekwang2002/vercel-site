@@ -138,29 +138,44 @@ function PostMeta({
   post: BlogExplorerPost;
 }) {
   return (
-    <p className={styles.postMeta}>
-      {post.selected ? <span>Selected</span> : null}
-      {post.tags.map((tag) => {
-        const slug = normalizeTagSlug(tag);
-        const href = buildBlogHref(activeTab, [slug]);
+    <div className={styles.postMeta}>
+      {post.selected ? (
+        <>
+          <span className={`${styles.metaBadge} ${styles.selectedBadge}`}>Selected</span>
+          {post.tags.length > 0 ? (
+            <span aria-hidden="true" className={styles.metaSeparator}>
+              |
+            </span>
+          ) : null}
+        </>
+      ) : null}
 
-        return (
-          <Link
-            href={href}
-            key={slug}
-            onClick={(event) => {
-              if (isModifiedClick(event)) return;
-              event.preventDefault();
-              onNavigate(href);
-            }}
-            prefetch={false}
-            scroll={false}
-          >
-            {tag}
-          </Link>
-        );
-      })}
-    </p>
+      {post.tags.length > 0 ? (
+        <span aria-label="Tags" className={styles.tagList} role="group">
+          {post.tags.map((tag) => {
+            const slug = normalizeTagSlug(tag);
+            const href = buildBlogHref(activeTab, [slug]);
+
+            return (
+              <Link
+                className={styles.postTag}
+                href={href}
+                key={slug}
+                onClick={(event) => {
+                  if (isModifiedClick(event)) return;
+                  event.preventDefault();
+                  onNavigate(href);
+                }}
+                prefetch={false}
+                scroll={false}
+              >
+                {tag}
+              </Link>
+            );
+          })}
+        </span>
+      ) : null}
+    </div>
   );
 }
 

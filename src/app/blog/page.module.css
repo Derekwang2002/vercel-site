@@ -75,8 +75,14 @@
 
 .postLink {
   color: var(--color-text);
-  text-decoration: none;
+  flex: 1 1 24rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
   min-width: 0;
+  text-decoration: none;
+  text-wrap: pretty;
 }
 
 .postLink:hover,
@@ -85,35 +91,91 @@
 }
 
 .postSummary {
-  color: var(--color-text-soft);
-  line-height: 1.6;
-  margin: 0.35rem 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.58;
+  margin: 0.28rem 0 0;
+  max-width: 64ch;
+  text-wrap: pretty;
 }
 
 .postMeta {
+  align-items: center;
+  color: var(--color-text-faint);
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem 0.65rem;
-  color: var(--color-text-faint);
-  font-size: 0.9rem;
+  font-size: 0.78rem;
+  gap: 0.34rem 0.45rem;
   line-height: 1.5;
-  margin: 0.35rem 0 0;
+  margin: 0.42rem 0 0;
 }
 
-.postMeta a {
-  color: inherit;
+.metaBadge {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  color: var(--color-text-muted);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.055em;
+  line-height: 1.45;
+  padding: 0.08rem 0.34rem;
+  text-transform: uppercase;
+}
+
+.selectedBadge {
+  background: var(--color-surface-muted);
+  color: var(--color-focus);
+}
+
+.metaSeparator {
+  color: var(--color-text-faint);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.72rem;
+  line-height: 1;
+  opacity: 0.68;
+}
+
+.tagList {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.postTag {
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border-soft);
+  border-radius: 2px;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+  padding: 0.06rem 0.34rem;
   text-decoration: none;
 }
 
-.postMeta a:hover,
-.postMeta a:focus-visible {
+.postTag::before {
+  color: var(--color-focus);
+  content: "#";
+  margin-right: 0.06rem;
+}
+
+.postTag:hover,
+.postTag:focus-visible {
+  background: var(--color-surface-raised);
+  border-color: var(--color-border);
   color: var(--color-text);
-  text-decoration: underline;
+}
+
+.postTag:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 .postDate {
   color: var(--color-text-muted);
-  font-size: 0.94rem;
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
@@ -132,5 +194,24 @@
 
   .filterDivider {
     display: none;
+  }
+
+  .postHeader {
+    display: grid;
+    gap: 0.25rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .postLink {
+    font-size: 1.16rem;
+    grid-row: 2;
+  }
+
+  .postDate {
+    grid-row: 1;
+  }
+
+  .postSummary {
+    font-size: 0.88rem;
   }
 }

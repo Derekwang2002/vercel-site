@@ -64,11 +64,40 @@ function ResourceLink({ resource }: { resource: Resource }) {
 }
 
 function ResourceMeta({ resource }: { resource: Resource }) {
-  const parts = [
-    getResourceTypeLabel(resource.type),
-    ...resource.tags,
-    resource.date ?? ""
-  ].filter(Boolean);
+  return (
+    <div className={styles.meta}>
+      <span className={styles.typeBadge}>{getResourceTypeLabel(resource.type)}</span>
 
-  return <p className={styles.meta}>{parts.join(" · ")}</p>;
+      {resource.tags.length > 0 ? (
+        <span aria-label="Tags" className={styles.tagList} role="group">
+          {resource.tags.map((tag) => (
+            <span className={styles.tag} key={tag}>
+              {tag}
+            </span>
+          ))}
+        </span>
+      ) : null}
+
+      {resource.date ? (
+        <time className={styles.metaDate} dateTime={resource.date}>
+          {formatResourceDate(resource.date)}
+        </time>
+      ) : null}
+    </div>
+  );
+}
+
+function formatResourceDate(date: string): string {
+  const parsed = new Date(`${date}T00:00:00.000Z`);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return date;
+  }
+
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC"
+  }).format(parsed);
 }
