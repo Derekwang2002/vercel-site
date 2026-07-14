@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import type { MouseEvent as ReactMouseEvent } from "react";
 import styles from "../app/blog/[slug]/page.module.css";
 
 export type TocItem = {
@@ -7,43 +11,295 @@ export type TocItem = {
 };
 
 type PostTocProps = {
+  activeId: string;
+  articleTitle: string;
   items: TocItem[];
   onOpenChange: (open: boolean) => void;
   open: boolean;
+  overlay: boolean;
 };
 
-export function PostToc({ items, onOpenChange, open }: PostTocProps) {
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+export function PostToc({
+  activeId,
+  articleTitle,
+  items,
+  onOpenChange,
+  open,
+  overlay
+}: PostTocProps) {
+  const listRef = useRef<HTMLOListElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open || !activeId) {
+      return;
+    }
+
+    const animationFrame = window.requestAnimationFrame(() => {
+      const list = listRef.current;
+
+      if (!list) {
+        return;
+      }
+
+      const activeLink = Array.from(
+        list.querySelectorAll<HTMLAnchorElement>("a[data-toc-id]")
+      ).find((link) => link.dataset.tocId === activeId);
+
+      if (!activeLink) {
+        return;
+      }
+
+      const listRect = list.getBoundingClientRect();
+      const linkRect = activeLink.getBoundingClientRect();
+      const inset = 8;
+
+      if (linkRect.top < listRect.top + inset) {
+        list.scrollTop -= listRect.top + inset - linkRect.top;
+      } else if (linkRect.bottom > listRect.bottom - inset) {
+        list.scrollTop += linkRect.bottom - (listRect.bottom - inset);
+      }
+    });
+
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, [activeId, open]);
+
+  useEffect(() => {
+    if (items.length === 0 || !open || !overlay) {
+      return;
+    }
+
+    const body = document.body;
+    const root = document.documentElement;
+    const previousOverflow = body.style.overflow;
+    const previousPaddingRight = body.style.paddingRight;
+    const previousRootOverflow = root.style.overflow;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    const computedPaddingRight = Number.parseFloat(window.getComputedStyle(body).paddingRight) || 0;
+
+    body.style.overflow = "hidden";
+    root.style.overflow = "hidden";
+
+    if (scrollbarWidth > 0) {
+      body.style.paddingRight = `${computedPaddingRight + scrollbarWidth}px`;
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onOpenChange(false);
+        window.requestAnimationFrame(() => toggleRef.current?.focus({ preventScroll: true }));
+        return;
+      }
+
+      if (event.key !== "Tab") {
+        return;
+      }
+
+      const panel = panelRef.current;
+
+      if (!panel) {
+        return;
+      }
+
+      const focusableElements = Array.from(
+        panel.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+      ).filter((element) => !element.hasAttribute("disabled") && element.offsetParent !== null);
+
+      if (focusableElements.length === 0) {
+        event.preventDefault();
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    window.requestAnimationFrame(() => toggleRef.current?.focus({ preventScroll: true }));
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      body.style.overflow = previousOverflow;
+      body.style.paddingRight = previousPaddingRight;
+      root.style.overflow = previousRootOverflow;
+    };
+  }, [items.length, onOpenChange, open, overlay]);
+
   if (items.length === 0) {
     return null;
   }
 
-  return (
-    <aside
-      className={open ? styles.toc : `${styles.toc} ${styles.tocCollapsed}`}
-      aria-label="Post table of contents"
-    >
-      <button
-        aria-controls="post-toc-list"
-        aria-expanded={open}
-        className={styles.tocToggle}
-        onClick={() => onOpenChange(!open)}
-        type="button"
-      >
-        <span>Contents</span>
-        <span aria-hidden="true" className={styles.tocIndicator}>
-          {open ? "-" : "+"}
-        </span>
-      </button>
+  const panelClassName = [
+    styles.toc,
+    open ? styles.tocOpen : styles.tocCollapsed,
+    open && overlay ? styles.tocOverlay : ""
+  ]
+    .filter(Boolean)
+    .join(" ");
 
-      {open ? (
-        <ol className={styles.tocList} id="post-toc-list">
-          {items.map((item) => (
-            <li className={styles[`tocLevel${Math.min(item.level, 4)}`]} key={item.id}>
-              <a href={`#${item.id}`}>{item.text}</a>
-            </li>
-          ))}
-        </ol>
+  const toggleLabel = open ? "Collapse contents" : "Expand contents";
+
+  function closeAndRestoreFocus() {
+    onOpenChange(false);
+    window.requestAnimationFrame(() => toggleRef.current?.focus({ preventScroll: true }));
+  }
+
+  function handleNavigate(event: ReactMouseEvent<HTMLAnchorElement>, itemId: string) {
+    if (
+      !overlay ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    onOpenChange(false);
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        const target = document.getElementById(itemId);
+
+        if (!target) {
+          return;
+        }
+
+        const previousTabIndex = target.getAttribute("tabindex");
+
+        if (previousTabIndex === null) {
+          target.setAttribute("tabindex", "-1");
+        }
+
+        target.focus({ preventScroll: true });
+
+        if (previousTabIndex === null) {
+          target.addEventListener(
+            "blur",
+            () => {
+              target.removeAttribute("tabindex");
+            },
+            { once: true }
+          );
+        }
+      });
+    });
+  }
+
+  return (
+    <div className={styles.tocShell}>
+      {overlay ? (
+        <button
+          aria-hidden={!open}
+          aria-label="Close article contents"
+          className={`${styles.tocBackdrop} ${open ? styles.tocBackdropVisible : ""}`}
+          onClick={closeAndRestoreFocus}
+          tabIndex={-1}
+          type="button"
+        />
       ) : null}
-    </aside>
+
+      <aside
+        aria-label="Article table of contents"
+        aria-modal={open && overlay ? true : undefined}
+        className={panelClassName}
+        ref={panelRef}
+        role={open && overlay ? "dialog" : undefined}
+      >
+        <div className={styles.tocHeader}>
+          <button
+            aria-controls="post-toc-list"
+            aria-expanded={open}
+            aria-label={toggleLabel}
+            className={styles.tocToggle}
+            onClick={() => onOpenChange(!open)}
+            ref={toggleRef}
+            type="button"
+          >
+            <span aria-hidden="true" className={styles.tocToggleIcon}>
+              <TocToggleIcon open={open} />
+            </span>
+            <span aria-hidden="true" className={styles.tocToggleLabel}>
+              {toggleLabel}
+            </span>
+          </button>
+
+          <p className={styles.tocTitle} title={articleTitle}>
+            {articleTitle}
+          </p>
+        </div>
+
+        <ol
+          aria-hidden={!open}
+          className={styles.tocList}
+          hidden={!open}
+          id="post-toc-list"
+          ref={listRef}
+        >
+          {items.map((item) => {
+            const active = item.id === activeId;
+            const levelClassName = styles[`tocLevel${Math.min(item.level, 4)}`];
+
+            return (
+              <li
+                className={`${levelClassName} ${active ? styles.tocItemActive : ""}`}
+                key={item.id}
+              >
+                <a
+                  aria-current={active ? "location" : undefined}
+                  data-toc-id={item.id}
+                  href={`#${item.id}`}
+                  onClick={(event) => handleNavigate(event, item.id)}
+                  title={item.text}
+                >
+                  {item.text}
+                </a>
+              </li>
+            );
+          })}
+        </ol>
+      </aside>
+    </div>
+  );
+}
+
+function TocToggleIcon({ open }: { open: boolean }) {
+  if (open) {
+    return (
+      <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
+        <path
+          d="m12.5 5-5 7 5 7M18.5 5l-5 7 5 7"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+        />
+      </svg>
+    );
+  }
+
+  return (
+    <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
+      <path
+        d="M4 6h16M4 12h12M4 18h8"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeWidth="1.8"
+      />
+    </svg>
   );
 }

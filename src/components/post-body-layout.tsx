@@ -1,39 +1,103 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { PostReadingRail } from "./post-reading-rail";
 import { PostToc, type TocItem } from "./post-toc";
+import { useActiveHeading } from "./use-active-heading";
 import styles from "../app/blog/[slug]/page.module.css";
 
+const TOC_PREFERENCE_KEY = "derek-hub:toc-open";
+
+type ViewportMode = "pending" | "wide" | "medium" | "mobile";
+
 type PostBodyLayoutProps = {
+  articleTitle: string;
   children: ReactNode;
   tocItems: TocItem[];
 };
 
-export function PostBodyLayout({ children, tocItems }: PostBodyLayoutProps) {
-  const [tocOpen, setTocOpen] = useState(true);
+export function PostBodyLayout({ articleTitle, children, tocItems }: PostBodyLayoutProps) {
+  const [viewportMode, setViewportMode] = useState<ViewportMode>("pending");
+  const [wideOpen, setWideOpen] = useState(true);
+  const [overlayOpen, setOverlayOpen] = useState(false);
+  const activeId = useActiveHeading(tocItems);
 
   useEffect(() => {
-    const mobileQuery = window.matchMedia("(max-width: 720px)");
+    const wideQuery = window.matchMedia("(min-width: 1280px)");
+    const mobileQuery = window.matchMedia("(max-width: 920px)");
 
-    function syncTocToViewport(event: MediaQueryList | MediaQueryListEvent) {
-      setTocOpen(!event.matches);
+    try {
+      const storedPreference = window.localStorage.getItem(TOC_PREFERENCE_KEY);
+
+      if (storedPreference === "closed") {
+        setWideOpen(false);
+      } else if (storedPreference === "open") {
+        setWideOpen(true);
+      }
+    } catch {
+      // Storage can be unavailable in private or restricted browser contexts.
     }
 
-    syncTocToViewport(mobileQuery);
-    mobileQuery.addEventListener("change", syncTocToViewport);
+    function syncViewportMode() {
+      const nextMode: ViewportMode = wideQuery.matches
+        ? "wide"
+        : mobileQuery.matches
+          ? "mobile"
+          : "medium";
+
+      setViewportMode(nextMode);
+      setOverlayOpen(false);
+    }
+
+    syncViewportMode();
+    wideQuery.addEventListener("change", syncViewportMode);
+    mobileQuery.addEventListener("change", syncViewportMode);
 
     return () => {
-      mobileQuery.removeEventListener("change", syncTocToViewport);
+      wideQuery.removeEventListener("change", syncViewportMode);
+      mobileQuery.removeEventListener("change", syncViewportMode);
     };
   }, []);
 
+  useEffect(() => {
+    setOverlayOpen(false);
+  }, [articleTitle]);
+
+  const tocOpen = viewportMode === "wide" ? wideOpen : overlayOpen;
+  const tocOverlay = viewportMode === "medium" || viewportMode === "mobile";
+
+  const setTocOpen = useCallback(
+    (nextOpen: boolean) => {
+      if (viewportMode === "wide") {
+        setWideOpen(nextOpen);
+
+        try {
+          window.localStorage.setItem(TOC_PREFERENCE_KEY, nextOpen ? "open" : "closed");
+        } catch {
+          // Keep the in-memory preference when storage is unavailable.
+        }
+
+        return;
+      }
+
+      setOverlayOpen(nextOpen);
+    },
+    [viewportMode]
+  );
+
   return (
     <div className={styles.bodyLayout}>
-      <PostToc items={tocItems} onOpenChange={setTocOpen} open={tocOpen} />
+      <PostToc
+        activeId={activeId}
+        articleTitle={articleTitle}
+        items={tocItems}
+        onOpenChange={setTocOpen}
+        open={tocOpen}
+        overlay={tocOverlay}
+      />
       <article className={styles.content}>{children}</article>
-      <PostReadingRail items={tocItems} />
+      <PostReadingRail activeId={activeId} items={tocItems} />
     </div>
   );
 }

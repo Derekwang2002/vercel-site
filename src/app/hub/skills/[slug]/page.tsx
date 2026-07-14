@@ -93,7 +93,9 @@ export default async function SkillPage({ params }: SkillPageProps) {
         </ul>
       </header>
 
-      <PostBodyLayout tocItems={tocItems}>{renderedContent}</PostBodyLayout>
+      <PostBodyLayout articleTitle={resource.title} tocItems={tocItems}>
+        {renderedContent}
+      </PostBodyLayout>
     </main>
   );
 }

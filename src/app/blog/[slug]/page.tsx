@@ -95,7 +95,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </ul>
       </header>
 
-      <PostBodyLayout tocItems={tocItems}>{renderedContent}</PostBodyLayout>
+      <PostBodyLayout articleTitle={post.title} tocItems={tocItems}>
+        {renderedContent}
+      </PostBodyLayout>
     </main>
   );
 }
