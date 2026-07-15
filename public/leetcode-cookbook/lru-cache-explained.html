@@ -73,7 +73,12 @@
       grid-template-columns: 1fr;
       gap: 14px;
       align-items: start;
-      padding: 2px 0 0;
+      width: min(100%, 1180px);
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 247, .9);
+      box-shadow: 4px 4px 0 rgba(27, 26, 23, .08);
     }
 
     .kicker {
@@ -106,11 +111,13 @@
     .hero p {
       font-size: 16px;
       color: var(--muted);
-      max-width: 1180px;
+      max-width: none;
       margin: 0;
     }
 
     .hero strong { color: var(--ink); }
+
+    .keep-together { white-space: nowrap; }
 
     .hero-proof {
       display: grid;
@@ -1340,6 +1347,10 @@
         padding-top: 18px;
       }
 
+      .hero-copy {
+        padding: 15px 16px;
+      }
+
       h1 {
         font-size: 44px;
       }
@@ -1552,7 +1563,7 @@
         <p>
           LRU Cache 解决的是一个朴素但高频的问题：空间有限时，应该保留谁、淘汰谁。
           它用 <strong>HashMap</strong> 负责 O(1) 定位，用 <strong>双向链表</strong> 负责 O(1) 调整新旧顺序，
-          把“最近使用”变成一条可维护的时间轴。
+          把<span class="keep-together">“最近使用”</span>变成一条可维护的时间轴。
         </p>
       </div>
     </section>
