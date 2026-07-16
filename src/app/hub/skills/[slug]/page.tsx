@@ -6,6 +6,7 @@ import { PostBodyLayout } from "@/components/post-body-layout";
 import { getPublicResourceByHref } from "../../../../../lib/resources";
 import { getAllSkillDocSlugs, getSkillDocBySlug } from "../../../../../lib/skill-docs";
 import styles from "../../../blog/[slug]/page.module.css";
+import { localizeResource } from "../../../../../lib/localized-resources";
 
 const DEFAULT_OG_IMAGE = "/og-default.svg";
 
@@ -25,8 +26,9 @@ export async function generateStaticParams(): Promise<Array<{ slug: string }>> {
 export async function generateMetadata({ params }: SkillPageProps): Promise<Metadata> {
   const { slug } = await params;
   const href = getSkillHref(slug);
-  const resource = await getPublicResourceByHref(href);
-  const doc = await getSkillDocBySlug(slug);
+  const rawResource = await getPublicResourceByHref(href);
+  const resource = rawResource ? localizeResource(rawResource, "en") : undefined;
+  const doc = await getSkillDocBySlug(slug, "en");
 
   if (!resource || !doc) {
     return {
@@ -38,6 +40,10 @@ export async function generateMetadata({ params }: SkillPageProps): Promise<Meta
   return {
     title: resource.title,
     description: resource.description,
+    alternates: {
+      canonical: href,
+      languages: { en: href, "zh-CN": `/zh${href}` }
+    },
     openGraph: {
       type: "article",
       title: resource.title,
@@ -59,8 +65,9 @@ export async function generateMetadata({ params }: SkillPageProps): Promise<Meta
 export default async function SkillPage({ params }: SkillPageProps) {
   const { slug } = await params;
   const href = getSkillHref(slug);
-  const resource = await getPublicResourceByHref(href);
-  const doc = await getSkillDocBySlug(slug);
+  const rawResource = await getPublicResourceByHref(href);
+  const resource = rawResource ? localizeResource(rawResource, "en") : undefined;
+  const doc = await getSkillDocBySlug(slug, "en");
 
   if (!resource || !doc) {
     notFound();

@@ -76,5 +76,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: resource.type === "skill" ? 0.7 : 0.6
     }));
 
-  return [...staticEntries, ...resourceSectionEntries, ...resourceEntries, ...postEntries];
+  const chineseEntries: MetadataRoute.Sitemap = [
+    ...staticEntries.map((entry) => ({ ...entry, url: entry.url === `${siteUrl}/` ? `${siteUrl}/zh` : entry.url.replace(`${siteUrl}/blog`, `${siteUrl}/zh/blog`) })),
+    ...resourceSectionEntries.map((entry) => ({ ...entry, url: entry.url.replace(`${siteUrl}/hub`, `${siteUrl}/zh/hub`) })),
+    ...resourceEntries.filter((entry) => entry.url.includes("/hub/skills/")).map((entry) => ({ ...entry, url: entry.url.replace(`${siteUrl}/hub`, `${siteUrl}/zh/hub`) })),
+    ...postEntries.map((entry) => ({ ...entry, url: entry.url.replace(`${siteUrl}/blog`, `${siteUrl}/zh/blog`) }))
+  ];
+
+  return [...staticEntries, ...resourceSectionEntries, ...resourceEntries, ...postEntries, ...chineseEntries];
 }

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { BlogExplorer, type BlogExplorerPost } from "@/components/blog-explorer";
 import {
-  getAllPosts,
   normalizeTagSlug,
   type Post,
   type TagCount
 } from "../../../lib/posts";
+import { getAllLocalizedPosts } from "../../../lib/localized-posts";
 import styles from "./page.module.css";
 
 export const dynamic = "force-static";
@@ -13,6 +13,7 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "Blog",
   description: "Chronological timeline of blog posts with all and selected filters.",
+  alternates: { canonical: "/blog", languages: { en: "/blog", "zh-CN": "/zh/blog" } },
   openGraph: {
     title: "Blog | Derek Hub",
     description: "Chronological timeline of blog posts with all and selected filters.",
@@ -55,7 +56,7 @@ export default async function BlogPage() {
 
 async function loadBlogData(): Promise<Post[]> {
   try {
-    return await getAllPosts();
+    return await getAllLocalizedPosts("en");
   } catch {
     return [];
   }

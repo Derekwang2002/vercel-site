@@ -4,10 +4,10 @@ import { HubNav } from "@/components/hub-nav";
 import { ResourceList } from "@/components/resource-list";
 import {
   RESOURCE_SECTIONS,
-  getResourceSection,
-  getResourcesBySection
+  getResourceSection
 } from "../../../../lib/resources";
 import styles from "../page.module.css";
+import { getLocalizedResourcesBySection } from "../../../../lib/localized-resources";
 
 type HubSectionPageProps = {
   params: Promise<{
@@ -38,6 +38,10 @@ export async function generateMetadata({
   return {
     title: section.label,
     description: section.description,
+    alternates: {
+      canonical: `/hub/${section.slug}`,
+      languages: { en: `/hub/${section.slug}`, "zh-CN": `/zh/hub/${section.slug}` }
+    },
     openGraph: {
       title: `${section.label} | Derek Hub`,
       description: section.description,
@@ -62,7 +66,7 @@ export default async function HubSectionPage({ params }: HubSectionPageProps) {
     notFound();
   }
 
-  const resources = await getResourcesBySection(section.slug);
+  const resources = await getLocalizedResourcesBySection(section.slug, "en");
 
   return (
     <main className={styles.hubPage}>

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Suspense } from "react";
+import { LanguageToggle } from "@/components/language-toggle";
+import { PrimaryNavigation } from "@/components/primary-navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
 
@@ -27,6 +29,15 @@ const THEME_INIT_SCRIPT = `
   } catch {
     document.documentElement.dataset.theme = "light";
   }
+})();
+`;
+
+const LANGUAGE_INIT_SCRIPT = `
+(() => {
+  document.documentElement.lang =
+    location.pathname === "/zh" || location.pathname.startsWith("/zh/")
+      ? "zh-CN"
+      : "en";
 })();
 `;
 
@@ -63,17 +74,17 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: LANGUAGE_INIT_SCRIPT }} />
       </head>
       <body>
         <div className="site-shell">
           <header className="site-header">
             <nav aria-label="Primary navigation" className="site-nav">
-              <div className="site-nav-links">
-                <Link href="/">Home</Link>
-                <Link href="/blog">Blog</Link>
-                <Link href="/hub/all">Hub</Link>
-              </div>
-              <div className="site-theme-slot">
+              <PrimaryNavigation />
+              <div className="site-controls">
+                <Suspense fallback={<span className="language-toggle" aria-hidden="true">Lang</span>}>
+                  <LanguageToggle />
+                </Suspense>
                 <ThemeToggle />
               </div>
             </nav>

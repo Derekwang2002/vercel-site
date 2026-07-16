@@ -16,12 +16,13 @@ export type { BlogTag };
 
 type BlogTagMenuProps = {
   activeTab: BlogTab;
+  locale?: "en" | "zh";
   onNavigate?: (href: string) => void;
   selectedTags: string[];
   tags: BlogTag[];
 };
 
-export function BlogTagMenu({ activeTab, onNavigate, selectedTags, tags }: BlogTagMenuProps) {
+export function BlogTagMenu({ activeTab, locale = "en", onNavigate, selectedTags, tags }: BlogTagMenuProps) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const rootRef = useRef<HTMLDivElement>(null);
@@ -66,7 +67,7 @@ export function BlogTagMenu({ activeTab, onNavigate, selectedTags, tags }: BlogT
         onClick={() => setOpen((current) => !current)}
         type="button"
       >
-        <span>Tags</span>
+        <span>{locale === "zh" ? "标签" : "Tags"}</span>
         <span
           aria-hidden={selectedTags.length === 0 ? "true" : undefined}
           className={selectedTags.length > 0 ? styles.count : `${styles.count} ${styles.countEmpty}`}
@@ -76,21 +77,21 @@ export function BlogTagMenu({ activeTab, onNavigate, selectedTags, tags }: BlogT
       </button>
 
       {open ? (
-        <section aria-label="Tag picker" className={styles.panel}>
+        <section aria-label={locale === "zh" ? "标签筛选器" : "Tag picker"} className={styles.panel}>
           <div className={styles.panelHeader}>
-            <span className={styles.panelTitle}>Filter tags</span>
+            <span className={styles.panelTitle}>{locale === "zh" ? "筛选标签" : "Filter tags"}</span>
             {selectedTags.length > 0 ? (
               <FilterLink
                 className={styles.clear}
-                href={buildBlogHref(activeTab, [])}
+                href={buildBlogHref(activeTab, [], locale)}
                 onFilterNavigate={onNavigate}
                 prefetch={false}
               >
-                Clear
+                {locale === "zh" ? "清除" : "Clear"}
               </FilterLink>
             ) : (
               <span aria-hidden="true" className={styles.clearPlaceholder}>
-                Clear
+                {locale === "zh" ? "清除" : "Clear"}
               </span>
             )}
           </div>
@@ -98,7 +99,7 @@ export function BlogTagMenu({ activeTab, onNavigate, selectedTags, tags }: BlogT
           <input
             className={styles.search}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search tags"
+            placeholder={locale === "zh" ? "搜索标签" : "Search tags"}
             type="search"
             value={query}
           />
@@ -117,7 +118,7 @@ export function BlogTagMenu({ activeTab, onNavigate, selectedTags, tags }: BlogT
           <div className={styles.list}>
             {visibleTags.map((tag) => {
               const selected = selectedTagSet.has(tag.slug);
-              const href = buildBlogHref(activeTab, toggleTag(selectedTags, tag.slug));
+              const href = buildBlogHref(activeTab, toggleTag(selectedTags, tag.slug), locale);
 
               return (
                 <FilterLink
@@ -136,7 +137,7 @@ export function BlogTagMenu({ activeTab, onNavigate, selectedTags, tags }: BlogT
             })}
           </div>
 
-          {visibleTags.length === 0 ? <p className={styles.empty}>No tags found.</p> : null}
+          {visibleTags.length === 0 ? <p className={styles.empty}>{locale === "zh" ? "未找到标签。" : "No tags found."}</p> : null}
         </section>
       ) : null}
     </div>
@@ -180,12 +181,12 @@ function toggleTag(selectedTags: string[], tag: string): string[] {
   return [...selectedTags, tag];
 }
 
-function buildBlogHref(tab: BlogTab, tags: string[]): string {
+function buildBlogHref(tab: BlogTab, tags: string[], locale: "en" | "zh"): string {
   const params = new URLSearchParams({ tab });
 
   for (const tag of tags) {
     params.append("tag", tag);
   }
 
-  return `/blog?${params.toString()}`;
+  return `${locale === "zh" ? "/zh" : ""}/blog?${params.toString()}`;
 }

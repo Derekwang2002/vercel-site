@@ -5,6 +5,7 @@ import styles from "./hub-nav.module.css";
 
 type HubNavProps = {
   active: ResourceSection;
+  locale?: "en" | "zh";
 };
 
 type NavItem = {
@@ -13,17 +14,17 @@ type NavItem = {
   href: string;
 };
 
-export function HubNav({ active }: HubNavProps) {
+export function HubNav({ active, locale = "en" }: HubNavProps) {
   const items: NavItem[] = RESOURCE_SECTIONS.map((section) => ({
     slug: section.slug,
-    label: section.label,
-    href: `/hub/${section.slug}`
+    label: locale === "zh" ? ({ all: "全部", skills: "Skills", demos: "演示" } as const)[section.slug] : section.label,
+    href: `${locale === "zh" ? "/zh" : ""}/hub/${section.slug}`
   }));
 
   return (
     <>
       <RefreshOnPageRestore />
-      <nav aria-label="Hub sections" className={styles.nav}>
+      <nav aria-label={locale === "zh" ? "Hub 分类" : "Hub sections"} className={styles.nav}>
         {items.map((item) => (
           <Link
             aria-current={active === item.slug ? "page" : undefined}

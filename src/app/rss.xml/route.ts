@@ -1,4 +1,4 @@
-import { getAllPosts } from "../../../lib/posts";
+import { getAllLocalizedPosts } from "../../../lib/localized-posts";
 
 export const dynamic = "force-static";
 
@@ -22,7 +22,7 @@ function escapeXml(value: string): string {
 
 export async function GET(): Promise<Response> {
   const siteUrl = getSiteUrl();
-  const posts = await getAllPosts();
+  const posts = await getAllLocalizedPosts("en");
 
   const itemsXml = posts
     .map((post) => {

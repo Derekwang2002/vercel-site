@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getMarkdownHeadings, renderMarkdown } from "@/components/markdown-renderer";
 import { PostBodyLayout } from "@/components/post-body-layout";
-import { getAllPosts, getPostBySlug, normalizeTagSlug } from "../../../../lib/posts";
+import { getAllPosts, normalizeTagSlug } from "../../../../lib/posts";
+import { getLocalizedPostBySlug } from "../../../../lib/localized-posts";
 import styles from "./page.module.css";
 
 const DEFAULT_OG_IMAGE = "/og-default.svg";
@@ -28,7 +29,7 @@ export async function generateStaticParams(): Promise<Array<{ slug: string }>> {
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = await getLocalizedPostBySlug(slug, "en");
 
   if (!post) {
     return {
@@ -42,6 +43,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   return {
     title: post.title,
     description: post.summary,
+    alternates: {
+      canonical: `/blog/${post.slug}`,
+      languages: { en: `/blog/${post.slug}`, "zh-CN": `/zh/blog/${post.slug}` }
+    },
     openGraph: {
       type: "article",
       title: post.title,
@@ -62,7 +67,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = await getLocalizedPostBySlug(slug, "en");
 
   if (!post) {
     notFound();

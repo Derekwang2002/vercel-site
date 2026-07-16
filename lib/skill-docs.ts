@@ -24,7 +24,7 @@ export async function getAllSkillDocSlugs(): Promise<string[]> {
   return slugs.map((item) => item.slug).sort((a, b) => a.localeCompare(b, "en"));
 }
 
-export async function getSkillDocBySlug(slug: string): Promise<SkillDoc | null> {
+export async function getSkillDocBySlug(slug: string, locale: ContentLocale = "zh"): Promise<SkillDoc | null> {
   if (!SKILL_SLUG_PATTERN.test(slug)) {
     return null;
   }
@@ -35,6 +35,17 @@ export async function getSkillDocBySlug(slug: string): Promise<SkillDoc | null> 
   }
 
   const source = await readMarkdownSource(resource.docSource, resource.href);
+
+  if (locale === "en") {
+    const translationPath = path.join(process.cwd(), "content", "translations", "en", "resources", `${slug}.md`);
+    try {
+      const content = await fs.readFile(translationPath, "utf8");
+      return { slug, content, sourceId: `local:${translationPath}`, sourceUrl: source.sourceUrl };
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") return null;
+      throw error;
+    }
+  }
 
   const doc: SkillDoc = {
     slug,
@@ -68,3 +79,6 @@ function assertUniqueSkillDocSlugs(items: Array<{ href: string; slug: string }>)
     seen.set(item.slug, item.href);
   }
 }
+import { promises as fs } from "node:fs";
+import path from "node:path";
+import type { ContentLocale } from "./locale";

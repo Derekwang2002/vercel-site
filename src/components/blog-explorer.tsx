@@ -18,6 +18,7 @@ export type BlogExplorerPost = {
 };
 
 type BlogExplorerProps = {
+  locale?: "en" | "zh";
   posts: BlogExplorerPost[];
   tags: BlogTag[];
 };
@@ -32,7 +33,7 @@ const DEFAULT_FILTERS: BlogFilters = {
   activeTags: []
 };
 
-export function BlogExplorer({ posts, tags }: BlogExplorerProps) {
+export function BlogExplorer({ locale = "en", posts, tags }: BlogExplorerProps) {
   const validTagSlugs = useMemo(() => new Set(tags.map((tag) => tag.slug)), [tags]);
   const [filters, setFilters] = useState<BlogFilters>(DEFAULT_FILTERS);
 
@@ -68,11 +69,13 @@ export function BlogExplorer({ posts, tags }: BlogExplorerProps) {
         <BlogTabs
           activeTab={filters.activeTab}
           activeTags={filters.activeTags}
+          locale={locale}
           onNavigate={navigate}
         />
         <span aria-hidden="true" className={styles.filterDivider} />
         <BlogTagMenu
           activeTab={filters.activeTab}
+          locale={locale}
           onNavigate={navigate}
           selectedTags={filters.activeTags}
           tags={tags}
@@ -82,27 +85,27 @@ export function BlogExplorer({ posts, tags }: BlogExplorerProps) {
       {filteredPosts.length === 0 ? (
         filters.activeTab === "selected" ? (
           <>
-            <p className={styles.emptyState}>No selected posts yet.</p>
+            <p className={styles.emptyState}>{locale === "zh" ? "暂无精选文章。" : "No selected posts yet."}</p>
             <p className={styles.emptyState}>
               <Link
-                href="/blog?tab=all"
+                href={`${locale === "zh" ? "/zh" : ""}/blog?tab=all`}
                 onClick={(event) => {
                   if (isModifiedClick(event)) return;
                   event.preventDefault();
-                  navigate("/blog?tab=all");
+                  navigate(`${locale === "zh" ? "/zh" : ""}/blog?tab=all`);
                 }}
                 prefetch={false}
                 scroll={false}
               >
-                View all posts
+                {locale === "zh" ? "查看全部文章" : "View all posts"}
               </Link>
             </p>
           </>
         ) : (
           <>
-            <p className={styles.emptyState}>No posts published yet.</p>
+            <p className={styles.emptyState}>{locale === "zh" ? "暂无已发布文章。" : "No posts published yet."}</p>
             <p className={styles.emptyState}>
-              <Link href="/">Back to Home</Link>
+              <Link href={locale === "zh" ? "/zh" : "/"}>{locale === "zh" ? "返回 Home" : "Back to Home"}</Link>
             </p>
           </>
         )
@@ -111,15 +114,15 @@ export function BlogExplorer({ posts, tags }: BlogExplorerProps) {
           {filteredPosts.map((post) => (
             <li className={styles.postRow} key={post.slug}>
               <div className={styles.postHeader}>
-                <Link className={styles.postLink} href={`/blog/${post.slug}`}>
+                <Link className={styles.postLink} href={`${locale === "zh" ? "/zh" : ""}/blog/${post.slug}`}>
                   {post.title}
                 </Link>
                 <time className={styles.postDate} dateTime={post.date}>
-                  {formatPostDate(post.date)}
+                  {formatPostDate(post.date, locale)}
                 </time>
               </div>
               <p className={styles.postSummary}>{post.summary}</p>
-              <PostMeta activeTab={filters.activeTab} onNavigate={navigate} post={post} />
+              <PostMeta activeTab={filters.activeTab} locale={locale} onNavigate={navigate} post={post} />
             </li>
           ))}
         </ul>
@@ -130,10 +133,12 @@ export function BlogExplorer({ posts, tags }: BlogExplorerProps) {
 
 function PostMeta({
   activeTab,
+  locale,
   onNavigate,
   post
 }: {
   activeTab: BlogTab;
+  locale: "en" | "zh";
   onNavigate: (href: string) => void;
   post: BlogExplorerPost;
 }) {
@@ -141,7 +146,7 @@ function PostMeta({
     <div className={styles.postMeta}>
       {post.selected ? (
         <>
-          <span className={`${styles.metaBadge} ${styles.selectedBadge}`}>Selected</span>
+          <span className={`${styles.metaBadge} ${styles.selectedBadge}`}>{locale === "zh" ? "精选" : "Selected"}</span>
           {post.tags.length > 0 ? (
             <span aria-hidden="true" className={styles.metaSeparator}>
               |
@@ -154,7 +159,7 @@ function PostMeta({
         <span aria-label="Tags" className={styles.tagList} role="group">
           {post.tags.map((tag) => {
             const slug = normalizeTagSlug(tag);
-            const href = buildBlogHref(activeTab, [slug]);
+            const href = buildBlogHref(activeTab, [slug], locale);
 
             return (
               <Link
@@ -214,14 +219,14 @@ function filterPosts(
   );
 }
 
-function buildBlogHref(tab: BlogTab, tags: string[]): string {
+function buildBlogHref(tab: BlogTab, tags: string[], locale: "en" | "zh"): string {
   const params = new URLSearchParams({ tab });
 
   for (const tag of tags) {
     params.append("tag", tag);
   }
 
-  return `/blog?${params.toString()}`;
+  return `${locale === "zh" ? "/zh" : ""}/blog?${params.toString()}`;
 }
 
 function normalizeTagSlug(input: string): string {
@@ -236,10 +241,10 @@ function isModifiedClick(event: MouseEvent<HTMLAnchorElement>): boolean {
   return event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
 }
 
-function formatPostDate(date: string): string {
+function formatPostDate(date: string, locale: "en" | "zh"): string {
   const parsed = new Date(`${date}T00:00:00.000Z`);
 
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat(locale === "zh" ? "zh-CN" : "en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
