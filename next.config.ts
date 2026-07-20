@@ -14,12 +14,22 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/blog/prod-dive-in-agentic-architecture",
-        destination: "/blog/call-e-agentic-tech-doc",
+        destination: "/blog/agentic-system-overview",
         permanent: true
       },
       {
         source: "/zh/blog/prod-dive-in-agentic-architecture",
-        destination: "/zh/blog/call-e-agentic-tech-doc",
+        destination: "/zh/blog/agentic-system-overview",
+        permanent: true
+      },
+      {
+        source: "/blog/call-e-agentic-tech-doc",
+        destination: "/blog/agentic-system-overview",
+        permanent: true
+      },
+      {
+        source: "/zh/blog/call-e-agentic-tech-doc",
+        destination: "/zh/blog/agentic-system-overview",
         permanent: true
       }
     ];
