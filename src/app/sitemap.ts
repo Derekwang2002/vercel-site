@@ -1,6 +1,10 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "../../lib/posts";
 import {
+  getAllPostSeriesDocuments,
+  getPostSeriesDefinition
+} from "../../lib/post-series";
+import {
   RESOURCE_SECTIONS,
   getPublicResources,
   isExternalResourceHref
@@ -25,6 +29,7 @@ function toDate(date: string): Date {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl();
   const posts = await getAllPosts();
+  const postSeriesDocuments = await getAllPostSeriesDocuments("zh");
   const publicResources = await getPublicResources();
 
   const latestPostDate = posts.length > 0 ? toDate(posts[0].date) : undefined;
@@ -67,6 +72,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7
   }));
 
+  const postSeriesEntries: MetadataRoute.Sitemap = postSeriesDocuments.map((document) => {
+    const definition = getPostSeriesDefinition(document.seriesSlug);
+    const parentPost = definition
+      ? posts.find((post) => post.slug === definition.parentPostSlug)
+      : undefined;
+
+    if (!definition || !parentPost) {
+      throw new Error(`Post-series document "${document.fileName}" has no parent post.`);
+    }
+
+    return {
+      url: toAbsoluteUrl(siteUrl, `/blog/${document.seriesSlug}/${document.slug}`),
+      lastModified: toDate(parentPost.date),
+      changeFrequency: "monthly",
+      priority: 0.65
+    };
+  });
+
   const resourceEntries: MetadataRoute.Sitemap = publicResources
     .filter((resource) => !isExternalResourceHref(resource.href))
     .map((resource) => ({
@@ -80,8 +103,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...staticEntries.map((entry) => ({ ...entry, url: entry.url === `${siteUrl}/` ? `${siteUrl}/zh` : entry.url.replace(`${siteUrl}/blog`, `${siteUrl}/zh/blog`) })),
     ...resourceSectionEntries.map((entry) => ({ ...entry, url: entry.url.replace(`${siteUrl}/hub`, `${siteUrl}/zh/hub`) })),
     ...resourceEntries.filter((entry) => entry.url.includes("/hub/skills/")).map((entry) => ({ ...entry, url: entry.url.replace(`${siteUrl}/hub`, `${siteUrl}/zh/hub`) })),
-    ...postEntries.map((entry) => ({ ...entry, url: entry.url.replace(`${siteUrl}/blog`, `${siteUrl}/zh/blog`) }))
+    ...postEntries.map((entry) => ({ ...entry, url: entry.url.replace(`${siteUrl}/blog`, `${siteUrl}/zh/blog`) })),
+    ...postSeriesEntries.map((entry) => ({ ...entry, url: entry.url.replace(`${siteUrl}/blog`, `${siteUrl}/zh/blog`) }))
   ];
 
-  return [...staticEntries, ...resourceSectionEntries, ...resourceEntries, ...postEntries, ...chineseEntries];
+  return [
+    ...staticEntries,
+    ...resourceSectionEntries,
+    ...resourceEntries,
+    ...postEntries,
+    ...postSeriesEntries,
+    ...chineseEntries
+  ];
 }

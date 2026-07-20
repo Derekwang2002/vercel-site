@@ -31,6 +31,16 @@ const nextConfig: NextConfig = {
         source: "/zh/blog/call-e-agentic-tech-doc",
         destination: "/zh/blog/agentic-system-overview",
         permanent: true
+      },
+      {
+        source: "/blog/calle-agentic-goal-architecture-guide",
+        destination: "/blog/calle-agentic-goal",
+        permanent: true
+      },
+      {
+        source: "/zh/blog/calle-agentic-goal-architecture-guide",
+        destination: "/zh/blog/calle-agentic-goal",
+        permanent: true
       }
     ];
   },

@@ -35,7 +35,7 @@ export default async function ChineseSkillPage({ params }: Props) {
         {resource.date ? <time className={styles.date} dateTime={resource.date}>{new Intl.DateTimeFormat("zh-CN", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" }).format(new Date(`${resource.date}T00:00:00.000Z`))}</time> : null}
         <ul className={styles.tags}>{resource.tags.map((tag) => <li key={tag}><span className={styles.tagLink}>{tag}</span></li>)}</ul>
       </header>
-      <PostBodyLayout articleTitle={resource.title} tocItems={tocItems}>{renderedContent}</PostBodyLayout>
+      <PostBodyLayout articleTitle={resource.title} locale="zh" tocItems={tocItems}>{renderedContent}</PostBodyLayout>
     </main>
   );
 }

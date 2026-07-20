@@ -22,7 +22,7 @@ If you remember only one sentence, remember this:
 This series moves from intuition toward source-level understanding. Each article adds only one layer of complexity so that implementation details do not overwhelm the mental model.
 
 - **Part 0 (this article):** Build the complete mental model and locate every concept in the source.
-- **Part 1 (planned):** Trace `commit_goal` and learn how Goal, Event, and Dispatch are written to the database.
+- **[Part 1: Trace `commit_goal`](/blog/calle-agentic-goal/commit-goal):** Learn how Goal, Event, and Dispatch are written to the database.
 - **Part 2 (planned):** Read `GoalIterationRunner` line by line and understand leases, cursors, transactions, and recovery.
 - **Part 3 (planned):** Trace the real phone execution path from `RunSpec → Run → VoiceRunExecutor`.
 - **Part 4 (planned):** Trace the result path from `Report → Context Delivery → MainAgent`.

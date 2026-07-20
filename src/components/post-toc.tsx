@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import type { MouseEvent as ReactMouseEvent } from "react";
+import Link from "next/link";
+import type { PostSeriesLocale, PostSeriesNavigation } from "../../lib/post-series";
 import styles from "../app/blog/[slug]/page.module.css";
 
 export type TocItem = {
@@ -14,9 +16,11 @@ type PostTocProps = {
   activeId: string;
   articleTitle: string;
   items: TocItem[];
+  locale?: PostSeriesLocale;
   onOpenChange: (open: boolean) => void;
   open: boolean;
   overlay: boolean;
+  seriesNavigation?: PostSeriesNavigation;
 };
 
 const FOCUSABLE_SELECTOR =
@@ -26,13 +30,16 @@ export function PostToc({
   activeId,
   articleTitle,
   items,
+  locale = "en",
   onOpenChange,
   open,
-  overlay
+  overlay,
+  seriesNavigation
 }: PostTocProps) {
-  const listRef = useRef<HTMLOListElement>(null);
+  const contentsRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const hasContents = items.length > 0 || Boolean(seriesNavigation?.items.length);
 
   useEffect(() => {
     if (!open || !activeId) {
@@ -40,28 +47,28 @@ export function PostToc({
     }
 
     const animationFrame = window.requestAnimationFrame(() => {
-      const list = listRef.current;
+      const contents = contentsRef.current;
 
-      if (!list) {
+      if (!contents) {
         return;
       }
 
       const activeLink = Array.from(
-        list.querySelectorAll<HTMLAnchorElement>("a[data-toc-id]")
+        contents.querySelectorAll<HTMLAnchorElement>("a[data-toc-id]")
       ).find((link) => link.dataset.tocId === activeId);
 
       if (!activeLink) {
         return;
       }
 
-      const listRect = list.getBoundingClientRect();
+      const contentsRect = contents.getBoundingClientRect();
       const linkRect = activeLink.getBoundingClientRect();
       const inset = 8;
 
-      if (linkRect.top < listRect.top + inset) {
-        list.scrollTop -= listRect.top + inset - linkRect.top;
-      } else if (linkRect.bottom > listRect.bottom - inset) {
-        list.scrollTop += linkRect.bottom - (listRect.bottom - inset);
+      if (linkRect.top < contentsRect.top + inset) {
+        contents.scrollTop -= contentsRect.top + inset - linkRect.top;
+      } else if (linkRect.bottom > contentsRect.bottom - inset) {
+        contents.scrollTop += linkRect.bottom - (contentsRect.bottom - inset);
       }
     });
 
@@ -69,7 +76,7 @@ export function PostToc({
   }, [activeId, open]);
 
   useEffect(() => {
-    if (items.length === 0 || !open || !overlay) {
+    if (!hasContents || !open || !overlay) {
       return;
     }
 
@@ -136,9 +143,9 @@ export function PostToc({
       body.style.paddingRight = previousPaddingRight;
       root.style.overflow = previousRootOverflow;
     };
-  }, [items.length, onOpenChange, open, overlay]);
+  }, [hasContents, onOpenChange, open, overlay]);
 
-  if (items.length === 0) {
+  if (!hasContents) {
     return null;
   }
 
@@ -150,7 +157,11 @@ export function PostToc({
     .filter(Boolean)
     .join(" ");
 
-  const toggleLabel = open ? "Collapse contents" : "Expand contents";
+  const toggleLabel = locale === "zh"
+    ? open ? "收起目录" : "展开目录"
+    : open ? "Collapse contents" : "Expand contents";
+  const closeLabel = locale === "zh" ? "关闭文章目录" : "Close article contents";
+  const contentsLabel = locale === "zh" ? "文章目录" : "Article table of contents";
 
   function closeAndRestoreFocus() {
     onOpenChange(false);
@@ -205,7 +216,7 @@ export function PostToc({
       {overlay ? (
         <button
           aria-hidden={!open}
-          aria-label="Close article contents"
+          aria-label={closeLabel}
           className={`${styles.tocBackdrop} ${open ? styles.tocBackdropVisible : ""}`}
           onClick={closeAndRestoreFocus}
           tabIndex={-1}
@@ -214,7 +225,7 @@ export function PostToc({
       ) : null}
 
       <aside
-        aria-label="Article table of contents"
+        aria-label={contentsLabel}
         aria-modal={open && overlay ? true : undefined}
         className={panelClassName}
         ref={panelRef}
@@ -243,35 +254,55 @@ export function PostToc({
           </p>
         </div>
 
-        <ol
+        <div
           aria-hidden={!open}
-          className={styles.tocList}
+          className={styles.tocContents}
           hidden={!open}
           id="post-toc-list"
-          ref={listRef}
+          ref={contentsRef}
         >
-          {items.map((item) => {
-            const active = item.id === activeId;
-            const levelClassName = styles[`tocLevel${Math.min(item.level, 4)}`];
+          {seriesNavigation ? (
+            <nav aria-label={seriesNavigation.label} className={styles.seriesNav}>
+              <p className={styles.tocGroupLabel}>{seriesNavigation.label}</p>
+              <ol className={styles.seriesList}>
+                {seriesNavigation.items.map((item) => (
+                  <li className={item.current ? styles.seriesCurrent : undefined} key={item.href}>
+                    <Link aria-current={item.current ? "page" : undefined} href={item.href}>
+                      <span aria-hidden="true">{item.order}</span>
+                      <span>{item.label}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          ) : null}
+          <p className={styles.tocGroupLabel}>
+            {locale === "zh" ? "本页目录" : "On this page"}
+          </p>
+          <ol className={styles.tocList}>
+            {items.map((item) => {
+              const active = item.id === activeId;
+              const levelClassName = styles[`tocLevel${Math.min(item.level, 4)}`];
 
-            return (
-              <li
-                className={`${levelClassName} ${active ? styles.tocItemActive : ""}`}
-                key={item.id}
-              >
-                <a
-                  aria-current={active ? "location" : undefined}
-                  data-toc-id={item.id}
-                  href={`#${item.id}`}
-                  onClick={(event) => handleNavigate(event, item.id)}
-                  title={item.text}
+              return (
+                <li
+                  className={`${levelClassName} ${active ? styles.tocItemActive : ""}`}
+                  key={item.id}
                 >
-                  {item.text}
-                </a>
-              </li>
-            );
-          })}
-        </ol>
+                  <a
+                    aria-current={active ? "location" : undefined}
+                    data-toc-id={item.id}
+                    href={`#${item.id}`}
+                    onClick={(event) => handleNavigate(event, item.id)}
+                    title={item.text}
+                  >
+                    {item.text}
+                  </a>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
       </aside>
     </div>
   );
