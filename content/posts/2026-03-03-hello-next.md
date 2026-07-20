@@ -7,8 +7,6 @@ selected: false
 draft: false
 ---
 
-# Hello Next
-
 This is a simple test post.
 
 ## Checklist
