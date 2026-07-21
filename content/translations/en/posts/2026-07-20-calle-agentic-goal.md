@@ -24,7 +24,7 @@ This series moves from intuition toward source-level understanding. Each article
 - **Part 0 (this article):** Build the complete mental model and locate every concept in the source.
 - **[Part 1: Trace `commit_goal`](/blog/calle-agentic-goal/commit-goal):** Learn how Goal, Event, and Dispatch are written to the database.
 - **[Part 2: Trace `GoalIterationRunner`](/blog/calle-agentic-goal/goal-iteration-runner):** Understand leases, cursors, transactions, and recovery.
-- **Part 3 (planned):** Trace the real phone execution path from `RunSpec → Run → VoiceRunExecutor`.
+- **[Part 3: Trace `RunSpec → Run → VoiceRunExecutor`](/blog/calle-agentic-goal/voice-run-execution):** Understand asynchronous submission, state transitions, and the evidence chain for a real phone call.
 - **Part 4 (planned):** Trace the result path from `Report → Context Delivery → MainAgent`.
 
 If the relationship between CALL-E, the desktop Agent, the Bridge, and the browser capabilities is not yet clear, start with [The Agentic Systems Overview](/blog/agentic-system-overview).

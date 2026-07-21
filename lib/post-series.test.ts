@@ -21,7 +21,8 @@ test("loads every repository series document for static route generation", async
     (await getAllPostSeriesDocuments("zh")).map((document) => [document.seriesSlug, document.slug]),
     [
       ["calle-agentic-goal", "commit-goal"],
-      ["calle-agentic-goal", "goal-iteration-runner"]
+      ["calle-agentic-goal", "goal-iteration-runner"],
+      ["calle-agentic-goal", "voice-run-execution"]
     ]
   );
 });
