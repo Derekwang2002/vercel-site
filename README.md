@@ -110,7 +110,8 @@ The article loader validates duplicates by both public slug/href and source id. 
 - `/board/login` - Owner-only Share Board login.
 - `/board` - Owner-only document manager.
 - `/board/[documentId]` - Private preview and share management.
-- `/share/[token]` - Read-only access to exactly one shared document.
+- `/share/[token]` - Distraction-free, near-fullscreen access to exactly one shared document.
+- `/share/[token]/download` - Download that same document after revalidating the Share Token.
 - `/rss.xml` - RSS feed.
 - `/sitemap.xml` - Sitemap.
 - `/404` and `not-found` - Error pages.
@@ -134,7 +135,7 @@ BOARD_ADMIN_PASSWORD=use-a-long-unique-password
 BOARD_SESSION_SECRET=use-at-least-32-random-bytes
 ```
 
-Run [`db/migrations/001_share_board.sql`](db/migrations/001_share_board.sql) once against the Neon database before opening `/board`. Documents are limited to non-empty `.md` and `.html` files of 1 MB or less. HTML is rendered in an iframe sandbox without same-origin privileges.
+Run [`db/migrations/001_share_board.sql`](db/migrations/001_share_board.sql) once against the Neon database before opening `/board`. Documents are limited to non-empty `.md` and `.html` files of 1 MB or less. HTML is rendered in a near-fullscreen iframe sandbox without same-origin privileges. Shared pages omit the public site navigation and footer; their only action is downloading the same token-bound file.
 
 ## Requirements
 
