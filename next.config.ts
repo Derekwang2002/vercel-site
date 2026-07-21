@@ -45,7 +45,10 @@ const nextConfig: NextConfig = {
     ];
   },
   experimental: {
-    devtoolSegmentExplorer: false
+    devtoolSegmentExplorer: false,
+    serverActions: {
+      bodySizeLimit: "2mb"
+    }
   },
   webpack: (config, { isServer }) => {
     if (isServer) {

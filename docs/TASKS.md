@@ -2,6 +2,8 @@
 
 **Architecture: Minimal Timeline + Tag-driven Knowledge Base**
 
+> Historical scope note: the restrictions below describe the original public blog milestones. The later private Share Board is documented in `docs/ARCHITECTURE.md` and intentionally adds narrowly scoped authentication and Neon persistence without changing the public blog's Markdown-first model.
+
 ---
 
 ## Global Rules

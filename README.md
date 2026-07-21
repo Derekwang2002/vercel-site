@@ -14,6 +14,7 @@ This repository contains Derek Hub, a Next.js App Router site for writing, resou
 - Markdown rendering with headings, table of contents, code highlighting, links, lists, tables, and blockquotes.
 - Shared Markdown source layer for local files, GitHub files, and GitHub folders.
 - Duplicate slug/source validation so one article is resolved from exactly one source.
+- Private Share Board for uploading Markdown/HTML and issuing revocable, single-document links.
 
 ## Content Model
 
@@ -106,6 +107,10 @@ The article loader validates duplicates by both public slug/href and source id. 
 - `/hub/skills` - Skill articles.
 - `/hub/demos` - Static demos.
 - `/hub/skills/[slug]` - Skill article page.
+- `/board/login` - Owner-only Share Board login.
+- `/board` - Owner-only document manager.
+- `/board/[documentId]` - Private preview and share management.
+- `/share/[token]` - Read-only access to exactly one shared document.
 - `/rss.xml` - RSS feed.
 - `/sitemap.xml` - Sitemap.
 - `/404` and `not-found` - Error pages.
@@ -116,7 +121,20 @@ The article loader validates duplicates by both public slug/href and source id. 
 - React 19
 - TypeScript
 - Shiki for code highlighting
+- Neon Postgres for private Share Board documents and share grants
 - ESLint and TypeScript checks
+
+## Share Board Setup
+
+The public blog remains statically generated. Share Board routes are dynamic and require three server-only environment variables:
+
+```text
+DATABASE_URL=postgresql://...
+BOARD_ADMIN_PASSWORD=use-a-long-unique-password
+BOARD_SESSION_SECRET=use-at-least-32-random-bytes
+```
+
+Run [`db/migrations/001_share_board.sql`](db/migrations/001_share_board.sql) once against the Neon database before opening `/board`. Documents are limited to non-empty `.md` and `.html` files of 1 MB or less. HTML is rendered in an iframe sandbox without same-origin privileges.
 
 ## Requirements
 
@@ -144,6 +162,8 @@ npm run start -- -p 3000
 - `npm run dev` - start local dev server with the repository's custom dev command.
 - `npm run dev:host` - start a standard Next.js dev server.
 - `npm run lint` - run ESLint checks.
+- `npm run test:board` - test Share Board authentication, permissions, uploads, sandboxing, and navigation.
+- `npm run test:series` - test localized post-series loading and navigation boundaries.
 - `npm run typecheck` - run TypeScript checks with `tsc --noEmit`.
 - `npm run build` - create a production build.
 - `npm run start` - run the production server after a build.
@@ -156,6 +176,8 @@ Checks:
 
 - `npm ci`
 - `npm run lint`
+- `npm run test:board`
+- `npm run test:series`
 - `npm run typecheck`
 - `npm run build`
 
@@ -174,6 +196,9 @@ Recommended Vercel settings:
 Environment variable:
 
 - `NEXT_PUBLIC_SITE_URL` - canonical site URL used by metadata and sitemap.
+- `DATABASE_URL` - Neon Postgres connection string for the Share Board.
+- `BOARD_ADMIN_PASSWORD` - password for the single Board Owner.
+- `BOARD_SESSION_SECRET` - random secret used to sign the Owner session cookie.
 
 If `NEXT_PUBLIC_SITE_URL` is unset, sitemap generation falls back to `http://localhost:3000`.
 

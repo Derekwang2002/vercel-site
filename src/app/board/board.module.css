@@ -1,0 +1,469 @@
+.boardPage,
+.loginPage {
+  margin: 0 auto;
+  max-width: 1040px;
+  padding: clamp(2rem, 5vw, 4.5rem) clamp(1rem, 4vw, 2.5rem) 5rem;
+}
+
+.loginPage {
+  align-items: center;
+  display: grid;
+  min-height: calc(100vh - 12rem);
+  min-height: calc(100dvh - 12rem);
+}
+
+.loginPanel {
+  border-left: 1px solid var(--color-text);
+  margin: 0 auto;
+  max-width: 560px;
+  padding: 0.25rem 0 0.5rem clamp(1.25rem, 4vw, 3.5rem);
+  width: 100%;
+}
+
+.boardHeader,
+.documentHeader {
+  align-items: flex-start;
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  margin-bottom: clamp(3rem, 8vw, 6rem);
+}
+
+.eyebrow,
+.sectionNumber,
+.rowIndex,
+.kindStamp,
+.fileName,
+.documentMeta,
+.fieldHint,
+.shareMeta,
+.newShareLabel {
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+
+.eyebrow {
+  color: var(--color-focus);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  margin: 0 0 0.8rem;
+}
+
+.displayTitle {
+  font-size: clamp(2.6rem, 8vw, 5.8rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+  margin: 0;
+  max-width: 13ch;
+  text-wrap: balance;
+}
+
+.lede {
+  color: var(--color-text-muted);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.6;
+  margin: 1.25rem 0 0;
+  max-width: 48ch;
+}
+
+.section {
+  border-top: 1px solid var(--color-text);
+  margin-top: 3.5rem;
+  padding-top: 0;
+}
+
+.sectionHeading {
+  align-items: baseline;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 3rem 1fr;
+  padding: 0.85rem 0 1.4rem;
+}
+
+.sectionHeading h2 {
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.sectionNumber,
+.rowIndex {
+  color: var(--color-text-faint);
+  font-size: 0.72rem;
+}
+
+.formStack {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.uploadForm {
+  align-items: end;
+  display: grid;
+  gap: 1rem 1.4rem;
+  grid-template-columns: minmax(12rem, 1fr) minmax(16rem, 1.4fr) auto;
+  padding: 1rem 0 0.5rem 4rem;
+}
+
+.uploadField,
+.uploadSubmit {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.fieldLabel {
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.fieldHint {
+  color: var(--color-text-faint);
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+.textInput,
+.selectInput,
+.fileInput,
+.shareUrl {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: 0;
+  color: var(--color-text);
+  font: inherit;
+  min-height: 2.65rem;
+  padding: 0.45rem 0;
+  width: 100%;
+}
+
+.fileInput {
+  color: var(--color-text-muted);
+  font-size: 0.86rem;
+  padding-top: 0.55rem;
+}
+
+.fileInput::file-selector-button {
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  margin-right: 0.8rem;
+  padding: 0.28rem 0.55rem;
+}
+
+.textInput:focus,
+.selectInput:focus,
+.fileInput:focus,
+.shareUrl:focus {
+  border-bottom-color: var(--color-focus);
+  outline: 0;
+}
+
+.primaryButton,
+.secondaryButton,
+.dangerButton,
+.textButton {
+  cursor: pointer;
+  font: inherit;
+}
+
+.primaryButton {
+  background: var(--color-text);
+  border: 1px solid var(--color-text);
+  color: var(--color-bg);
+  min-height: 2.65rem;
+  padding: 0.45rem 1rem;
+}
+
+.primaryButton:hover,
+.primaryButton:focus-visible {
+  background: var(--color-focus);
+  border-color: var(--color-focus);
+}
+
+.primaryButton:disabled {
+  cursor: wait;
+  opacity: 0.58;
+}
+
+.secondaryButton,
+.dangerButton,
+.textButton {
+  background: transparent;
+  border: 0;
+  color: var(--color-text-muted);
+  padding: 0.3rem 0;
+  text-decoration: underline;
+  text-decoration-color: var(--color-border);
+  text-underline-offset: 0.25rem;
+}
+
+.secondaryButton:hover,
+.secondaryButton:focus-visible,
+.textButton:hover,
+.textButton:focus-visible {
+  color: var(--color-text);
+  text-decoration-color: currentColor;
+}
+
+.dangerButton:hover,
+.dangerButton:focus-visible {
+  color: #a43b2d;
+  text-decoration-color: currentColor;
+}
+
+.formError {
+  color: #a43b2d;
+  font-size: 0.88rem;
+  grid-column: 1 / -1;
+  margin: 0.25rem 0 0;
+}
+
+.formSuccess {
+  color: #5f7d4a;
+  font-size: 0.88rem;
+  grid-column: 1 / -1;
+  margin: 0.25rem 0 0;
+}
+
+.documentList,
+.shareList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.documentRow {
+  align-items: center;
+  border-top: 1px solid var(--color-border-soft);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 3rem minmax(12rem, 1fr) 4rem 6rem 7rem;
+  min-height: 5.4rem;
+}
+
+.documentRow:last-child {
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.documentIdentity {
+  display: grid;
+  gap: 0.16rem;
+  min-width: 0;
+}
+
+.documentLink {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.documentLink:hover,
+.documentLink:focus-visible,
+.backLine a:hover,
+.backLine a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.22rem;
+}
+
+.fileName {
+  color: var(--color-text-faint);
+  font-size: 0.72rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kindStamp {
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  padding: 0.18rem 0.35rem;
+  text-align: center;
+}
+
+.documentMeta {
+  color: var(--color-text-faint);
+  font-size: 0.7rem;
+  text-align: right;
+}
+
+.emptyState {
+  color: var(--color-text-faint);
+  margin: 0;
+  padding: 1rem 0 1rem 4rem;
+}
+
+.backLine {
+  font-size: 0.86rem;
+  margin: 0 0 2.5rem;
+}
+
+.backLine a {
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.documentHeader {
+  align-items: flex-end;
+}
+
+.shareForm {
+  align-items: end;
+  display: grid;
+  gap: 0.5rem 1rem;
+  grid-template-columns: minmax(15rem, 1fr) auto;
+  padding: 0.6rem 0 1.5rem 4rem;
+}
+
+.shareForm .fieldLabel {
+  grid-column: 1 / -1;
+}
+
+.newShare {
+  background: var(--color-surface-muted);
+  border-left: 3px solid var(--color-focus);
+  margin: 0.5rem 0 1.5rem 4rem;
+  padding: 0.9rem 1rem 1rem;
+}
+
+.newShareLabel {
+  color: var(--color-focus);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin: 0 0 0.45rem;
+  text-transform: uppercase;
+}
+
+.shareUrlRow {
+  align-items: end;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr auto;
+}
+
+.shareUrl {
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.76rem;
+}
+
+.shareList {
+  border-top: 1px solid var(--color-border-soft);
+  margin-left: 4rem;
+}
+
+.shareRow {
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-soft);
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: auto 1fr auto;
+  padding: 0.85rem 0;
+}
+
+.shareRow strong {
+  font-size: 0.9rem;
+}
+
+.shareMeta {
+  color: var(--color-text-faint);
+  font-size: 0.68rem;
+  margin: 0.1rem 0 0;
+}
+
+.statusDot {
+  background: var(--color-text-faint);
+  border-radius: 50%;
+  height: 0.5rem;
+  width: 0.5rem;
+}
+
+.statusActive {
+  background: #5f7d4a;
+  box-shadow: 0 0 0 3px rgb(95 125 74 / 0.14);
+}
+
+.statusExpired,
+.statusRevoked {
+  background: var(--color-text-faint);
+}
+
+.htmlPreview {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  height: min(70vh, 720px);
+  margin-left: 4rem;
+  width: calc(100% - 4rem);
+}
+
+.markdownPreview {
+  border: 1px solid var(--color-border-soft);
+  margin-left: 4rem;
+  padding: clamp(1rem, 4vw, 2.5rem);
+}
+
+@media (max-width: 760px) {
+  .boardHeader,
+  .documentHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .uploadForm {
+    grid-template-columns: 1fr;
+    padding-left: 0;
+  }
+
+  .documentRow {
+    gap: 0.55rem 0.8rem;
+    grid-template-columns: 2rem 1fr auto;
+    padding: 0.85rem 0;
+  }
+
+  .documentIdentity {
+    grid-column: 2;
+  }
+
+  .kindStamp {
+    grid-column: 3;
+  }
+
+  .documentMeta {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .documentMeta:last-child {
+    display: none;
+  }
+
+  .shareForm {
+    grid-template-columns: 1fr;
+    padding-left: 0;
+  }
+
+  .newShare,
+  .shareList,
+  .htmlPreview,
+  .markdownPreview {
+    margin-left: 0;
+  }
+
+  .htmlPreview {
+    width: 100%;
+  }
+
+  .emptyState {
+    padding-left: 0;
+  }
+}
