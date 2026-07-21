@@ -1,8 +1,8 @@
 ---
-title: "Docker 从零理解：从 Dockerfile 到 Container"
+title: "Docker 入门：从 Dockerfile 到 Container"
 date: 2026-07-10
-summary: "用一个虚构的五服务商店，从构建 Image、启动 Container，一路讲清 Compose、网络、Volume 与 Docker 的底层运行链路。"
-tags: [docker, container, devops]
+summary: "用一个虚构的五服务项目，从构建 Image、启动 Container，一路讲清 Compose、网络、Volume 与 Docker 的底层运行链路。"
+tags: [docker, devops]
 selected: false
 draft: false
 ---
@@ -154,13 +154,13 @@ docker build -t maple-api:1.0 .
 Image: maple-api:1.0
 
 ┌──────────────────────────────┐
-│ 元数据：入口命令、环境变量等 │
+│ 元数据: 入口命令、环境变量等     │
 ├──────────────────────────────┤
 │ COPY app.jar                 │  ← 应用层
 ├──────────────────────────────┤
 │ Java 21 JRE                  │  ← 运行时层
 ├──────────────────────────────┤
-│ 基础 Linux 用户空间文件      │  ← 基础层
+│ 基础 Linux 用户空间文件         │  ← 基础层
 └──────────────────────────────┘
 ```
 
@@ -246,14 +246,14 @@ Linux 上，Docker 主要依赖两类内核能力：
 
 ```text
 ┌─────────────────────────────────────────┐
-│ Image 只读层                            │
-│ 程序、运行时、Image 中预置的配置        │
+│ Image 只读层                             │
+│ 程序、运行时、Image 中预置的配置            │
 ├─────────────────────────────────────────┤
-│ Container 可写层                        │
-│ 日志、缓存、运行期间临时修改            │
+│ Container 可写层                         │
+│ 日志、缓存、运行期间临时修改                 │
 ├─────────────────────────────────────────┤
 │ Volume / Bind Mount                     │
-│ 需要独立于 Container 生命周期保存的数据 │
+│ 需要独立于 Container 生命周期保存的数据      │
 └─────────────────────────────────────────┘
 ```
 

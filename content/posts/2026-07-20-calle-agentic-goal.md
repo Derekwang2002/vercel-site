@@ -11,7 +11,7 @@ draft: false
 
 CALL-E 的 Goal 系统就是为这些问题设计的。它不把用户的一句话简单地交给一个大模型执行，而是把自然语言目标转换成一张可持久化、可恢复、可审计的长期工单，再由不同角色分阶段推进。
 
-本文基于 `prod-dive-in` 仓库 `aa7af64` 附近的当前实现整理，主要关注：
+本文主要关注：
 
 - `services/seleven-mcp/src/calle/agentic/`
 - `services/seleven-mcp/src/calle/voice_runtime/`
