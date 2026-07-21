@@ -93,6 +93,8 @@ Acceptance:
 - Every Share exposes exactly one Document and never exposes the Board or another Document.
 - Viewers do not need an account.
 - Uploaded HTML runs in a sandbox without same-origin privileges.
+- The shared view omits all public-site navigation and uses nearly the full viewport.
+- A Viewer can download only the Document resolved by the current Share Token.
 
 Acceptance:
 - Invalid, revoked, and expired Share Tokens reveal no document.

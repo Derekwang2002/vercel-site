@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
-import { LanguageToggle } from "@/components/language-toggle";
-import { PrimaryNavigation } from "@/components/primary-navigation";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import "./globals.css";
 
 const SITE_NAME = "Derek Hub";
@@ -78,21 +75,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body>
         <div className="site-shell">
-          <header className="site-header">
-            <nav aria-label="Primary navigation" className="site-nav">
-              <PrimaryNavigation />
-              <div className="site-controls">
-                <Suspense fallback={<span className="language-toggle" aria-hidden="true">Lang</span>}>
-                  <LanguageToggle />
-                </Suspense>
-                <ThemeToggle />
-              </div>
-            </nav>
-          </header>
+          <SiteHeader />
 
           <div className="site-content">{children}</div>
 
-          <footer className="site-footer">© 2026 Derek Wang</footer>
+          <SiteFooter />
         </div>
       </body>
     </html>
