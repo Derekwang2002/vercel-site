@@ -1,8 +1,11 @@
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 
 type SessionPayload = {
+  audience: SessionAudience;
   expiresAt: number;
 };
+
+type SessionAudience = "board-owner" | "private-reader";
 
 export function matchesAdminPassword(candidate: string, configuredPassword: string): boolean {
   if (!candidate || !configuredPassword) return false;
@@ -15,14 +18,51 @@ export function createAdminSession(
   now = new Date(),
   lifetimeSeconds = 60 * 60 * 24 * 7
 ): string {
+  return createSession("board-owner", secret, now, lifetimeSeconds);
+}
+
+export function createPrivateReaderSession(
+  secret: string,
+  now = new Date(),
+  lifetimeSeconds = 60 * 60 * 24 * 7
+): string {
+  return createSession("private-reader", secret, now, lifetimeSeconds);
+}
+
+export function verifyAdminSession(token: string, secret: string, now = new Date()): boolean {
+  return verifySession(token, "board-owner", secret, now);
+}
+
+export function verifyPrivateReaderSession(
+  token: string,
+  secret: string,
+  now = new Date()
+): boolean {
+  return verifySession(token, "private-reader", secret, now);
+}
+
+function createSession(
+  audience: SessionAudience,
+  secret: string,
+  now: Date,
+  lifetimeSeconds: number
+): string {
   const payload = Buffer.from(
-    JSON.stringify({ expiresAt: Math.floor(now.getTime() / 1000) + lifetimeSeconds } satisfies SessionPayload)
+    JSON.stringify({
+      audience,
+      expiresAt: Math.floor(now.getTime() / 1000) + lifetimeSeconds
+    } satisfies SessionPayload)
   ).toString("base64url");
 
   return `${payload}.${sign(payload, secret)}`;
 }
 
-export function verifyAdminSession(token: string, secret: string, now = new Date()): boolean {
+function verifySession(
+  token: string,
+  audience: SessionAudience,
+  secret: string,
+  now: Date
+): boolean {
   if (!token || !secret) return false;
 
   const [payload, signature, extra] = token.split(".");
@@ -34,7 +74,9 @@ export function verifyAdminSession(token: string, secret: string, now = new Date
     }
 
     const parsed = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as SessionPayload;
-    return Number.isInteger(parsed.expiresAt) && parsed.expiresAt >= Math.floor(now.getTime() / 1000);
+    return parsed.audience === audience &&
+      Number.isInteger(parsed.expiresAt) &&
+      parsed.expiresAt >= Math.floor(now.getTime() / 1000);
   } catch {
     return false;
   }

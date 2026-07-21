@@ -10,7 +10,15 @@ The single authenticated person who can add, replace, delete, preview, share, an
 
 ## Document
 
-A Markdown or HTML file uploaded by the Owner. A Document remains private unless reached through one of its active Shares.
+A Markdown or HTML file uploaded by the Owner. A Document remains private unless reached through the authenticated Private Repo or one of its active Shares.
+
+## Private Repo
+
+The read-only catalogue of every Document in the Board. It is unlisted from the public site and requires a dedicated reader password that grants no Board management permissions.
+
+## Private Reader
+
+A person authenticated with the Private Repo password. A Private Reader can list, read, and download every Document, but cannot upload, replace, delete, share, or revoke anything.
 
 ## Share
 

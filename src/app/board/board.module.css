@@ -29,6 +29,13 @@
   margin-bottom: clamp(3rem, 8vw, 6rem);
 }
 
+.headerActions {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 1rem;
+}
+
 .eyebrow,
 .sectionNumber,
 .rowIndex,

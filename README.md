@@ -110,6 +110,9 @@ The article loader validates duplicates by both public slug/href and source id. 
 - `/board/login` - Owner-only Share Board login.
 - `/board` - Owner-only document manager.
 - `/board/[documentId]` - Private preview and share management.
+- `/private` - Password-protected catalogue of every Board document.
+- `/private/[documentId]` - Password-protected, near-fullscreen document reader.
+- `/private/[documentId]/download` - Authenticated download for a Private Repo document.
 - `/share/[token]` - Distraction-free, near-fullscreen access to exactly one shared document.
 - `/share/[token]/download` - Download that same document after revalidating the Share Token.
 - `/rss.xml` - RSS feed.
@@ -127,15 +130,16 @@ The article loader validates duplicates by both public slug/href and source id. 
 
 ## Share Board Setup
 
-The public blog remains statically generated. Share Board routes are dynamic and require three server-only environment variables:
+The public blog remains statically generated. Share Board and Private Repo routes are dynamic and require four server-only environment variables:
 
 ```text
 DATABASE_URL=postgresql://...
 BOARD_ADMIN_PASSWORD=use-a-long-unique-password
 BOARD_SESSION_SECRET=use-at-least-32-random-bytes
+PRIVATE_REPO_PASSWORD=use-a-different-long-password
 ```
 
-Run [`db/migrations/001_share_board.sql`](db/migrations/001_share_board.sql) once against the Neon database before opening `/board`. Documents are limited to non-empty `.md` and `.html` files of 1 MB or less. HTML is rendered in a near-fullscreen iframe sandbox without same-origin privileges. Shared pages omit the public site navigation and footer; their only action is downloading the same token-bound file.
+Run [`db/migrations/001_share_board.sql`](db/migrations/001_share_board.sql) once against the Neon database before opening `/board`. Documents are limited to non-empty `.md` and `.html` files of 1 MB or less. HTML is rendered in a near-fullscreen iframe sandbox without same-origin privileges. Private Repo and Share pages omit the public site navigation and footer. The Private Repo lists every Board document for authenticated readers, while each Share exposes only its token-bound file.
 
 ## Requirements
 
@@ -200,6 +204,7 @@ Environment variable:
 - `DATABASE_URL` - Neon Postgres connection string for the Share Board.
 - `BOARD_ADMIN_PASSWORD` - password for the single Board Owner.
 - `BOARD_SESSION_SECRET` - random secret used to sign the Owner session cookie.
+- `PRIVATE_REPO_PASSWORD` - separate read-only password for the Private Repo; never reuse the Board administrator password.
 
 If `NEXT_PUBLIC_SITE_URL` is unset, sitemap generation falls back to `http://localhost:3000`.
 

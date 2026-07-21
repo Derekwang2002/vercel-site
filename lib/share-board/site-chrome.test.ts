@@ -8,3 +8,9 @@ test("site navigation and footer are absent from every Share route", () => {
   assert.equal(isSiteChromeVisible("/board"), true);
   assert.equal(isSiteChromeVisible("/blog"), true);
 });
+
+test("the unlisted Private Repo has no public-site navigation or footer", () => {
+  assert.equal(isSiteChromeVisible("/private"), false);
+  assert.equal(isSiteChromeVisible("/private/document-1"), false);
+  assert.equal(isSiteChromeVisible("/private/document-1/download"), false);
+});

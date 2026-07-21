@@ -7,7 +7,9 @@ import { PrimaryNavigation } from "./primary-navigation";
 import { ThemeToggle } from "./theme-toggle";
 
 export function isSiteChromeVisible(pathname: string): boolean {
-  return !pathname.startsWith("/share/");
+  return !pathname.startsWith("/share/") &&
+    pathname !== "/private" &&
+    !pathname.startsWith("/private/");
 }
 
 export function SiteHeader() {

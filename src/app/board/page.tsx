@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getShareBoardService } from "../../../lib/share-board/runtime";
 import { requireBoardOwner } from "../../../lib/share-board/session";
 import { logoutAction } from "./actions";
@@ -25,9 +26,12 @@ export default async function BoardPage() {
           <h1 className={styles.displayTitle}>Share Board</h1>
           <p className={styles.lede}>你的私人文件架。每个链接只打开一个文件。</p>
         </div>
-        <form action={logoutAction}>
-          <button className={styles.textButton} type="submit">退出</button>
-        </form>
+        <div className={styles.headerActions}>
+          <Link className={styles.textButton} href="/private">查看 Private Repo</Link>
+          <form action={logoutAction}>
+            <button className={styles.textButton} type="submit">退出</button>
+          </form>
+        </div>
       </header>
 
       <section aria-labelledby="upload-heading" className={styles.section}>

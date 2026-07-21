@@ -12,14 +12,17 @@ export async function createShareDownloadResponse(
   resolveShare: ResolveShare
 ): Promise<Response> {
   const resolved = await resolveShare(token);
-  if (!resolved) {
+  return createDocumentDownloadResponse(resolved?.document ?? null);
+}
+
+export function createDocumentDownloadResponse(document: BoardDocument | null): Response {
+  if (!document) {
     return new Response("Not found", {
       headers: { "Cache-Control": "private, no-store" },
       status: 404
     });
   }
 
-  const { document } = resolved;
   return new Response(document.content, {
     headers: {
       "Cache-Control": "private, no-store",

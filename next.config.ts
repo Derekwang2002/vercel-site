@@ -10,6 +10,18 @@ const deploymentId = [
 const nextConfig: NextConfig = {
   ...(deploymentId ? { deploymentId: deploymentId.trim() } : {}),
   distDir: process.env.NEXT_DIST_DIR || ".next",
+  async headers() {
+    return [
+      {
+        source: "/private/:path*",
+        headers: [
+          { key: "Cache-Control", value: "private, no-store" },
+          { key: "Referrer-Policy", value: "no-referrer" },
+          { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }
+        ]
+      }
+    ];
+  },
   async redirects() {
     return [
       {
