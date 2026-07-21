@@ -1,9 +1,9 @@
 # Architecture & Constraints
 
 ## 1. Project Type
-- Static site (SSG preferred).
+- Hybrid Next.js site: SSG preferred for public content, dynamic server rendering for the private Share Board.
 - Markdown-first content system.
-- No backend.
+- A narrow backend exists only for Owner authentication, private uploaded documents, and Share resolution.
 
 ## 2. Source of Truth
 All blog content lives in the repo under `/content/posts`.
@@ -63,6 +63,7 @@ No:
   1) it is necessary for Markdown rendering/SSG/SEO
   2) it is justified in a short note
   3) it is approved before installation
+- The Share Board uses `@neondatabase/serverless` as its only database client so Vercel server functions can issue parameterized Postgres queries over Neon's serverless transport without an ORM.
 
 ## 7. Build & Quality Gates
 Every change must pass:
@@ -86,12 +87,14 @@ If tests exist:
 - Every Pull Request must generate a Preview Deployment.
 - No manual server setup; site must remain statically generatable.
 - Custom domain (optional): configure via Vercel dashboard; DNS managed externally if needed.
+- Share Board persistence uses Neon Postgres and requires `DATABASE_URL`.
+- Owner access requires `BOARD_ADMIN_PASSWORD` and `BOARD_SESSION_SECRET`.
 
 ## 10. Framework (Next.js)
 - Framework: Next.js (App Router).
-- Rendering: Static generation first (SSG) for posts/tags.
+- Rendering: Static generation first (SSG) for posts/tags; dynamic rendering for `/board` and `/share`.
 - Content: Markdown files under /content/posts.
-- No server-side database. No auth. No comments in MVP.
+- Public publishing has no database or auth. The Share Board has one Owner session and a Neon-backed document/share store.
 - Deployment: Vercel only.
 
 ## 11. Project Conventions

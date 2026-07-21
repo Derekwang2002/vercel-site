@@ -11,12 +11,13 @@ Build a minimalist personal technical hub that:
 - Recruiters / collaborators: quickly understand who I am and what I do.
 - Readers: browse my writing timeline and find content via tags.
 - Myself: a long-term archive for writing and notes.
+- Share recipients: open exactly the Markdown or HTML document intentionally shared with them.
 
 ## 3. Core Principles
 - Minimal design, high readability.
 - Timeline-first browsing; tags for secondary navigation.
 - Markdown as the single source of truth.
-- No backend required.
+- Public content remains statically generated; private sharing uses the smallest server-side surface needed for access control.
 
 ## 4. Site Map
 - `/` Home
@@ -26,6 +27,8 @@ Build a minimalist personal technical hub that:
 - `/tags/[tag]` Tag timeline
 - `/rss.xml` RSS feed
 - `/sitemap.xml` Sitemap
+- `/board` Private Share Board
+- `/share/[token]` One shared document
 - `/404` Not found
 
 ## 5. MVP Features
@@ -84,6 +87,19 @@ Acceptance:
 - sitemap reachable.
 - OG previews work.
 
+### 5.6 Share Board
+- A single Owner can upload, preview, and delete local `.md` and `.html` files.
+- The Owner can create expiring or manually revocable Shares.
+- Every Share exposes exactly one Document and never exposes the Board or another Document.
+- Viewers do not need an account.
+- Uploaded HTML runs in a sandbox without same-origin privileges.
+
+Acceptance:
+- Invalid, revoked, and expired Share Tokens reveal no document.
+- Deleting a Document invalidates all of its Shares.
+- The Board is inaccessible without a valid Owner session.
+- Uploads reject unsupported, empty, or larger-than-1-MB files.
+
 ## 6. Content Model (Markdown Frontmatter)
 Each post must include:
 - title: string
@@ -96,8 +112,9 @@ Each post must include:
 
 ## 7. Non-Goals (Out of Scope for MVP)
 - Comments system
-- Login/auth
-- Database/CMS backend
+- Multi-user accounts and roles
+- Collaborative editing
+- Large-file and binary-file storage
 - Full-text search (can be future)
 - Multi-language (future)
 - Analytics dashboard (future)

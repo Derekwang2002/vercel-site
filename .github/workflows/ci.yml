@@ -28,5 +28,11 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      - name: Share Board tests
+        run: npm run test:board
+
+      - name: Post series tests
+        run: npm run test:series
+
       - name: Build
         run: npm run build
