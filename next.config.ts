@@ -26,32 +26,32 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/blog/prod-dive-in-agentic-architecture",
-        destination: "/blog/agentic-system-overview",
+        destination: "/blog/call-e-overview",
         permanent: true
       },
       {
         source: "/zh/blog/prod-dive-in-agentic-architecture",
-        destination: "/zh/blog/agentic-system-overview",
+        destination: "/zh/blog/call-e-overview",
         permanent: true
       },
       {
         source: "/blog/call-e-agentic-tech-doc",
-        destination: "/blog/agentic-system-overview",
+        destination: "/blog/call-e-overview",
         permanent: true
       },
       {
         source: "/zh/blog/call-e-agentic-tech-doc",
-        destination: "/zh/blog/agentic-system-overview",
+        destination: "/zh/blog/call-e-overview",
         permanent: true
       },
       {
         source: "/blog/calle-agentic-goal-architecture-guide",
-        destination: "/blog/calle-agentic-goal",
+        destination: "/blog/calle-agentic-goal-architecture",
         permanent: true
       },
       {
         source: "/zh/blog/calle-agentic-goal-architecture-guide",
-        destination: "/zh/blog/calle-agentic-goal",
+        destination: "/zh/blog/calle-agentic-goal-architecture",
         permanent: true
       }
     ];

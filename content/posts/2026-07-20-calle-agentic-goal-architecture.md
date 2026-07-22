@@ -2,7 +2,7 @@
 title: "CALL-E Agentic Goal 架构"
 date: 2026-07-20
 summary: "面向新手拆解 CALL-E Agentic Goal 系统，讲清 MainAgent、GoalBrief、GoalAgent、Iteration、RunSpec、Run、Event、Report 与持久化运行时如何协作。"
-tags: [ai-agent, architecture, voice-ai, domain-modeling]
+tags: [architecture, call-e]
 selected: false
 draft: false
 ---

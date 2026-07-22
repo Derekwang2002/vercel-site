@@ -4,7 +4,7 @@ summary: "A systems-level tour of CALL-E, the desktop Agent, and browser takeove
 ---
 
 > This article is a repository-level map of `prod-dive-in`. It explains how the applications and services fit together.
-> To learn the CALL-E Agentic Goal architecture from the beginning, start with [Understanding the CALL-E Agentic Goal Architecture](/blog/calle-agentic-goal).
+> To learn the CALL-E Agentic Goal architecture from the beginning, start with [Understanding the CALL-E Agentic Goal Architecture](/blog/calle-agentic-goal-architecture).
 
 Many AI applications can chat. `prod-dive-in` is concerned with what happens outside the chat box: how a system places a real phone call, operates a browser, lets a long-running task continue in the background, and shows the user a trustworthy account of the process and result.
 
@@ -187,7 +187,7 @@ Remember the essential domain objects with four sentences:
 | Run | Which attempt actually happened in the real world? |
 | Report | How does the system deliver the result and evidence? |
 
-These objects are only coordinates on the repository map. For their state machines, events, leases, cursors, Workspace, and source-level call relationships, continue with Part 0 of the series: [Understanding the CALL-E Agentic Goal Architecture](/blog/calle-agentic-goal). This overview intentionally does not duplicate that material.
+These objects are only coordinates on the repository map. For their state machines, events, leases, cursors, Workspace, and source-level call relationships, continue with Part 0 of the series: [Understanding the CALL-E Agentic Goal Architecture](/blog/calle-agentic-goal-architecture). This overview intentionally does not duplicate that material.
 
 ## 5. Why the legacy one-shot phone flow remains
 
@@ -363,7 +363,7 @@ These boundaries do not invalidate the architecture. They help readers distingui
 
 ### Path B: go deep on CALL-E Goals
 
-Read [Understanding the CALL-E Agentic Goal Architecture](/blog/calle-agentic-goal), then follow its source-reading order into `services/seleven-mcp/src/calle/agentic/`. Build a mental model of Goal, Iteration, RunSpec, Run, Event, and Report before focusing on individual functions.
+Read [Understanding the CALL-E Agentic Goal Architecture](/blog/calle-agentic-goal-architecture), then follow its source-reading order into `services/seleven-mcp/src/calle/agentic/`. Build a mental model of Goal, Iteration, RunSpec, Run, Event, and Report before focusing on individual functions.
 
 ### Path C: trace one phone call
 

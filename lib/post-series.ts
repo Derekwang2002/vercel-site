@@ -22,7 +22,7 @@ export type PostSeriesDocument = {
 const SERIES_DEFINITIONS: PostSeriesDefinition[] = [
   {
     directoryName: "calle-agentic-goal",
-    parentPostSlug: "calle-agentic-goal",
+    parentPostSlug: "calle-agentic-goal-architecture",
     slug: "calle-agentic-goal"
   }
 ];

@@ -28,9 +28,9 @@ test("loads every repository series document for static route generation", async
 });
 
 test("discovers the registered series from its migrated landing post", () => {
-  assert.deepEqual(getPostSeriesDefinitionByParentPostSlug("calle-agentic-goal"), {
+  assert.deepEqual(getPostSeriesDefinitionByParentPostSlug("calle-agentic-goal-architecture"), {
     directoryName: "calle-agentic-goal",
-    parentPostSlug: "calle-agentic-goal",
+    parentPostSlug: "calle-agentic-goal-architecture",
     slug: "calle-agentic-goal"
   });
   assert.equal(getPostSeriesDefinitionByParentPostSlug("agentic-system-overview"), null);

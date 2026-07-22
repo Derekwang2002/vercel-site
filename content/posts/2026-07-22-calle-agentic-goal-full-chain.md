@@ -1,8 +1,8 @@
 ---
-title: "CALL-E Agentic Goal：完整执行链路"
+title: "CALL-E Agentic Goal 完整链路"
 date: 2026-07-22
 summary: "从 Session、Goal、RunSpec、RunGroup、Run 和 Call 的关系出发，逐步说明 MainAgent、GoalAgent、CALL-E Runtime、Voice Runtime 与外部 Provider 在一次真实外呼中的职责边界。"
-tags: [ai-agent, architecture, voice-ai, domain-modeling]
+tags: [architecture, call-e]
 selected: false
 draft: false
 ---

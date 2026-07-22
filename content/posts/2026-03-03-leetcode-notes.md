@@ -2,7 +2,7 @@
 title: LeetCode 笔记
 date: 2026-03-03
 summary: 数据结构与算法的学习笔记和代码片段。
-tags: [Notes, Algorithms]
+tags: [notes, algorithms]
 selected: true
 draft: false
 ---
@@ -34,7 +34,7 @@ struct ListNode {
 
 - 快速判断一个元素是否存在于“集合”中
     - Hash Function：$h(value) = key$，**多对一（key 由 value 唯一确定）**
-- Get：O(1)，Add：O(1)，Delete：O(1)（平均复杂度）
+- Get：$O(1)$，Add：$O(1)$，Delete：$O(1)$（平均复杂度）
 - Hash Collision：使用 Separate Chaining 解决
     - 权衡 *dataSize* 与 *hashSize*
 - 在 Java 中遍历 Entry：
@@ -65,10 +65,10 @@ StringBuilder sb = new StringBuilder();
 
 ### 总结
 
-- **通过两个指针在一个for循环下完成两个for循环的工作。**
-- **其实很多数组（字符串）填充类的问题，都可以先预先给数组扩容带填充后的大小，然后在从后向前进行操作**
-- **使用快慢指针，分别定义 fast 和 slow指针，从头结点出发，fast指针每次移动两个节点，slow指针每次移动一个节点，如果 fast 和 slow指针在途中相遇 ，说明这个链表有环。**
-- N数之和 - **通过前后两个指针不断向中间逼近，在一个for循环下完成两个for循环的工作**
+- 通过两个指针在一个for循环下，每一步同时处理两个元素，完成原本两个for循环的工作。
+- 其实很多**数组（字符串）填充类**的问题，都可以先预先给数组扩容带填充后的大小，然后在从后向前进行操作
+- 使用**快慢指针**，分别定义 fast 和 slow指针，从头结点出发，fast指针每次移动两个节点，slow指针每次移动一个节点，如果 fast 和 slow指针在途中相遇 ，说明这个链表有环。
+- **N数之和** - 通过前后两个指针不断向中间逼近，在一个for循环下完成两个for循环的工作
 
 # Stack and queue
 
@@ -147,7 +147,7 @@ public class TreeNode {
 # Backtracking algorithm
 
 - Backtracking → Recursion（可以借助递归树理解）
-- 本质是穷举，因此时间复杂度通常较高
+- 本质是穷举，因此时间复杂度通常较高，一般在 O(N!)，只在无其他解法时使用
 - 常见类型：Combination、Subset、Partitioning、Permutation
     - 同层 / 路径去重
     - 预排序去重
