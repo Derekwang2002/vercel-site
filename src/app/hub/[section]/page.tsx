@@ -72,10 +72,10 @@ export default async function HubSectionPage({ params }: HubSectionPageProps) {
     <main className={styles.hubPage}>
       <header className={styles.hero}>
         <h1 className={styles.title}>Hub</h1>
+        <p className={styles.description}>{section.description}</p>
       </header>
 
       <HubNav active={section.slug} />
-      <p className={styles.sectionDescription}>{section.description}</p>
 
       <ResourceList
         emptyMessage={`No ${section.label.toLowerCase()} resources yet.`}

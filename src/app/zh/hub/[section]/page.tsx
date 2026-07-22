@@ -36,9 +36,11 @@ export default async function ChineseHubSectionPage({ params }: Props) {
   const resources = await getLocalizedResourcesBySection(section.slug, "zh");
   return (
     <main className={styles.hubPage} lang="zh-CN">
-      <header className={styles.hero}><h1 className={styles.title}>Hub</h1></header>
+      <header className={styles.hero}>
+        <h1 className={styles.title}>Hub</h1>
+        <p className={styles.description}>{DESCRIPTIONS[section.slug]}</p>
+      </header>
       <HubNav active={section.slug} locale="zh" />
-      <p className={styles.sectionDescription}>{DESCRIPTIONS[section.slug]}</p>
       <ResourceList emptyMessage={`暂无 ${section.label} 资源。`} locale="zh" resources={resources} />
     </main>
   );
