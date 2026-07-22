@@ -1,7 +1,7 @@
 ---
-title: Leetcode notes
+title: LeetCode 笔记
 date: 2026-03-03
-summary: Notes and snippets on data structures and algorithms.
+summary: 数据结构与算法的学习笔记和代码片段。
 tags: [Notes, Algorithms]
 selected: true
 draft: false
@@ -32,12 +32,12 @@ struct ListNode {
 
 # Hash Table
 
-- quickly determine whether an element is present in a “set”
-    - hash function: $h(value) = key$, **many to one(key unique to value)**
-- Get: O(1), Add: O(1), Delete: O(1) ← on average
-- Hash collision: seperate chaining
-    - Weighing *dataSize* and *hashSize*
-- Loop entry in Java:
+- 快速判断一个元素是否存在于“集合”中
+    - Hash Function：$h(value) = key$，**多对一（key 由 value 唯一确定）**
+- Get：O(1)，Add：O(1)，Delete：O(1)（平均复杂度）
+- Hash Collision：使用 Separate Chaining 解决
+    - 权衡 *dataSize* 与 *hashSize*
+- 在 Java 中遍历 Entry：
 
 ```python
 for (Map.Entry<String, Integer> entry : map.entrySet()) {
@@ -63,7 +63,7 @@ StringBuilder sb = new StringBuilder();
 
 # Double Pointer
 
-### Summary
+### 总结
 
 - **通过两个指针在一个for循环下完成两个for循环的工作。**
 - **其实很多数组（字符串）填充类的问题，都可以先预先给数组扩容带填充后的大小，然后在从后向前进行操作**
@@ -72,8 +72,8 @@ StringBuilder sb = new StringBuilder();
 
 # Stack and queue
 
-- Stack: LIFO
-    - Java class:
+- Stack：LIFO（后进先出）
+    - Java Class：
 
 ```java
 Deque<String> stack = new ArrayDeque<>();
@@ -82,8 +82,8 @@ stack.pop();
 stack.peek();
 ```
 
-- Queue: FIFO
-    - Java class:
+- Queue：FIFO（先进先出）
+    - Java Class：
 
 ```java
 Queue<String> queue = new ArrayDeque<>();
@@ -100,18 +100,18 @@ deque.peekFront();
 deque.peekLast();
 ```
 
-- Monotonical Queue
-- Priority queue: min/max-heap
+- Monotonic Queue（单调队列）
+- Priority Queue：Min-Heap / Max-Heap
 
 # Binary Tree
 
-- **Full BT**: $2^k-1$ nodes, k is height
-- **Complete BT**: first n nodes of a Full BT, or **composed by Full BTs**!
-- **Binary Search Tree**: left subtree < node < right subtree
-- **Balanced BST**: subtree height difference ≤ 1
-- Traversal method:
-    - DFS: Preorder; In-order; Postorder (root node)
-    - BFS: Level Sequence Traversal
+- **Full Binary Tree**：共有 $2^k-1$ 个节点，其中 k 为树高
+- **Complete Binary Tree**：由 Full Binary Tree 的前 n 个节点组成，或**由多个 Full Binary Tree 构成**
+- **Binary Search Tree**：左子树 < 根节点 < 右子树
+- **Balanced BST**：左右子树的高度差 ≤ 1
+- 遍历方式：
+    - DFS：Preorder、In-order、Postorder（以根节点的位置命名）
+    - BFS：Level Order Traversal
 
 ```java
 public void traverseBFS(TreeNode root) {
@@ -125,7 +125,7 @@ public void traverseBFS(TreeNode root) {
 }
 ```
 
-- Know how to construct a binary tree by hand!
+- 掌握手动构造 Binary Tree 的方法
 
 ```java
 public class TreeNode {
@@ -146,18 +146,18 @@ public class TreeNode {
 
 # Backtracking algorithm
 
-- Backtracking → recursion (use recursion tree to understand)
-- exhaustive enumeration → Bad Time perform
-- Types: combinations, subset, partitioning, permutation
-    - layer/path-dedup
-    - presort dedup
-    - direct map dedup
-- **Template (**3 steps: function title, base case, single layer search)
-    - Recursion function: return void, if + for + (backtracking)return
-    - Recursion + for:
-        - Recursion: vertical traversal
-        - for loop: horizontal traversal
-    - Seudocode:
+- Backtracking → Recursion（可以借助递归树理解）
+- 本质是穷举，因此时间复杂度通常较高
+- 常见类型：Combination、Subset、Partitioning、Permutation
+    - 同层 / 路径去重
+    - 预排序去重
+    - 使用 Map 直接去重
+- **模板**（三个步骤：函数定义、终止条件、单层搜索）
+    - 递归函数：返回 `void`，结构通常为 `if + for + backtracking + return`
+    - Recursion + `for`：
+        - Recursion：纵向遍历
+        - `for` 循环：横向遍历
+    - 伪代码：
 
 ```cpp
 void backtracking(参数) {
@@ -177,6 +177,6 @@ void backtracking(参数) {
 
 # Greedy Algo
 
-- Local optimal → Global optimal?
-- Verify: come up controversy
-- When doing any problems, force think in a “greedy” way
+- 局部最优能否推导出全局最优？
+- 验证方法：尝试寻找反例
+- 解题时可以主动尝试从 Greedy 的角度思考
