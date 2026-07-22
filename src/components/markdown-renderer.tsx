@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { renderToString } from "katex";
 import { codeToHtml } from "shiki";
 import type { TocItem } from "./post-toc";
 import styles from "../app/blog/[slug]/page.module.css";
@@ -19,6 +20,20 @@ export async function renderMarkdown(
 
     if (!trimmed) {
       i += 1;
+      continue;
+    }
+
+    const mathBlock = parseMathBlock(lines, i);
+    if (mathBlock) {
+      blocks.push(
+        <div
+          className={styles.mathBlock}
+          dangerouslySetInnerHTML={{ __html: renderMath(mathBlock.expression, true) }}
+          key={`block-${key}`}
+        />
+      );
+      i = mathBlock.nextIndex;
+      key += 1;
       continue;
     }
 
@@ -151,6 +166,50 @@ export async function renderMarkdown(
   }
 
   return blocks;
+}
+
+type MathBlock = {
+  expression: string;
+  nextIndex: number;
+};
+
+function parseMathBlock(lines: string[], startIndex: number): MathBlock | null {
+  const opening = lines[startIndex].trim();
+  const delimiter = opening.startsWith("$$") ? "$$" : opening.startsWith("\\[") ? "\\[" : null;
+
+  if (!delimiter) {
+    return null;
+  }
+
+  const closing = delimiter === "$$" ? "$$" : "\\]";
+  const firstLine = opening.slice(delimiter.length);
+  if (firstLine.endsWith(closing) && firstLine.length >= closing.length) {
+    return { expression: firstLine.slice(0, -closing.length).trim(), nextIndex: startIndex + 1 };
+  }
+
+  const expressionLines = [firstLine];
+  let i = startIndex + 1;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (line.trimEnd().endsWith(closing)) {
+      expressionLines.push(line.trimEnd().slice(0, -closing.length));
+      return { expression: expressionLines.join("\n").trim(), nextIndex: i + 1 };
+    }
+
+    expressionLines.push(line);
+    i += 1;
+  }
+
+  return null;
+}
+
+function renderMath(expression: string, displayMode: boolean): string {
+  return renderToString(expression, {
+    displayMode,
+    output: "html",
+    strict: false,
+    throwOnError: false
+  });
 }
 
 function isThematicBreak(line: string): boolean {
@@ -535,7 +594,7 @@ function slugifyHeading(text: string): string {
 function parseInline(text: string, keyPrefix: string): ReactNode[] {
   const nodes: ReactNode[] = [];
   const pattern =
-    /!\[([^\]]*)\]\(([^)]+)\)|\[([^\]]+)\]\(([^)]+)\)|<((?:https?:\/\/|mailto:)[^>\s]+)>|`([^`]+)`|\*\*([^*]+)\*\*|\*([^*]+)\*/g;
+    /!\[([^\]]*)\]\(([^)]+)\)|\[([^\]]+)\]\(([^)]+)\)|<((?:https?:\/\/|mailto:)[^>\s]+)>|`([^`]+)`|\*\*([^*]+)\*\*|\*([^*]+)\*|(?<!\\)\$((?:\\.|[^$\n])+?)(?<!\\)\$/g;
   let lastIndex = 0;
   let match = pattern.exec(text);
 
@@ -604,6 +663,14 @@ function parseInline(text: string, keyPrefix: string): ReactNode[] {
         <em key={`${keyPrefix}-em-${match.index}`}>
           {parseInline(match[8], `${keyPrefix}-em-${match.index}`)}
         </em>
+      );
+    } else if (match[9] !== undefined) {
+      nodes.push(
+        <span
+          className={styles.inlineMath}
+          dangerouslySetInnerHTML={{ __html: renderMath(match[9], false) }}
+          key={`${keyPrefix}-math-${match.index}`}
+        />
       );
     }
 

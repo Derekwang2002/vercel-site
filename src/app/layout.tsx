@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+import "katex/dist/katex.min.css";
 import "./globals.css";
 
 const SITE_NAME = "Derek Hub";
