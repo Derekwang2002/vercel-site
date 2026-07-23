@@ -36,6 +36,15 @@ export type ResourceCollection = {
 
 export const resources = [
   {
+    title: "dev -> test -> uat -> prod",
+    description: "在 pi.dev 中查看共享的 Pi 会话演示。",
+    type: "demo",
+    href: "https://pi.dev/session/#8ea85042f886b464aa3562eb493c3c16",
+    tags: ["pi", "agent", "session"],
+    date: "2026-07-23",
+    status: "public"
+  },
+  {
     title: "Docker 运行原理动态讲解",
     description: "从 Dockerfile、Image 到 Container，配合构建、隔离、网络、Volume 与 Compose 动画，从头理解 Docker。",
     type: "demo",

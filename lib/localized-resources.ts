@@ -3,6 +3,10 @@ import { getResourcesBySection, type ResourceSection } from "./resources";
 import type { Resource } from "../content/resources";
 
 const ENGLISH_COPY: Record<string, Pick<Resource, "title" | "description">> = {
+  "https://pi.dev/session/#8ea85042f886b464aa3562eb493c3c16": {
+    title: "dev -> test -> uat -> prod",
+    description: "Open a shared Pi session demo on pi.dev."
+  },
   "/docker-runtime/index.html": {
     title: "Docker Runtime Visual Explainer",
     description: "Follow Dockerfile, Image, and Container through animated build, isolation, networking, Volume, and Compose flows."
