@@ -13,6 +13,17 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        source: "/dev-test-uat-prod/:path*",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: "sandbox allow-scripts; default-src 'none'; img-src data: blob: https:; script-src 'unsafe-inline'; style-src 'unsafe-inline'; font-src data: https:; connect-src 'none'; base-uri 'none'; form-action 'none'"
+          },
+          { key: "Referrer-Policy", value: "no-referrer" },
+          { key: "X-Content-Type-Options", value: "nosniff" }
+        ]
+      },
+      {
         source: "/private/:path*",
         headers: [
           { key: "Cache-Control", value: "private, no-store" },

@@ -35,12 +35,14 @@ export type ResourceCollection = {
 };
 
 export const resources = [
+  // Snapshot source:
+  // https://gist.githubusercontent.com/Derekwang2002/8ea85042f886b464aa3562eb493c3c16/raw/8d2e2bcbcb237586bc1fea065aa277c574685d47/session.html
   {
     title: "dev -> test -> uat -> prod",
-    description: "在 pi.dev 中查看共享的 Pi 会话演示。",
+    description: "以共享会话形式讲解 Dev、Test、UAT 与 Prod 环境及其发布流程。",
     type: "demo",
-    href: "https://pi.dev/session/#8ea85042f886b464aa3562eb493c3c16",
-    tags: ["pi", "agent", "session"],
+    href: "/dev-test-uat-prod/index.html",
+    tags: ["devops", "environment", "deployment"],
     date: "2026-07-23",
     status: "public"
   },
